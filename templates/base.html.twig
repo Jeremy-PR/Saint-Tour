@@ -1,17 +1,68 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SaintéTour{% endblock %}</title>
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
+    <!-- Fichier CSS principal -->
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
+    <!-- Intégration de Font Awesome ou d'autres icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+
+    <header>
+       <nav class="uk-navbar-container">
+    <div class="uk-container">
+        <div uk-navbar>
+
+            <div class="uk-navbar-center">
+
+                <div class="uk-navbar-center-left">
+                    <ul class="uk-navbar-nav">
+                        <li class="uk-active"><a href="#">Active</a></li>
+                        <li>
+                            <a href="#">Parent</a>
+                            <div class="uk-navbar-dropdown">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li class="uk-active"><a href="#">Active</a></li>
+                                    <li><a href="#">Item</a></li>
+                                    <li><a href="#">Item</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <a class="uk-navbar-item uk-logo" href="#">Logo</a>
+                <div class="uk-navbar-center-right">
+                    <ul class="uk-navbar-nav">
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</nav>
+    </header>
+
+    <main>
         {% block body %}{% endblock %}
-    </body>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 SaintéTour. Tous droits réservés.</p>
+    </footer>
+
+    {% block javascripts %}
+        <script src="{{ asset('js/scripts.js') }}"></script>
+    {% endblock %}
+
+</body>
 </html>
