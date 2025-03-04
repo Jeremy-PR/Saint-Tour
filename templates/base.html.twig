@@ -1,68 +1,112 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}SaintéTour{% endblock %}</title>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			{% block title %}SaintéTour
+			{% endblock %}
+		</title>
+        {# templates/base.html.twig #}
 
-    <!-- Fichier CSS principal -->
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+{% endblock %}
 
-    <!-- Intégration de Font Awesome ou d'autres icônes -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<!-- Fichier CSS principal -->
+		<link
+		rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-    {% block stylesheets %}{% endblock %}
-</head>
-<body>
+		<!-- Intégration de Font Awesome ou d'autres icônes -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <header>
-       <nav class="uk-navbar-container">
-    <div class="uk-container">
-        <div uk-navbar>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+		<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-            <div class="uk-navbar-center">
 
-                <div class="uk-navbar-center-left">
-                    <ul class="uk-navbar-nav">
-                        <li class="uk-active"><a href="#">Active</a></li>
-                        <li>
-                            <a href="#">Parent</a>
-                            <div class="uk-navbar-dropdown">
-                                <ul class="uk-nav uk-navbar-dropdown-nav">
-                                    <li class="uk-active"><a href="#">Active</a></li>
-                                    <li><a href="#">Item</a></li>
-                                    <li><a href="#">Item</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <a class="uk-navbar-item uk-logo" href="#">Logo</a>
-                <div class="uk-navbar-center-right">
-                    <ul class="uk-navbar-nav">
-                        <li><a href="#">Item</a></li>
-                        <li><a href="#">Item</a></li>
-                    </ul>
-                </div>
+	</head>
+	<body>
 
+		<header>
+			<nav class="bg-gray-900 shadow-md">
+    <div class="container mx-auto px-4 py-3">
+        <div class="flex items-center justify-between">
+
+            <!-- Left Menu -->
+            <div class="flex space-x-4 text-white">
+                <ul class="flex space-x-4">
+                    <li class="text-gray-300 hover:text-white">
+                        <a href="#">Lieux</a>
+                    </li>
+                    <li class="relative text-gray-300 hover:text-white">
+                        <a href="#">Itinéraires</a>
+                        <div class="absolute left-0 w-48 bg-gray-800 text-white mt-2 p-2 rounded-lg shadow-lg hidden group-hover:block">
+                            <ul>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Active</a></li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Item</a></li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Item</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Logo -->
+            <a href="#" class="text-white text-2xl font-bold">Logo</a>
+
+            <!-- Right Menu -->
+            <div class="flex space-x-4 text-white">
+                <ul class="flex space-x-4">
+                    <li class="text-gray-300 hover:text-white">
+                        <a href="#">Connexion</a>
+                    </li>
+                    <li class="text-gray-300 hover:text-white">
+                        <a href="#">Inscription</a>
+                    </li>
+                </ul>
             </div>
 
         </div>
     </div>
 </nav>
-    </header>
 
-    <main>
-        {% block body %}{% endblock %}
-    </main>
+		</header>
 
-    <footer>
-        <p>&copy; 2025 SaintéTour. Tous droits réservés.</p>
-    </footer>
+		<main>
+			{% block body %}{% endblock %}
+		</main>
 
-    {% block javascripts %}
-        <script src="{{ asset('js/scripts.js') }}"></script>
-    {% endblock %}
+		<footer class="bg-gray-900 text-white py-6">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-start space-x-10">
 
-</body>
+            <!-- Left column -->
+            <div class="flex flex-col space-y-4">
+                <a href="#" class="hover:text-gray-400">Mentions Légales</a>
+                <a href="#" class="hover:text-gray-400">Politique de confidentialité</a>
+                <a href="#" class="hover:text-gray-400">Conditions d'utilisation</a>
+            </div>
+
+            <!-- Center column -->
+            <div class="flex flex-col justify-center items-center text-gray-300">
+                <p>&copy; 2025 SaintéTour. Tous droits réservés.</p>
+            </div>
+
+            <!-- Right column -->
+            <div class="flex flex-col space-y-4">
+                <a href="#" class="hover:text-gray-400">Qui sommes-nous ?</a>
+                <a href="#" class="hover:text-gray-400">Nous contacter</a>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+
+
+		{% block javascripts %}
+			<script src="{{ asset('js/scripts.js') }}"></script>
+		{% endblock %}
+
+	</body>
 </html>
