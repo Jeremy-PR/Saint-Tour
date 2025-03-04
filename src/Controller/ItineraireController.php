@@ -11,7 +11,7 @@ final class ItineraireController extends AbstractController
     #[Route('/itineraire', name: 'app_itineraire')]
     public function index(): Response
     {
-        return $this->render('itineraire/itineraire.html.twig', [
+        return $this->render('itineraire/index.html.twig', [
             'controller_name' => 'ItineraireController',
         ]);
     }

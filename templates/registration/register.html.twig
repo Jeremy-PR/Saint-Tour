@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <section class="bg-cover bg-center h-screen" style="background-image: url('/path/to/your/image.jpg');">
+    <section class="bg-cover bg-center h-screen" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}');">
         <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
             <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 class="text-2xl font-semibold text-center mb-4 text-gray-700">Create Your Account</h2>
+                <h2 class="text-2xl font-semibold text-center mb-4 text-gray-700">Créer vous un compte</h2>
                 
                 <!-- Formulaire d'enregistrement -->
                 {{ form_start(registrationForm, {'attr': {'class': 'space-y-4'}}) }}
@@ -14,6 +14,12 @@
                         {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'text-gray-600'}}) }}
                         {{ form_widget(registrationForm.email, {'attr': {'class': 'p-3 border border-gray-300 rounded-md'}}) }}
                         {{ form_errors(registrationForm.email, {'attr': {'class': 'text-red-500 text-sm'}}) }}
+                    </div>
+
+                       <div class="flex flex-col">
+                        {{ form_label(registrationForm.pseudo, null, {'label_attr': {'class': 'text-gray-600'}}) }}
+                        {{ form_widget(registrationForm.pseudo, {'attr': {'class': 'p-3 border border-gray-300 rounded-md'}}) }}
+                        {{ form_errors(registrationForm.pseudo, {'attr': {'class': 'text-red-500 text-sm'}}) }}
                     </div>
                     
                     <!-- Mot de passe -->
@@ -31,20 +37,20 @@
                         {{ form_errors(registrationForm.plainPassword.second, {'attr': {'class': 'text-red-500 text-sm'}}) }}
                     </div>
 
-                    <!-- Conditions d'utilisation -->
+                    {# <!-- Conditions d'utilisation -->
                     <div class="flex items-center space-x-2">
                         {{ form_widget(registrationForm.agreeTerms) }}
                         <label for="agreeTerms" class="text-sm text-gray-600">{{ form_label(registrationForm.agreeTerms) }}</label>
-                    </div>
+                    </div> #}
 
                     <!-- Bouton de soumission -->
                     <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-md mt-4 hover:bg-blue-600 focus:outline-none">
-                        Create Account
+                        Créer compte
                     </button>
 
                     <!-- Lien vers la page de connexion -->
                     <div class="text-center mt-4">
-                        <a href="{{ path('app_login') }}" class="text-sm text-blue-500 hover:underline">Already have an account? Login here</a>
+                        <a href="{{ path('app_login') }}" class="text-sm text-blue-500 hover:underline">Vous avez déjà un compte? Connectez-vous ici</a>
                     </div>
 
                 {{ form_end(registrationForm) }}

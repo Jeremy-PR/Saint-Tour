@@ -35,12 +35,14 @@ class Itineraire
      * @var Collection<int, Categorie>
      */
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'itineraires')]
+    #[ORM\JoinTable(name: 'itineraire_categorie')]
     private Collection $categories;
 
     /**
      * @var Collection<int, Lieu>
      */
-    #[ORM\ManyToMany(targetEntity: Lieu::class, mappedBy: 'itineraires')]
+    #[ORM\ManyToMany(targetEntity: Lieu::class, inversedBy: 'itineraires')]
+    #[ORM\JoinTable(name: 'lieu_itineraire')]
     private Collection $lieux;
 
     public function __construct()

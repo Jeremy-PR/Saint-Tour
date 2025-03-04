@@ -17,8 +17,7 @@ final class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-       
-       
+
 
         // Créer le formulaire pour l'inscription
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -31,19 +30,8 @@ final class RegistrationController extends AbstractController
             // Hache le mot de passe de l'utilisateur
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
-
-           
             $entityManager->persist($user);
             $entityManager->flush();
-
-            // Envoie un email de confirmation à l'utilisateur
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('support@luxury-services.com', 'Luxury Services Support'))
-                    ->to((string) $user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
 
             return $this->redirectToRoute('app_home');
         }
@@ -52,5 +40,4 @@ final class RegistrationController extends AbstractController
             'registrationForm' => $form,
         ]);
     }
-    }
-
+}

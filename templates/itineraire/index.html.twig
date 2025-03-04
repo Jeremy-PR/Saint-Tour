@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les Itinéraires{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto my-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Tous les Itinéraires</h1>
+
+        <!-- Liste des itinéraires -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {% for itineraire in itineraires %}
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-semibold text-gray-700">{{ itineraire.name }}</h2>
+                    <p class="text-gray-500">{{ itineraire.description }}</p>
+                    <a href="{{ path('itineraire_show', {'id': itineraire.id}) }}" class="text-blue-500 hover:underline mt-4 block">Voir plus</a>
+                </div>
+            {% else %}
+                <p class="text-center text-gray-500">Aucun itinéraire disponible pour le moment.</p>
+            {% endfor %}
+        </div>
+        
+        <!-- Lien pour voir tous les itinéraires si nécessaire -->
+        <div class="text-center mt-8">
+            <a href="{{ path('itineraire_index') }}" class="text-blue-500 hover:underline">Voir tous les itinéraires</a>
+        </div>
+    </div>
+{% endblock %}
