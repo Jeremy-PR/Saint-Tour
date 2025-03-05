@@ -20,7 +20,7 @@ final class LieuController extends AbstractController
            $lieux = $entityManager->getRepository(Lieu::class)->findAll();
 
 
-        return $this->render('lieu/index.html.twig', [
+        return $this->render('lieu/all_lieux.html.twig', [
             'lieux' => $lieux,
         ]);
     }
