@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carte des Lieux{% endblock %}
+
+{% block body %}
+<h1>Carte des Lieux</h1>
+
+
+<div id="map" style="height: 600px;"></div>
+
+
+<div id="lieux-container"></div>
+
+<script>
+    // Créer la carte Leaflet centrée sur Saint-Étienne
+    var map = L.map('map').setView([45.4397, 4.3872], 13);
+
+    // Ajouter le fond de carte OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Récupérer les lieux depuis la variable Twig 'lieux' convertie en JSON
+    const lieux = {{ lieux|raw }};
+
+    
+    lieux.forEach(lieu => {
+     
+        if (lieu.latitude && lieu.longitude) {
+            const lat = lieu.latitude;
+            const lng = lieu.longitude;
+
+            L.marker([lat, lng])
+                .addTo(map)
+                .bindPopup(`<b>${lieu.name}</b>`); 
+        }
+    });
+</script>
+
+{% endblock %}

@@ -6,6 +6,7 @@ use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
@@ -16,6 +17,7 @@ class Categorie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['lieu:read'])]
     private ?string $name = null;
 
     /**
@@ -36,7 +38,10 @@ class Categorie
         $this->itineraires = new ArrayCollection();
     }
 
-   
+   public function __toString(): string
+    {
+        return $this->name;
+    }
 
 
     public function getId(): ?int

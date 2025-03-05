@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TestFetchJavascriptController!{% endblock %}
+
+{% block body %}
+{# // <script>
+//     fetch('http://127.0.0.1:8000/test/fetch/lieu')
+//         .then(response => response.json())
+//         .then(lieux => {
+//             const container = document.getElementById('lieux-container');
+//             lieux.forEach(lieu => {
+//                 const div = document.createElement('div');
+//                 div.textContent = lieu.name;
+//                 container.appendChild(div);
+//             });
+//         });
+// </script> #}
+
+
+<h1>Page de la map</h1>
+<div id="lieux-container"></div>
+
+{# //  <script>
+//      const lieux = {{ lieux|raw }};
+//      console.log(lieux);
+
+//      // Exemple d'utilisation de la variable lieux
+//      const container = document.getElementById('lieux-container');
+//      lieux.forEach(lieu => {
+//          const div = document.createElement('div');
+//          div.textContent = lieu.name;
+//          container.appendChild(div);
+//      });
+// </script> #}
+{% endblock %}

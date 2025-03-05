@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Lieu;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -24,13 +25,16 @@ class LieuCrudController extends AbstractCrudController
             IdField::new('id')->onlyOnIndex(),
             TextField::new('name', 'Nom du lieu'),
             TextField::new('adresse', 'Adresse du lieu'),
-            NumberField::new('latitude', 'Latitude du lieu'),
-            NumberField::new('longitude', 'Longitude du lieu'),
+            NumberField::new('latitude', 'Latitude du lieu')->setNumDecimals(6),
+            NumberField::new('longitude', 'Longitude du lieu')->setNumDecimals(5),
             TextareaField::new('description', 'Description du lieu'),
+            AssociationField::new('categories'),
+            // ->setFormTypeOption('by_reference', false),
             ImageField::new('image')
                 ->setBasePath('uploads/images') // Le chemin vers le dossier où les images seront stockées
                 ->setUploadDir('public/uploads/images') // Dossier où les images seront envoyées
                 ->setRequired(false), // Indiquer si ce champ est obligatoire ou non
+         
         ];
     }
 }

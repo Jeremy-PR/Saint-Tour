@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: LieuRepository::class)]
 class Lieu
@@ -14,24 +15,31 @@ class Lieu
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['lieu:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['lieu:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['lieu:read'])]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['lieu:read'])]
     private ?string $adresse = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    private ?string $latitude = null;
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 6)]
+    #[Groups(['lieu:read'])]
+    private ?float $latitude = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    private ?string $longitude = null;
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 6)]
+    #[Groups(['lieu:read'])]
+    private ?float $longitude = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['lieu:read'])]
     private ?string $image = null;
 
     /**
@@ -39,6 +47,7 @@ class Lieu
      */
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'lieux')]
     #[ORM\JoinTable(name: 'lieu_categorie')]
+    #[Groups(['lieu:read'])]
     private Collection $categories;
 
     /**
@@ -55,7 +64,10 @@ class Lieu
         $this->itineraires = new ArrayCollection();
     }
 
-  
+    public function __toString(): string
+    {
+        return $this->name;
+    }
 
     public function getId(): ?int
     {
@@ -98,24 +110,24 @@ class Lieu
         return $this;
     }
 
-    public function getLatitude(): ?string
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    public function setLatitude(string $latitude): static
+    public function setLatitude(float $latitude): static
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    public function getLongitude(): ?string
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
-    public function setLongitude(string $longitude): static
+    public function setLongitude(float $longitude): static
     {
         $this->longitude = $longitude;
 
