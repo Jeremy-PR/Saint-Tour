@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conditions d'Utilisation{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+        <h1 class="text-2xl font-bold mb-4">Conditions d'Utilisation</h1>
+
+        <h2 class="text-xl font-semibold mt-4">Acceptation des conditions</h2>
+        <p>L’utilisation du site <strong>SaintéTour</strong> implique l’acceptation des présentes conditions générales d’utilisation.</p>
+
+        <h2 class="text-xl font-semibold mt-4">Accès au site</h2>
+        <p>Le site est accessible gratuitement à tout utilisateur ayant un accès à internet.</p>
+
+        <h2 class="text-xl font-semibold mt-4">Utilisation des services</h2>
+        <p>L’utilisateur s’engage à ne pas :</p>
+        <ul class="list-disc pl-5">
+            <li>Publier de contenus illicites</li>
+            <li>Usurper l’identité d’une autre personne</li>
+            <li>Interférer avec le bon fonctionnement du site</li>
+        </ul>
+
+        <h2 class="text-xl font-semibold mt-4">Modification des conditions</h2>
+        <p>Nous nous réservons le droit de modifier ces conditions à tout moment. La dernière mise à jour date du <strong>{{ "now"|date("d/m/Y") }}</strong>.</p>
+    </div>
+{% endblock %}
