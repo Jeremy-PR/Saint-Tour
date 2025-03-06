@@ -16,6 +16,16 @@ class ItineraireRepository extends ServiceEntityRepository
         parent::__construct($registry, Itineraire::class);
     }
 
+    public function findAllWithLieux(): array
+{
+    return $this->createQueryBuilder('i')
+        ->leftJoin('i.lieux', 'l')
+        ->addSelect('l') // Important pour récupérer les lieux !
+        ->getQuery()
+        ->getResult();
+}
+
+
     //    /**
     //     * @return Itineraire[] Returns an array of Itineraire objects
     //     */

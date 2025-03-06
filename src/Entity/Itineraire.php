@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ItineraireRepository::class)]
 class Itineraire
@@ -14,9 +15,11 @@ class Itineraire
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("itineraire:read")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("itineraire:read")]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -43,6 +46,7 @@ class Itineraire
      */
     #[ORM\ManyToMany(targetEntity: Lieu::class, inversedBy: 'itineraires')]
     #[ORM\JoinTable(name: 'lieu_itineraire')]
+    #[Groups("itineraire:read")]
     private Collection $lieux;
 
     public function __construct()
@@ -50,9 +54,10 @@ class Itineraire
         $this->avis = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->lieux = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
     }
 
-   
+ 
   
     public function getId(): ?int
     {
@@ -155,6 +160,13 @@ class Itineraire
     public function getLieux(): Collection
     {
         return $this->lieux;
+    }
+
+    public function setLieux($lieux): self
+    {
+        $this->lieux = $lieux;
+
+        return $this;
     }
 
     public function addLieu(Lieu $lieu): static

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Itineraire;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -26,9 +27,9 @@ class ItineraireCrudController extends AbstractCrudController
                 ->setFormTypeOption('by_reference', false)
                 ->setCrudController(LieuCrudController::class)
                 ->setHelp('Sélectionnez les lieux par lesquels passe cet itinéraire'),
-             
-
-                AssociationField::new('categories'),
+            AssociationField::new('categories'),
+            DateTimeField::new('created_at')->onlyOnDetail(),
+            
         ];
     }
 }

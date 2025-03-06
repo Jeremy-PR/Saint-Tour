@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: LieuRepository::class)]
 class Lieu
@@ -15,11 +15,11 @@ class Lieu
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['lieu:read'])]
+    #[Groups(['lieu:read', 'itineraire:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['lieu:read'])]
+    #[Groups(['lieu:read', 'itineraire:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -31,11 +31,11 @@ class Lieu
     private ?string $adresse = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 6)]
-    #[Groups(['lieu:read'])]
+    #[Groups(['lieu:read', 'itineraire:read'])]
     private ?float $latitude = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 6)]
-    #[Groups(['lieu:read'])]
+    #[Groups(['lieu:read', 'itineraire:read'])]
     private ?float $longitude = null;
 
     #[ORM\Column(length: 255)]

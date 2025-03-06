@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\CategorieRepository;
 use App\Repository\LieuRepository;
+use App\Repository\ItineraireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -11,13 +13,25 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 final class MapController extends AbstractController
 {
     #[Route('/map', name: 'app_map')]
-    public function index(LieuRepository $lieuRepository, NormalizerInterface $normalizer): Response
+    public function afficherCarte(LieuRepository $lieuRepository, CategorieRepository $categorieRepository, ItineraireRepository $itineraireRepository, NormalizerInterface $normalizer): Response
     {
+        // Récupération des lieux et normalisation des données
         $lieux = $lieuRepository->findAll();
         $lieuxNormalized = $normalizer->normalize($lieux, null, ['groups' => 'lieu:read']);
+
+        // Récupération des itinéraires pour afficher les points correspondants
+        $itineraires = $itineraireRepository->findAllWithLieux();
+
+        // dd($itinéraires);
+        $itinerairesNormalized = $normalizer->normalize($itineraires, null, ['groups' => 'itineraire:read']);
+        
+        // Récupération des catégories pour le filtre
+        $categories = $categorieRepository->findAll();
+
         return $this->render('map/index.html.twig', [
-            'lieux' => json_encode($lieuxNormalized),
-            'controller_name' => 'TestFetchJavascriptController',
+            'lieux' => json_encode($lieuxNormalized),  // Envoi des lieux au format JSON
+            'itineraires' => json_encode($itinerairesNormalized),  // Envoi des itinéraires au format JSON
+            'categories' => $categories,  // Envoi des catégories pour le filtre
         ]);
     }
 }
