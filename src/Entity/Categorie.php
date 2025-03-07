@@ -26,16 +26,12 @@ class Categorie
     #[ORM\ManyToMany(targetEntity: Lieu::class, mappedBy: 'categories')]
     private Collection $lieux;
 
-    /**
-     * @var Collection<int, Itineraire>
-     */
-    #[ORM\ManyToMany(targetEntity: Itineraire::class, mappedBy: 'categories')]
-    private Collection $itineraires;
+  
 
     public function __construct()
     {
         $this->lieux = new ArrayCollection();
-        $this->itineraires = new ArrayCollection();
+       
     }
 
    public function __toString(): string
@@ -88,32 +84,7 @@ class Categorie
         return $this;
     }
 
-    /**
-     * @return Collection<int, Itineraire>
-     */
-    public function getItineraires(): Collection
-    {
-        return $this->itineraires;
-    }
-
-    public function addItineraire(Itineraire $itineraire): static
-    {
-        if (!$this->itineraires->contains($itineraire)) {
-            $this->itineraires->add($itineraire);
-            $itineraire->addCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeItineraire(Itineraire $itineraire): static
-    {
-        if ($this->itineraires->removeElement($itineraire)) {
-            $itineraire->removeCategory($this);
-        }
-
-        return $this;
-    }
+   
 
     
 }

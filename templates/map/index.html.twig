@@ -1,114 +1,114 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Carte des Lieux
-{% endblock %}
+{% block title %}Carte des Lieux{% endblock %}
 
 {% block body %}
-	{{ dump(itineraires) }}
-	<div class="bg-cover bg-center bg-fixed h-screen" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')">
-		<h1 class="text-2xl text-white font-semibold mb-4">Carte des Lieux</h1>
+    {{ dump(itineraires) }}
+    <div class="bg-cover bg-center bg-fixed h-screen" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')">
+        <h1 class="text-2xl text-white font-semibold mb-4">Carte des Lieux</h1>
 
-		<!-- Filtre par catégorie -->
-		<div class="mb-4">
-			<label for="categoryFilter" class="mr-2 font-semibold text-white">Filtrer par catégorie :</label>
-			<select id="categoryFilter" class="border p-2 rounded">
-				<option value="all">Toutes les catégories</option>
-				{% for categorie in categories %}
-					<option value="{{ categorie.name }}">{{ categorie.name }}</option>
-				{% endfor %}
-			</select>
-		</div>
+        <!-- Filtre par catégorie -->
+        <div class="mb-4">
+            <label for="categoryFilter" class="mr-2 font-semibold text-white">Filtrer par catégorie :</label>
+            <select id="categoryFilter" class="border p-2 rounded">
+                <option value="all">Toutes les catégories</option>
+                {% for categorie in categories %}
+                    <option value="{{ categorie.name }}">{{ categorie.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-		<!-- Sélectionner un itinéraire -->
-		<div class="mb-4">
-			<label for="itineraireFilter" class="mr-2 font-semibold text-white">Choisir un itinéraire :</label>
-			<select id="itineraireFilter" class="border p-2 rounded">
-				<option value="all">Tous les itinéraires</option>
-				{% for itineraire in itineraires %}
-					<option value="{{ itineraire.id }}">{{ itineraire.name }}</option>
-				{% endfor %}
-			</select>
-		</div>
+        <!-- Sélectionner un itinéraire -->
+        <div class="mb-4">
+            <label for="itineraireFilter" class="mr-2 font-semibold text-white">Choisir un itinéraire :</label>
+            <select id="itineraireFilter" class="border p-2 rounded">
+                <option value="all">Tous les itinéraires</option>
+                {% for itineraire in itineraires %}
+                    <option value="{{ itineraire.id }}">{{ itineraire.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-		<div id="map" style="height: 600px;"></div>
+        <div id="map" style="height: 600px;"></div>
 
-		<script>
-			var map = L.map('map').setView([45.4397, 4.3872], 13);
+        <script>
+            var map = L.map('map').setView([45.4397, 4.3872], 13);
 
-			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 
-			// Récupérer les lieux et itinéraires et les stocker dans des variables JS
-			const lieux = {{ lieux|raw }};
-			const itineraires = {{ itineraires|json_encode|raw }};
+            // Récupérer les lieux et itinéraires et les stocker dans des variables JS
+            const lieux = {{ lieux|raw }};
+            const itineraires = {{ itineraires|json_encode|raw }};
+			console.log(itineraires);
 
-			let markers = []; // Tableau pour stocker les marqueurs Leaflet
-			let polyline = null; // Pour le tracé des itinéraires
+            let markers = []; // Tableau pour stocker les marqueurs Leaflet
+            let polyline = null; // Pour le tracé des itinéraires
 
-			// Fonction pour afficher les lieux filtrés
-			function afficherLieux(categorie) {
-				// Supprimer tous les marqueurs existants
-				markers.forEach(marker => map.removeLayer(marker));
-				markers = [];
+            // Fonction pour afficher les lieux filtrés
+            function afficherLieux(categorie) {
+                // Supprimer tous les marqueurs existants
+                markers.forEach(marker => map.removeLayer(marker));
+                markers = [];
 
-				// Ajouter uniquement les lieux correspondant à la catégorie sélectionnée
-				lieux.forEach(lieu => {
-					if (lieu.latitude && lieu.longitude) {
-						const categoriesLieu = lieu.categories.map(c => c.name);
-						if (categorie === "all" || categoriesLieu.includes(categorie)) {
-							let marker = L.marker([lieu.latitude, lieu.longitude]).addTo(map).bindPopup(`<b>${lieu.name}</b><br>${categoriesLieu.join(', ')}`);
-							markers.push(marker);
-						}
-					}
-				});
-			}
+                // Ajouter uniquement les lieux correspondant à la catégorie sélectionnée
+                lieux.forEach(lieu => {
+                    if (lieu.latitude && lieu.longitude) {
+                        const categoriesLieu = lieu.categories.map(c => c.name);
+                        if (categorie === "all" || categoriesLieu.includes(categorie)) {
+                            let marker = L.marker([lieu.latitude, lieu.longitude]).addTo(map).bindPopup(`<b>${lieu.name}</b><br>${categoriesLieu.join(', ')}`);
+                            markers.push(marker);
+                        }
+                    }
+                });
+            }
 
-			// Afficher tous les lieux au chargement de la page
-			afficherLieux("all");
+            // Afficher tous les lieux au chargement de la page
+            afficherLieux("all");
 
-			// Fonction pour afficher l'itinéraire sélectionné
-			function afficherItineraire(itineraireId) {
-				// Supprimer les anciens marqueurs et tracé
-				markers.forEach(marker => map.removeLayer(marker));
-				markers = [];
-				if (polyline) {
-					map.removeLayer(polyline);
-					polyline = null;
-				}
+            // Fonction pour afficher l'itinéraire sélectionné
+            function afficherItineraire(itineraireId) {
+                // Supprimer les anciens marqueurs et tracé
+                markers.forEach(marker => map.removeLayer(marker));
+                markers = [];
+                if (polyline) {
+                    map.removeLayer(polyline);
+                    polyline = null;
+                }
 
-				// Trouver l'itinéraire sélectionné
-				const itineraire = itineraires.find(i => i.id == itineraireId);
-				if (itineraire) {
-					// Afficher les lieux de l'itinéraire
-					itineraire.lieux.forEach(lieuId => {
-						const lieu = lieux.find(l => l.id == lieuId);
-						if (lieu && lieu.latitude && lieu.longitude) {
-							let marker = L.marker([lieu.latitude, lieu.longitude]).addTo(map).bindPopup(`<b>${lieu.name}</b>`);
-							markers.push(marker);
-						}
-					});
+                // Trouver l'itinéraire sélectionné
+                const itineraire = itineraires.find(i => i.id == itineraireId);
+                if (itineraire) {
+                    // Afficher les lieux de l'itinéraire
+                    itineraire.lieux.forEach(lieuId => {
+                        const lieu = lieux.find(l => l.id == lieuId);
+                        if (lieu && lieu.latitude && lieu.longitude) {
+                            let marker = L.marker([lieu.latitude, lieu.longitude]).addTo(map).bindPopup(`<b>${lieu.name}</b>`);
+                            markers.push(marker);
+                        }
+                    });
 
-					// Tracer une ligne entre les lieux de l'itinéraire
-					const latLngs = itineraire.lieux.map(lieuId => {
-						const lieu = lieux.find(l => l.id == lieuId);
-						return [lieu.latitude, lieu.longitude];
-					});
-					polyline = L.polyline(latLngs, {color: 'blue'}).addTo(map);
-					map.fitBounds(polyline.getBounds());
-				}
-			}
+                    // Tracer une ligne entre les lieux de l'itinéraire
+                    const latLngs = itineraire.lieux.map(lieuId => {
+                        const lieu = lieux.find(l => l.id == lieuId);
+                        return [lieu.latitude, lieu.longitude];
+                    });
+                    polyline = L.polyline(latLngs, {color: 'blue'}).addTo(map);
+                    map.fitBounds(polyline.getBounds());
+                }
+            }
 
-			// Afficher tous les lieux au chargement de la page
-			afficherLieux("all");
+            // Afficher tous les lieux au chargement de la page
+            afficherLieux("all");
 
-			// Écouter les changements dans le filtre des catégories
-			document.getElementById("categoryFilter").addEventListener("change", function () {
-				afficherLieux(this.value);
-			});
+            // Écouter les changements dans le filtre des catégories
+            document.getElementById("categoryFilter").addEventListener("change", function () {
+                afficherLieux(this.value);
+            });
 
-			// Écouter les changements dans le filtre des itinéraires
-			document.getElementById("itineraireFilter").addEventListener("change", function () {
-				afficherItineraire(this.value);
-			});
-		</script>
-	</div>
+            // Écouter les changements dans le filtre des itinéraires
+            document.getElementById("itineraireFilter").addEventListener("change", function () {
+                afficherItineraire(this.value);
+            });
+        </script>
+    </div>
 {% endblock %}

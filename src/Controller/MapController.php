@@ -25,13 +25,14 @@ final class MapController extends AbstractController
         // dd($itinéraires);
         $itinerairesNormalized = $normalizer->normalize($itineraires, null, ['groups' => 'itineraire:read']);
         
-        // Récupération des catégories pour le filtre
         $categories = $categorieRepository->findAll();
 
         return $this->render('map/index.html.twig', [
             'lieux' => json_encode($lieuxNormalized),  // Envoi des lieux au format JSON
             'itineraires' => json_encode($itinerairesNormalized),  // Envoi des itinéraires au format JSON
-            'categories' => $categories,  // Envoi des catégories pour le filtre
+            'categories' => $categories,  // Envoi des catégories pour le filtre des lieux
+
+           
         ]);
     }
 }

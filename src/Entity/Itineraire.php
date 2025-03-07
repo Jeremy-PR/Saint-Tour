@@ -34,12 +34,7 @@ class Itineraire
     #[ORM\OneToMany(targetEntity: Avis::class, mappedBy: 'itineraire')]
     private Collection $avis;
 
-    /**
-     * @var Collection<int, Categorie>
-     */
-    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'itineraires')]
-    #[ORM\JoinTable(name: 'itineraire_categorie')]
-    private Collection $categories;
+
 
     /**
      * @var Collection<int, Lieu>
@@ -52,7 +47,6 @@ class Itineraire
     public function __construct()
     {
         $this->avis = new ArrayCollection();
-        $this->categories = new ArrayCollection();
         $this->lieux = new ArrayCollection();
         $this->created_at = new \DateTimeImmutable();
     }
@@ -130,29 +124,8 @@ class Itineraire
         return $this;
     }
 
-    /**
-     * @return Collection<int, Categorie>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
+  
 
-    public function addCategory(Categorie $category): static
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Categorie $category): static
-    {
-        $this->categories->removeElement($category);
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Lieu>

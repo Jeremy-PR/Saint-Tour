@@ -28,7 +28,7 @@ class LieuCrudController extends AbstractCrudController
             NumberField::new('latitude', 'Latitude du lieu')->setNumDecimals(6),
             NumberField::new('longitude', 'Longitude du lieu')->setNumDecimals(5),
             TextareaField::new('description', 'Description du lieu'),
-            AssociationField::new('categories'),
+            AssociationField::new('categories', 'Catégories')->setFormTypeOption('multiple', true),
             // ->setFormTypeOption('by_reference', false),
             ImageField::new('image')
                 ->setBasePath('uploads/images') // Le chemin vers le dossier où les images seront stockées
