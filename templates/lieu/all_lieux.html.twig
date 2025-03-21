@@ -9,10 +9,10 @@
             <h1 class="text-3xl font-bold text-center mb-8 text-white">Tous les Lieux</h1>
 
             <!-- Liste des lieux -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4">
                 {% for lieu in lieux %}
-                    <div class="bg-white w-[500px] h-[317px] rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-                        <div class="w-full h-[200px] overflow-hidden">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                        <div class="w-full h-48 overflow-hidden">
                             <img 
                                 src="{{ asset('uploads/images/' ~ lieu.image) }}" 
                                 alt="{{ lieu.name }}" 

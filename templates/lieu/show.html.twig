@@ -3,34 +3,37 @@
 {% block title %}Détails du lieu{% endblock %}
 
 {% block body %}
-    <div class="container mx-auto my-8 p-6 bg-white rounded-lg shadow-lg">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">{{ lieu.name }}</h1>
+    <div class="min-h-screen bg-cover bg-center bg-fixed flex items-center justify-center" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')">
+        <div class="container mx-auto p-6 bg-white bg-opacity-90 rounded-lg shadow-lg">
+            <h1 class="text-4xl font-bold text-center text-gray-800 mb-6">{{ lieu.name }}</h1>
 
-        <div class="mb-4">
-            <p class="text-xl text-gray-700"><strong>Adresse :</strong> {{ lieu.adresse }}</p>
-        </div>
-
-        <div class="mb-4">
-            <p class="text-xl text-gray-700"><strong>Latitude :</strong> {{ lieu.latitude }}</p>
-            <p class="text-xl text-gray-700"><strong>Longitude :</strong> {{ lieu.longitude }}</p>
-        </div>
-
-        <div class="mb-6">
-            <p class="text-lg text-gray-600"><strong>Description :</strong></p>
-            <p class="text-gray-700">{{ lieu.description }}</p>
-        </div>
-
-        <!-- Affichage de l'image avec une taille plus petite -->
-        {% if lieu.image %}
-            <div class="mb-6 flex justify-center">
-                <img src="{{ asset('uploads/images/' ~ lieu.image) }}" alt="{{ lieu.name }}" class="w-1/2 h-auto rounded-lg shadow-md">
+            <div class="mb-4">
+                <p class="text-2xl font-bold text-gray-700"><strong>Adresse :</strong> </p>
+                <p class=" text-xl text-gray-700">{{ lieu.adresse }}</p>
             </div>
-        {% else %}
-            <p class="text-center text-gray-500">Aucune image disponible pour ce lieu.</p>
-        {% endif %}
 
-        <div class="mt-6 text-center">
-            <a href="{{ path('app_lieu') }}" class="inline-block bg-blue-500 text-white py-2 px-6 rounded-full hover:bg-blue-600 transition">Retour à la liste</a>
+            {# <div class="mb-4">
+                <p class="text-xl text-gray-700"><strong>Latitude :</strong> {{ lieu.latitude }}</p>
+                <p class="text-xl text-gray-700"><strong>Longitude :</strong> {{ lieu.longitude }}</p>
+            </div> #}
+
+            <div class="mb-6">
+                <p class="text-2xl font-bold text-gray-600"><strong>Description :</strong></p>
+                <p class=" text-xl text-gray-700">{{ lieu.description }}</p>
+            </div>
+
+            <!-- Affichage de l'image avec une taille plus petite -->
+            {% if lieu.image %}
+                <div class="mb-6 flex justify-center">
+                    <img src="{{ asset('uploads/images/' ~ lieu.image) }}" alt="{{ lieu.name }}" class="w-1/2 h-auto rounded-lg shadow-md">
+                </div>
+            {% else %}
+                <p class="text-center text-gray-500">Aucune image disponible pour ce lieu.</p>
+            {% endif %}
+
+            <div class="mt-6 text-center">
+                <a href="{{ path('app_lieu') }}" class="inline-block bg-blue-500 text-white py-2 px-6 rounded-full hover:bg-blue-600 transition">Retour à la liste</a>
+            </div>
         </div>
     </div>
 {% endblock %}
