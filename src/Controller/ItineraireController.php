@@ -24,9 +24,24 @@ final class ItineraireController extends AbstractController
 public function show(Itineraire $itineraire, EntityManagerInterface $entityManager): Response
 {
     $lieux = $itineraire->getLieux();
+
+    //    // Tri des lieux dans l'ordre souhaité (par exemple, par un champ "ordre" ou autre logique)
+    //    $lieux = $lieux->toArray(); // Convertir en tableau si nécessaire
+    //    usort($lieux, function ($a, $b) {
+    //        return $a->getOrdre() <=> $b->getOrdre(); // Tri par un champ "ordre"
+    //    });
+
+    $lieuxData = [];
+    foreach ($lieux as $lieu) {
+        $lieuxData[] = [
+            'name' => $lieu->getName(),
+            'latitude' => $lieu->getLatitude(),
+            'longitude' => $lieu->getLongitude(),
+        ];
+    }
     return $this->render('itineraire/show.html.twig', [
         'itineraire' => $itineraire,
-        'lieux' => $lieux,
+        'lieuxData' => $lieuxData,
     ]);
 }
 }

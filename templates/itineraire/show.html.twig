@@ -42,33 +42,54 @@
 </div>
 
 <script>
+
     var map = L.map('map').setView([45.4397, 4.3872], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Tableau pour les lieux de l'itinéraire
-    const lieux = {{ lieux|json_encode|raw }};
-    const itineraireLieux = {{ itineraire.lieux|json_encode|raw }};
-    let markers = []; // Tableau pour stocker les marqueurs Leaflet
+  var lieux = {{ lieuxData|json_encode|raw }};
+console.log('Données des lieux :', lieux);
+    // Ajout des marqueurs pour chaque lieu
+    // lieux.forEach(function(lieu) {
+    //     L.marker([lieu.latitude, lieu.longitude])
+    //         .addTo(map)
+    //         .bindPopup('<strong>' + lieu.name + '</strong>');
+          
+    // });
 
-    // Ajouter les lieux à la carte
-    itineraireLieux.forEach(lieuId => {
-        const lieu = lieux.find(l => l.id === lieuId);
-        if (lieu && lieu.latitude && lieu.longitude) {
-            let marker = L.marker([lieu.latitude, lieu.longitude]).addTo(map)
-                .bindPopup(`<b>${lieu.name}</b><br>${lieu.adresse}`);
-            markers.push(marker);
+
+
+
+     // Tableau pour stocker les coordonnées des lieux
+    var points = [];
+
+     // Tableau pour stocker les coordonnées des lieux dans l'ordre
+    var points = [];
+
+    // Ajout des marqueurs pour chaque lieu et stockage des coordonnées dans l'ordre
+    lieux.forEach(function(lieu) {
+        if (lieu.latitude && lieu.longitude) {
+            // Ajout du marqueur sur la carte
+            L.marker([lieu.latitude, lieu.longitude])
+                .addTo(map)
+                .bindPopup('<strong>' + lieu.name + '</strong>');
+
+            // Ajout des coordonnées au tableau des points dans l'ordre
+            points.push([lieu.latitude, lieu.longitude]);
         }
     });
 
-    // Tracer les itinéraires (lignes entre les lieux)
-    const latLngs = itineraireLieux.map(lieuId => {
-        const lieu = lieux.find(l => l.id === lieuId);
-        return [lieu.latitude, lieu.longitude];
-    });
-    const polyline = L.polyline(latLngs, {color: 'blue'}).addTo(map);
-    map.fitBounds(polyline.getBounds());
+    // // Tracer une ligne entre les points dans l'ordre
+    // if (points.length > 1) {
+    //     var polyline = L.polyline(points, { color: 'blue', weight: 4, opacity: 0.7 }).addTo(map);
+
+    //     // Ajuster la vue de la carte pour inclure tous les points
+    //     map.fitBounds(polyline.getBounds());
+    // } else {
+    //     console.log('Pas assez de points pour tracer une ligne.');
+    // }
+
 </script>
 {% endblock %}
