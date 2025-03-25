@@ -15,7 +15,6 @@ final class LieuController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
 
-           // Récupérer tous les lieux depuis la base de données
          
            $lieux = $entityManager->getRepository(Lieu::class)->findAll();
 
