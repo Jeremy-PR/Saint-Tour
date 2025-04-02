@@ -28,11 +28,10 @@ final class MapController extends AbstractController
         $categories = $categorieRepository->findAll();
 
         return $this->render('map/index.html.twig', [
-            'lieux' => json_encode($lieuxNormalized),  // Envoi des lieux au format JSON
-            'itineraires' => json_encode($itinerairesNormalized),  // Envoi des itinéraires au format JSON
+            'lieux' => json_encode($lieuxNormalized),  // Envoi des lieux au format JSON pour JavaScript
+            'itineraires' => $itineraires,  // Envoi des itinéraires sous forme d'objet pour Twig
+            'itinerairesJson' => json_encode($itinerairesNormalized),  // Envoi des itinéraires au format JSON pour JavaScript
             'categories' => $categories,  // Envoi des catégories pour le filtre des lieux
-
-           
         ]);
     }
 }
