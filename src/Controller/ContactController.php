@@ -32,11 +32,12 @@ final class ContactController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             try {
                 $mail = (new TemplatedEmail())
-                    ->from($data->email)
-                    ->to('saintecitytour@gmail.com')
-                    ->subject('Demande de contact')
-                    ->htmlTemplate('emails/contact.html.twig')
-                    ->context(['data' => $data]);
+                ->from($data->email)
+                ->replyTo($data->email)
+                ->to('saintecitytour@gmail.com')
+                ->subject('Demande de contact')
+                ->htmlTemplate('emails/contact.html.twig')
+                ->context(['data' => $data]);
 
 
                 $mailer->send($mail);
