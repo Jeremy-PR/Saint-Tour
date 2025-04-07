@@ -29,38 +29,65 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/edit', name: 'app_profile_edit')]
-    public function edit(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
+public function edit(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
+{
+     /** @var \App\Entity\User $user */
+    $user = $this->getUser();
+    if (!$user) {
+        throw $this->createNotFoundException('Utilisateur non trouvé');
+    }
+
+    // Création du formulaire
+    $form = $this->createFormBuilder($user)
+        ->add('pseudo', TextType::class, ['label' => 'Pseudo'])
+        ->add('email', TextType::class, ['label' => 'Email'])
+        ->add('password', PasswordType::class, [
+            'label' => 'Nouveau mot de passe',
+            'required' => false, // Le champ n'est pas obligatoire
+            'mapped' => false, // Ce champ ne sera pas directement lié à l'entité User
+        ])
+        ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
+        ->getForm();
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Vérifiez si un mot de passe a été saisi
+        $plainPassword = $form->get('password')->getData();
+        if ($plainPassword) {
+            // Hachez le mot de passe et mettez-le à jour
+            $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
+            $user->setPassword($hashedPassword);
+        }
+
+        // Sauvegardez les modifications (pseudo, email, etc.)
+        $em->persist($user);
+        $em->flush();
+
+        $this->addFlash('success', 'Profil mis à jour avec succès !');
+
+        return $this->redirectToRoute('app_profile');
+    }
+
+    return $this->render('profile/edit.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
+
+    #[Route('/delete', name: 'app_profile_delete')]
+    public function delete(EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
         if (!$user) {
-            throw $this->createNotFoundException('User not found');
+            throw $this->createNotFoundException('Utilisateur non trouvé');
         }
 
-        $form = $this->createFormBuilder($user)
-            ->add('pseudo', TextType::class, ['label' => 'Pseudo'])
-            ->add('email', TextType::class, ['label' => 'Email'])
-            ->add('password', PasswordType::class, ['label' => 'Nouveau mot de passe', 'required' => false])
-            ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
-            ->getForm();
+        // Supprimez l'utilisateur
+        $em->remove($user);
+        $em->flush();
 
-        $form->handleRequest($request);
+        $this->addFlash('success', 'Votre compte a été supprimé avec succès.');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('password')->getData()) {
-                $hashedPassword = $passwordHasher->hashPassword($user, $form->get('password')->getData());
-                $user->setPassword($hashedPassword);
-            }
-
-            $em->persist($user);
-            $em->flush();
-
-            $this->addFlash('success', 'Profil mis à jour avec succès !');
-
-            return $this->redirectToRoute('app_profile');
-        }
-
-        return $this->render('profile/edit.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('app_home');
     }
 }

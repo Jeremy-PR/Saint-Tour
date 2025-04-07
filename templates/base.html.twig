@@ -1,114 +1,113 @@
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>
-			{% block title %}SaintéTour
-			{% endblock %}
-		</title>
-		{# templates/base.html.twig #}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            {% block title %}SaintéTour{% endblock %}
+        </title>
 
-		{% block stylesheets %}
-			<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-		{% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+        {% endblock %}
 
-		<!-- Fichier CSS principal -->
-		{# <link
-						rel="stylesheet" href="{{ asset('css/styles.css') }}"> #}
+        <!-- Intégration de Font Awesome et Leaflet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    </head>
+    <body class="bg-gray-100 min-h-screen flex flex-col">
 
-		<!-- Intégration de Font Awesome ou d'autres icônes -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-		<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <header class="bg-gray-900 shadow-md">
+            <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+                <!-- Logo -->
+                <a href="{{ path('app_home') }}" class="text-white text-2xl font-bold">Logo</a>
 
+                <!-- Nom du site (affiché pour les écrans moyens et grands) -->
+                <span class="text-white text-xl font-semibold hidden md:block">SaintéCityTour</span>
 
-	</head>
-	<body>
+                <!-- Menu Hamburger (Mobile) -->
+                <button id="menu-toggle" class="text-white block lg:hidden focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
 
-		<header>
-			<nav class="bg-gray-900 shadow-md">
-				<div class="container mx-auto px-4 py-3">
-					<div
-						class="flex items-center justify-between">
-						<!-- Logo -->
-						<a href="{{ path('app_home') }}" class="text-white text-2xl font-bold">Logo</a>
+                <!-- Navigation Links -->
+                <div id="menu" class="hidden lg:flex flex-col lg:flex-row lg:items-center lg:space-x-4 text-white mt-4 lg:mt-0">
+                    <ul class="flex flex-col lg:flex-row lg:space-x-4">
+                        <li class="text-gray-300 hover:text-white">
+                            <a href="{{ path('app_lieu') }}">Lieux</a>
+                        </li>
+                        <li class="text-gray-300 hover:text-white">
+                            <a href="{{ path('app_itineraire') }}">Itinéraires</a>
+                        </li>
+                        <li class="text-gray-300 hover:text-white">
+                            <a href="{{ path('app_map') }}">Carte</a>
+                        </li>
+                    </ul>
 
-						<!-- Menu Hamburger (Mobile) -->
-						<button id="menu-toggle" class="text-white block lg:hidden focus:outline-none">
-							<i class="fas fa-bars"></i>
-						</button>
+                    <!-- Right Menu -->
+                    <ul class="flex flex-col lg:flex-row lg:space-x-4 mt-4 lg:mt-0">
+                        {% if app.user %}
+                            <li class="text-gray-300 hover:text-white">
+                                <a href="{{ path('app_profile') }}">Profil</a>
+                            </li>
+                            <li class="text-gray-300 hover:text-white">
+                                <a href="{{ path('app_logout') }}">Déconnexion</a>
+                            </li>
+                        {% else %}
+                            <li class="text-gray-300 hover:text-white">
+                                <a href="{{ path('app_login') }}">Connexion</a>
+                            </li>
+                            <li class="text-gray-300 hover:text-white">
+                                <a href="{{ path('app_register') }}">Inscription</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </header>
 
-						<!-- Navigation Links -->
-						<div id="menu" class="hidden lg:flex flex-col lg:flex-row lg:items-center lg:space-x-4 text-white">
-							<ul class="flex flex-col lg:flex-row lg:space-x-4">
-								<li class="text-gray-300 hover:text-white">
-									<a href="{{ path('app_lieu') }}">Lieux</a>
-								</li>
-								<li class="text-gray-300 hover:text-white">
-									<a href="{{ path('app_itineraire') }}">Itinéraires</a>
-								</li>
-								<li class="text-gray-300 hover:text-white">
-									<a href="{{ path('app_map') }}">Carte</a>
-								</li>
-							</ul>
+        <main class="flex-grow bg-gray-100">
+            {% block body %}{% endblock %}
+        </main>
 
-							<!-- Right Menu -->
-							<ul class="flex flex-col lg:flex-row lg:space-x-4 mt-4 lg:mt-0">
-								{% if app.user %}
-									<li class="text-gray-300 hover:text-white">
-										<a href="{{ path('app_profile') }}">Profil</a>
-									</li>
-									<li class="text-gray-300 hover:text-white">
-										<a href="{{ path('app_logout') }}">Déconnexion</a>
-									</li>
-								{% else %}
-									<li class="text-gray-300 hover:text-white">
-										<a href="{{ path('app_login') }}">Connexion</a>
-									</li>
-									<li class="text-gray-300 hover:text-white">
-										<a href="{{ path('app_register') }}">Inscription</a>
-									</li>
-								{% endif %}
-							</ul>
-						</div>
-					</div>
-				</div>
-			</nav>
-		</header>
-		<main>
-			{% block body %}{% endblock %}
-		</main>
-		<footer class="bg-gray-800 text-white py-4 mt-auto">
-			<div class="container mx-auto text-center">
-				<div
-					class="flex justify-between items-start space-x-10">
+        <footer class="bg-black text-white py-4">
+            <div class="container mx-auto text-center">
+                <div class="flex flex-col md:flex-row justify-between items-start space-y-4 md:space-y-0 md:space-x-10">
+                    <!-- Left column -->
+                    <div class="flex flex-col space-y-4">
+                        <a href="{{ path('app_mentions_legales') }}" class="hover:text-gray-400">Mentions Légales</a>
+                        <a href="{{ path('app_politique_confidentialite') }}" class="hover:text-gray-400">Politique de confidentialité</a>
+                        <a href="{{ path('app_conditions_utilisation') }}" class="hover:text-gray-400">Conditions d'utilisation</a>
+                    </div>
 
-					<!-- Left column -->
-					<div class="flex flex-col space-y-4">
-						<a href="{{ path('app_mentions_legales') }}" class="hover:text-gray-400">Mentions Légales</a>
-						<a href="{{ path('app_politique_confidentialite') }}" class="hover:text-gray-400">Politique de confidentialité</a>
-						<a href="{{ path('app_conditions_utilisation') }}" class="hover:text-gray-400">Conditions d'utilisation</a>
-					</div>
+                    <!-- Center column -->
+                    <div class="text-gray-300">
+                        <p>&copy; 2025 SaintéTour. Tous droits réservés.</p>
+                    </div>
 
-					<!-- Center column -->
-					<div class="flex flex-col justify-center items-center text-gray-300">
-						<p>&copy; 2025 SaintéTour. Tous droits réservés.</p>
-					</div>
+                    <!-- Right column -->
+                    <div class="flex flex-col space-y-4">
+                        <a href="{{ path('app_qui_sommes_nous') }}" class="hover:text-gray-400">Qui sommes-nous ?</a>
+                        <a href="{{ path('contact_index') }}" class="hover:text-gray-400">Nous contacter</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
-					<!-- Right column -->
-					<div class="flex flex-col space-y-4">
-						<a href="{{ path('app_qui_sommes_nous') }}" class="hover:text-gray-400">Qui sommes-nous ?</a>
-						<a href="{{ path('contact_index') }}" class="hover:text-gray-400">Nous contacter</a>
-					</div>
+        {% block javascripts %}
+            <script>
+                // Menu toggle logic
+                document.addEventListener('DOMContentLoaded', function () {
+                    const menuToggle = document.getElementById('menu-toggle');
+                    const menu = document.getElementById('menu');
 
-				</div>
-			</div>
-		</footer>
-		{% block javascripts %}
-			<script src="{{ asset('js/menu.js') }}"></script>
-		{% endblock %}
-
-
-	</body>
+                    menuToggle.addEventListener('click', function () {
+                        menu.classList.toggle('hidden');
+                        menuToggle.classList.toggle('hidden'); // Hide the burger icon when menu is open
+                    });
+                });
+            </script>
+        {% endblock %}
+    </body>
 </html>
-
