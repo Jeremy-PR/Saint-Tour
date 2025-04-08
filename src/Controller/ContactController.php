@@ -41,10 +41,10 @@ final class ContactController extends AbstractController
 
 
                 $mailer->send($mail);
-                $this->addFlash('success', 'Your message has been sent successfully.');
+                $this->addFlash('success', 'Votre message a été envoyé avec succès.');
                 return $this->redirectToRoute('contact_index');
             } catch (\Exception $e) {
-                $this->addFlash('danger', 'An error occurred while sending the message : ' . $e->getMessage());
+                $this->addFlash('danger', 'Une erreur est apparue : ' . $e->getMessage());
                 return $this->redirectToRoute('contact_index');
             }
         }

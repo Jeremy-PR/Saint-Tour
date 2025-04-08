@@ -42,6 +42,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $pseudo = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $receivePromotions = false;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -163,4 +166,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getReceivePromotions(): bool
+    {
+        return $this->receivePromotions;
+    }
+    
+    public function setReceivePromotions(bool $receivePromotions): self
+    {
+        $this->receivePromotions = $receivePromotions;
+        return $this;
+    }
+
 }

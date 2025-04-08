@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -12,64 +13,62 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\IsTrue;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, [
-                'attr' => [
-                    'id' => 'email',
-                    'required' => true,
-                    'data-parsley-trigger' => 'change',
-                    'data-parsley-error-message' => 'Veuillez entrer un email valide.'
-                ],
-                'label' => 'Email',
-
-            ])
-
-            ->add('pseudo', TextType::class, [
-                'attr' => [
-                    'id' => 'pseudo',
-                    'required' => true,
-                    'data-parsley-trigger' => 'change',
-                    'data-parsley-error-message' => 'Veuillez entrer un pseudo valide.'
-                ],
-                'label' => 'Pseudo',
-
-            ])
-
-            ->add('plainPassword', RepeatedType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
-                'type' => PasswordType::class,
-                'attr' => [
-                    'id' => 'password',
-                    'required' => true,
-                    'data-parsley-minlength' => '6',
-                    'data-parsley-error-message' => 'Le mot de passe doit comporté au moins 6 caractères.'
-                ],
-                'first_options' => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Répétez le mot de passe'],
-                'invalid_message' => 'Les mots de passe ne correspondent pas.',
-
-            ])
-        ;
-    }
+        ->add('email', EmailType::class, [
+            'attr' => [
+                'id' => 'email',
+                'required' => true,
+            ],
+            'label' => 'Email',
+        ])
+        ->add('pseudo', TextType::class, [
+            'attr' => [
+                'id' => 'pseudo',
+                'required' => true,
+            ],
+            'label' => 'Pseudo',
+        ])
+        ->add('plainPassword', RepeatedType::class, [
+            'mapped' => false,
+            'attr' => ['autocomplete' => 'new-password'],
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Please enter a password',
+                ]),
+                new Length([
+                    'min' => 6,
+                    'minMessage' => 'Your password should be at least {{ limit }} characters',
+                ]),
+            ],
+            'type' => PasswordType::class,
+            'first_options' => ['label' => 'Mot de passe'],
+            'second_options' => ['label' => 'Répétez le mot de passe'],
+            'invalid_message' => 'Les mots de passe ne correspondent pas.',
+        ])
+        // Case obligatoire pour accepter les CGU et la politique de confidentialité
+        ->add('agreeTerms', CheckboxType::class, [
+            'mapped' => false,
+            'constraints' => [
+                new IsTrue([
+                    'message' => 'Vous devez accepter les conditions générales d\'utilisation et la politique de confidentialité.',
+                ]),
+            ],
+            'label' => 'J\'accepte les conditions générales d\'utilisation et la politique de confidentialité',
+        ])
+        // Case optionnelle pour les offres promotionnelles
+        ->add('receivePromotions', CheckboxType::class, [
+            'mapped' => true,
+            'required' => false,
+            'label' => 'Recevoir des offres promotionnelles et des informations marketing',
+            ]);
+    
+        }
 
     public function configureOptions(OptionsResolver $resolver): void
     {

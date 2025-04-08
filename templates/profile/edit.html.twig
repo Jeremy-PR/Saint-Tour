@@ -22,10 +22,22 @@
                     {{ form_widget(form.email, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
 
-                <!-- Mot de passe -->
+                <!-- Mot de passe actuel -->
                 <div class="flex flex-col">
-                    {{ form_label(form.password, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
-                    {{ form_widget(form.password, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500'}}) }}
+                    {{ form_label(form.currentPassword, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
+                    {{ form_widget(form.currentPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500'}}) }}
+                </div>
+
+                <!-- Nouveau mot de passe -->
+                <div class="flex flex-col">
+                    {{ form_label(form.newPassword, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
+                    {{ form_widget(form.newPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500'}}) }}
+                </div>
+
+                <!-- Confirmer le mot de passe -->
+                <div class="flex flex-col">
+                    {{ form_label(form.confirmPassword, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
+                    {{ form_widget(form.confirmPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
 
                 <!-- Bouton Enregistrer -->
