@@ -8,6 +8,20 @@
         <div class="bg-cover bg-center bg-fixed flex-1" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')">
             <h1 class="text-3xl font-bold text-center mb-8 text-white">Tous les Lieux</h1>
 
+            <!-- Menu déroulant pour sélectionner un lieu -->
+            <div class="flex justify-center mb-8">
+                <select 
+                    id="lieu-select" 
+                    class="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 w-full max-w-md"
+                    onchange="redirectToLieu(this)"
+                >
+                    <option value="">-- Sélectionnez un lieu --</option>
+                    {% for lieu in lieux %}
+                        <option value="{{ path('lieu_show', {'id': lieu.id}) }}">{{ lieu.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
             <!-- Liste des lieux -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4 sm:px-6 lg:px-8">
                 {% for lieu in lieux %}
@@ -43,4 +57,14 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Fonction pour rediriger vers la page du lieu sélectionné
+        function redirectToLieu(select) {
+            const url = select.value;
+            if (url) {
+                window.location.href = url;
+            }
+        }
+    </script>
 {% endblock %}

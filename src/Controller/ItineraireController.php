@@ -28,7 +28,7 @@ final class ItineraireController extends AbstractController
     {
         // Récupérer les lieux associés à l'itinéraire
         $lieux = $itineraire->getLieux();
-    
+
         // Préparer les données des lieux pour le JavaScript
         $lieuxData = [];
         foreach ($lieux as $lieu) {
@@ -39,31 +39,51 @@ final class ItineraireController extends AbstractController
                 'longitude' => $lieu->getLongitude(),
             ];
         }
-    
+
         // Créer un nouvel avis
         $avis = new Avis();
         $avis->setItineraire($itineraire);
         $avis->setUser($this->getUser());
         $avis->setCreatedAt(new \DateTimeImmutable());
-    
+
         // Créer le formulaire
         $form = $this->createForm(AvisType::class, $avis);
         $form->handleRequest($request);
-    
+
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($avis);
             $entityManager->flush();
-    
+
             $this->addFlash('success', 'Votre avis a été ajouté avec succès.');
-    
+
             return $this->redirectToRoute('itineraire_show', ['id' => $itineraire->getId()]);
         }
-    
+
         // Rendre le template avec les données nécessaires
         return $this->render('itineraire/show.html.twig', [
             'itineraire' => $itineraire,
             'lieuxData' => $lieuxData, // Transmettre les données des lieux
             'form' => $form->createView(), // Transmettre le formulaire
         ]);
-    }}
+    }
+
+    #[Route('/avis/{id}/delete', name: 'avis_delete', methods: ['POST'])]
+    public function deleteAvis(Request $request, Avis $avis, EntityManagerInterface $entityManager): Response
+    {
+        // Vérifiez que l'utilisateur connecté est le propriétaire du commentaire
+        if ($avis->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException('Vous ne pouvez pas supprimer ce commentaire.');
+        }
+
+        // Vérifiez le token CSRF
+        if ($this->isCsrfTokenValid('delete' . $avis->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($avis);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre commentaire a été supprimé avec succès.');
+        }
+
+        return $this->redirectToRoute('itineraire_show', ['id' => $avis->getItineraire()->getId()]);
+    }
+}

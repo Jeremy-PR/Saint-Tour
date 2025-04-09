@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %}
 
 {% block title %}Accueil{% endblock %}
 
@@ -11,4 +11,118 @@
             </div>
         </div>
     </div>
+{% endblock %} #}
+
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <!-- Section Hero avec Slideshow -->
+    <div class="relative h-screen w-full overflow-hidden">
+        <!-- Slideshow -->
+        <div class="absolute inset-0 slideshow">
+            <div class="slide active absolute inset-0 bg-cover bg-center transition-opacity duration-1000" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')"></div>
+            <div class="slide absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0" style="background-image: url('{{ asset('images/rail-de-tram.jpg') }}')"></div>
+            <div class="slide absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0" style="background-image: url('{{ asset('images/place-jean-jaures.jpg') }}')"></div>
+        </div>
+        
+        <!-- Overlay avec contenu -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70 flex flex-col items-center justify-center">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 transform transition-all duration-700 translate-y-0 opacity-100 shadow-text">
+                    Bienvenue sur SaintéTour
+                </h1>
+                <p class="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto transform transition-all duration-700 delay-300 translate-y-0 opacity-100 shadow-text">
+                    Découvrez les itinéraires et lieux incontournables de Saint-Étienne
+                </p>
+                
+                <!-- Boutons CTA -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                    <a href="{{ path('app_itineraire') }}" class="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-full uppercase tracking-wide transition-all transform hover:-translate-y-1 hover:shadow-lg">
+                        Explorer les itinéraires
+                    </a>
+                    <a href="{{ path('app_lieu') }}" class="px-8 py-3 border-2 border-white text-white font-bold rounded-full uppercase tracking-wide transition-all transform hover:-translate-y-1 hover:bg-white/10 hover:shadow-lg">
+                        Découvrir les lieux
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Flèche de défilement -->
+            <div class="absolute top-[76%] left-1/2 transform -translate-x-1/2 text-white text-center animate-bounce">
+                <span class="block">Découvrir</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto mt-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+            </div>
+        </div>
+        
+        <!-- Points forts -->
+        <div class="absolute bottom-0 left-0 right-0 bg-black/70 py-4 px-2">
+            <div class="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 text-white text-center">
+                <div class="p-2">
+                    <div class="text-green-500 text-2xl mb-1">★</div>
+                    <div class="text-sm font-medium">Itinéraires personnalisés</div>
+                </div>
+                <div class="p-2">
+                    <div class="text-green-500 text-2xl mb-1">🏛️</div>
+                    <div class="text-sm font-medium">Patrimoine culturel</div>
+                </div>
+                <div class="p-2">
+                    <div class="text-green-500 text-2xl mb-1">🍽️</div>
+                    <div class="text-sm font-medium">Gastronomie locale</div>
+                </div>
+                <div class="p-2">
+                    <div class="text-green-500 text-2xl mb-1">🚶</div>
+                    <div class="text-sm font-medium">Visites guidées</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script pour le slideshow -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            let currentSlide = 0;
+            
+            function nextSlide() {
+                slides[currentSlide].classList.remove('active');
+                slides[currentSlide].classList.add('opacity-0');
+                
+                currentSlide = (currentSlide + 1) % slides.length;
+                
+                slides[currentSlide].classList.add('active');
+                slides[currentSlide].classList.remove('opacity-0');
+            }
+            
+            setInterval(nextSlide, 5000);
+        });
+    </script>
+
+    <!-- Styles supplémentaires -->
+    <style>
+        .shadow-text {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .slide {
+            transition: opacity 1.5s ease-in-out;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+    </style>
 {% endblock %}
