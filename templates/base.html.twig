@@ -1,115 +1,221 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>
-            {% block title %}SaintéTour{% endblock %}
-        </title>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			{% block title %}SaintéTour
+			{% endblock %}
+		</title>
 
-        {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-        {% endblock %}
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+		{% endblock %}
 
-        <!-- Intégration de Font Awesome et Leaflet -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+		<!-- Intégration de Font Awesome et Leaflet -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    </head>
-    <body class="bg-gray-100 min-h-screen flex flex-col">
+		<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+		<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+	</head>
+	<body class="bg-gray-100 min-h-screen flex flex-col">
 
-        <header class="bg-gray-900 shadow-md">
-            <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
-                <!-- Logo -->
-                <a href="{{ path('app_home') }}" class="text-white text-2xl font-bold">Logo</a>
+		<header class="bg-green-600 shadow-lg relative">
+			<div class="container mx-auto px-4">
+				<nav class="relative flex items-center justify-between py-4">
+					<!-- Logo et nom du site en flex container -->
+					<div class="flex items-center">
+						<a href="{{ path('app_home') }}" class="text-white text-2xl font-bold mr-3">Logo</a>
+						<span class="text-white text-xl font-semibold hidden md:block">SaintéCityTour</span>
+					</div>
 
-                <!-- Nom du site (affiché pour les écrans moyens et grands) -->
-                <span class="text-white text-xl font-semibold hidden md:block">SaintéCityTour</span>
+					<!-- Menu Hamburger (Mobile) -->
+					<button id="menu-toggle" class="text-white bg-green-700 hover:bg-green-800 transition-colors p-2 rounded-md z-20 lg:hidden focus:outline-none">
+						<i class="fas fa-bars"></i>
+					</button>
+					<button id="menu-close" class="text-white bg-green-700 hover:bg-green-800 transition-colors p-2 rounded-md z-20 lg:hidden focus:outline-none hidden">
+						<i class="fas fa-times"></i>
+					</button>
 
-                <!-- Menu Hamburger (Mobile) -->
-                <button id="menu-toggle" class="text-white block lg:hidden focus:outline-none">
-                    <i class="fas fa-bars"></i>
-                </button>
+					<!-- Navigation Links -->
+					<div id="menu" class="fixed inset-0 lg:relative bg-green-600 lg:bg-transparent pt-20 lg:pt-0 z-10 transform translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out lg:flex lg:items-center lg:justify-end">
+						<div class="container mx-auto px-4 lg:p-0 flex flex-col lg:flex-row lg:items-center">
+							<!-- Navigation principale -->
+							<ul class="flex flex-col lg:flex-row lg:mr-8 mb-6 lg:mb-0 items-center">
+								<li class="py-2 lg:py-0 lg:px-3">
+									<a href="{{ path('app_lieu') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Lieux</a>
+								</li>
+								<li class="py-2 lg:py-0 lg:px-3">
+									<a href="{{ path('app_itineraire') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Itinéraires</a>
+								</li>
+								<li class="py-2 lg:py-0 lg:px-3">
+									<a href="{{ path('app_map') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Carte</a>
+								</li>
+							</ul>
 
-                <!-- Navigation Links -->
-                <div id="menu" class="hidden lg:flex flex-col lg:flex-row lg:items-center lg:space-x-4 text-white mt-4 lg:mt-0">
-                    <ul class="flex flex-col lg:flex-row lg:space-x-4">
-                        <li class="text-gray-300 hover:text-white">
-                            <a href="{{ path('app_lieu') }}">Lieux</a>
-                        </li>
-                        <li class="text-gray-300 hover:text-white">
-                            <a href="{{ path('app_itineraire') }}">Itinéraires</a>
-                        </li>
-                        <li class="text-gray-300 hover:text-white">
-                            <a href="{{ path('app_map') }}">Carte</a>
-                        </li>
-                    </ul>
+							<!-- Séparateur vertical pour desktop -->
+							<div class="hidden lg:block h-6 w-px bg-green-400 mx-2"></div>
 
-                    <!-- Right Menu -->
-                    <ul class="flex flex-col lg:flex-row lg:space-x-4 mt-4 lg:mt-0">
-                        {% if app.user %}
-                            <li class="text-gray-300 hover:text-white">
-                                <a href="{{ path('app_profile') }}">Profil</a>
-                            </li>
-                            <li class="text-gray-300 hover:text-white">
-                                <a href="{{ path('app_logout') }}">Déconnexion</a>
-                            </li>
-                        {% else %}
-                            <li class="text-gray-300 hover:text-white">
-                                <a href="{{ path('app_login') }}">Connexion</a>
-                            </li>
-                            <li class="text-gray-300 hover:text-white">
-                                <a href="{{ path('app_register') }}">Inscription</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </nav>
-        </header>
+							<!-- Séparateur horizontal pour mobile -->
+							<div class="w-full h-px bg-green-500 my-4 lg:hidden"></div>
 
-        <main class="flex-grow bg-gray-100">
-            {% include 'partials/flash.html.twig' %}
-            {% block body %}{% endblock %}
-        </main>
+							<!-- Right Menu -->
+							<ul class="flex flex-col lg:flex-row items-center">
+								{% if app.user %}
+									<li class="py-2 lg:py-0 lg:px-3">
+										<a href="{{ path('app_profile') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
+											<i class="fas fa-user mr-2"></i>Profil
+										</a>
+									</li>
+									<li class="py-2 lg:py-0 lg:px-3">
+										<a href="{{ path('app_logout') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
+											<i class="fas fa-sign-out-alt mr-2"></i>Déconnexion
+										</a>
+									</li>
+								{% else %}
+									<li class="py-2 lg:py-0 lg:px-3">
+										<a href="{{ path('app_login') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
+											<i class="fas fa-sign-in-alt mr-2"></i>Connexion
+										</a>
+									</li>
+									<li class="py-2 lg:py-0 lg:px-3 mt-2 lg:mt-0">
+										<a href="{{ path('app_register') }}" class="bg-white text-green-600 hover:bg-green-100 transition-colors px-4 py-2 rounded-md font-bold flex items-center">
+											<i class="fas fa-user-plus mr-2"></i>Inscription
+										</a>
+									</li>
+								{% endif %}
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</header>
 
-        <footer class="bg-black text-white py-4">
-            <div class="container mx-auto text-center">
-                <div class="flex flex-col md:flex-row justify-between items-start space-y-4 md:space-y-0 md:space-x-10">
-                    <!-- Left column -->
-                    <div class="flex flex-col space-y-4">
-                        <a href="{{ path('app_mentions_legales') }}" class="hover:text-gray-400">Mentions Légales</a>
-                        <a href="{{ path('app_politique_confidentialite') }}" class="hover:text-gray-400">Politique de confidentialité</a>
-                        <a href="{{ path('app_conditions_utilisation') }}" class="hover:text-gray-400">Conditions d'utilisation</a>
-                    </div>
+		<main class="flex-grow bg-gray-100">
+			{% include 'partials/flash.html.twig' %}
+			{% block body %}{% endblock %}
+		</main>
 
-                    <!-- Center column -->
-                    <div class="text-gray-300">
-                        <p>&copy; 2025 SaintéTour. Tous droits réservés.</p>
-                    </div>
+		<footer class="bg-black text-white py-6">
+			<!-- Le contenu du footer reste inchangé -->
+			<div class="container mx-auto px-4">
+				<!-- Logo et Slogan -->
+				<div class="flex flex-col items-center mb-6">
+					<div class="text-2xl font-bold mb-2">SaintéCityTour</div>
+					<p class="text-sm text-gray-400 text-center">Découvrez Saint-Étienne autrement</p>
+				</div>
 
-                    <!-- Right column -->
-                    <div class="flex flex-col space-y-4">
-                        <a href="{{ path('app_qui_sommes_nous') }}" class="hover:text-gray-400">Qui sommes-nous ?</a>
-                        <a href="{{ path('contact_index') }}" class="hover:text-gray-400">Nous contacter</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
+				<!-- Séparateur stylisé -->
+				<div class="flex justify-center mb-6">
+					<div class="w-16 h-1 bg-green-600 rounded-full"></div>
+				</div>
 
-        {% block javascripts %}
-            <script>
-                // Menu toggle logic
-                document.addEventListener('DOMContentLoaded', function () {
-                    const menuToggle = document.getElementById('menu-toggle');
-                    const menu = document.getElementById('menu');
+				<!-- Liens et Informations -->
+				<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8">
+					<!-- Colonne 1 : Liens Légaux -->
+					<div class="flex flex-col items-center sm:items-start space-y-3">
+						<h3 class="text-lg font-semibold mb-2 text-green-500">Informations légales</h3>
+						<a href="{{ path('app_mentions_legales') }}" class="hover:text-green-400 transition-colors duration-300">Mentions Légales</a>
+						<a href="{{ path('app_politique_confidentialite') }}" class="hover:text-green-400 transition-colors duration-300">Politique de confidentialité</a>
+						<a href="{{ path('app_conditions_utilisation') }}" class="hover:text-green-400 transition-colors duration-300">Conditions d'utilisation</a>
+					</div>
 
-                    menuToggle.addEventListener('click', function () {
-                        menu.classList.toggle('hidden');
-                        menuToggle.classList.toggle('hidden'); // Hide the burger icon when menu is open
-                    });
-                });
-            </script>
-        {% endblock %}
-    </body>
+					<!-- Colonne 2 : À propos -->
+					<div class="flex flex-col items-center sm:items-start space-y-3">
+						<h3 class="text-lg font-semibold mb-2 text-green-500">À propos</h3>
+						<a href="{{ path('app_qui_sommes_nous') }}" class="hover:text-green-400 transition-colors duration-300">Qui sommes-nous ?</a>
+						<a href="{{ path('contact_index') }}" class="hover:text-green-400 transition-colors duration-300">Nous contacter</a>
+					</div>
+
+					<!-- Colonne 3 : Réseaux sociaux -->
+					<div class="flex flex-col items-center md:items-start space-y-3">
+						<h3 class="text-lg font-semibold mb-2 text-green-500">Suivez-nous</h3>
+						<div class="flex space-x-4">
+							<a href="#" class="text-white hover:text-green-400 transition-colors duration-300">
+								<i class="fab fa-facebook-f text-xl"></i>
+							</a>
+							<a href="#" class="text-white hover:text-green-400 transition-colors duration-300">
+								<i class="fab fa-instagram text-xl"></i>
+							</a>
+							<a href="#" class="text-white hover:text-green-400 transition-colors duration-300">
+								<i class="fab fa-twitter text-xl"></i>
+							</a>
+							<a href="#" class="text-white hover:text-green-400 transition-colors duration-300">
+								<i class="fab fa-youtube text-xl"></i>
+							</a>
+						</div>
+						<p class="text-sm text-gray-400 mt-2">Restez informés de nos actualités</p>
+					</div>
+				</div>
+
+				<!-- Barre de séparation -->
+				<div class="h-px bg-gray-800 w-full my-4"></div>
+
+				<!-- Copyright et Mention du site -->
+				<div class="flex flex-col md:flex-row justify-between items-center mt-4">
+					<p class="text-sm text-gray-400 mb-2 md:mb-0">&copy; 2025 SaintéCityTour. Tous droits réservés.</p>
+					<div class="flex items-center">
+						<span class="text-sm text-gray-400">Fait avec</span>
+						<i class="fas fa-heart text-green-500 mx-1"></i>
+						<span class="text-sm text-gray-400">à Saint-Étienne</span>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		{% block javascripts %}
+			<script>
+				// Menu toggle logic amélioré
+				document.addEventListener('DOMContentLoaded', function () {
+					const menuToggle = document.getElementById('menu-toggle');
+					const menuClose = document.getElementById('menu-close');
+					const menu = document.getElementById('menu');
+					
+					// Fonction pour ouvrir le menu
+					function openMenu() {
+						menu.classList.remove('translate-x-full');
+						menu.classList.add('translate-x-0');
+						menuToggle.classList.add('hidden');
+						menuClose.classList.remove('hidden');
+						document.body.classList.add('overflow-hidden'); // Empêche le défilement du corps
+					}
+					
+					// Fonction pour fermer le menu
+					function closeMenu() {
+						menu.classList.remove('translate-x-0');
+						menu.classList.add('translate-x-full');
+						menuToggle.classList.remove('hidden');
+						menuClose.classList.add('hidden');
+						document.body.classList.remove('overflow-hidden'); // Permet le défilement du corps
+					}
+					
+					// Gestionnaires d'événements
+					menuToggle.addEventListener('click', openMenu);
+					menuClose.addEventListener('click', closeMenu);
+					
+					// Fermer le menu si l'écran devient plus grand (transition de mobile à desktop)
+					window.addEventListener('resize', function() {
+						if (window.innerWidth >= 1024) { // Breakpoint lg de Tailwind
+							menu.classList.remove('translate-x-0', 'translate-x-full');
+							menuToggle.classList.remove('hidden');
+							menuClose.classList.add('hidden');
+							document.body.classList.remove('overflow-hidden');
+						} else if (!menu.classList.contains('translate-x-0')) {
+							menu.classList.add('translate-x-full');
+						}
+					});
+					
+					// Fermer le menu lorsqu'un lien est cliqué (pour mobile)
+					const menuLinks = menu.querySelectorAll('a');
+					menuLinks.forEach(link => {
+						link.addEventListener('click', function() {
+							if (window.innerWidth < 1024) {
+								closeMenu();
+							}
+						});
+					});
+				});
+			</script>
+		{% endblock %}
+	</body>
 </html>

@@ -40,4 +40,5 @@ final class RegistrationController extends AbstractController
             'registrationForm' => $form,
         ]);
     }
+    
 }
