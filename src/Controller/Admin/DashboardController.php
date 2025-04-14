@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-
+use App\Entity\Avis;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Lieu;
 use App\Entity\Itineraire;
@@ -49,6 +49,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Lieux', 'fa fa-map-marker', Lieu::class),
             MenuItem::linkToCrud('Itinéraires', 'fa fa-route', Itineraire::class),
             MenuItem::linkToCrud('Catégories', 'fa fa-tags', Categorie::class),
+            MenuItem::linkToCrud('Avis', 'fa fa-comments', Avis::class),
             MenuItem::linkToLogout('Déconnexion', 'fa fa-sign-out'),
         ];
     }

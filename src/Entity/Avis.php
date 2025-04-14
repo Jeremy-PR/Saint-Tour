@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AvisRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AvisRepository::class)]
 class Avis
@@ -15,9 +16,16 @@ class Avis
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Le commentaire ne peut pas être vide.')]
     private ?string $commentaire = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'La note est obligatoire.')]
+    #[Assert\Range(
+        min: 1,
+        max: 5,
+        notInRangeMessage: 'La note doit être entre {{ min }} et {{ max }}.'
+    )]
     private ?int $note = null;
 
     #[ORM\Column]
