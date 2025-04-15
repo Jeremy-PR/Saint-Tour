@@ -2,15 +2,15 @@
 
 {% block body %}
     <!-- Formulaire de contact -->
-    <section class="bg-cover bg-center bg-fixed h-screen flex items-center" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')" role="region" aria-labelledby="contact-title">
-        <div class="container mx-auto">
+    <section class="bg-cover bg-center bg-fixed min-h-screen flex flex-col justify-between pb-20" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')" role="region" aria-labelledby="contact-title">
+        <div class="container mx-auto px-4 flex-grow">
             <div class="text-center mb-12">
                 <h2 id="contact-title" class="text-4xl font-bold text-white" role="heading" aria-level="1">Envoyez-nous un message</h2>
             </div>
 
             <div class="flex flex-col md:flex-row gap-8">
                 <!-- Formulaire -->
-                <div class="bg-white p-8 rounded-lg shadow-lg flex-1" role="form" aria-labelledby="form-title">
+                <div class="bg-white p-8 rounded-lg shadow-lg flex-1 max-w-screen-md mx-auto" role="form" aria-labelledby="form-title">
                     <h3 id="form-title" class="text-2xl font-bold text-gray-800 mb-4">Formulaire de contact</h3>
                     {{ form_start(form, {'attr': {'id': 'formContact', 'class': 'space-y-6'}}) }}
                     
@@ -48,7 +48,7 @@
                 </div>
 
                 <!-- Informations de contact -->
-                <div class="bg-white p-8 rounded-lg shadow-lg flex-1" role="region" aria-labelledby="contact-info-title">
+                <div class="bg-white p-8 rounded-lg shadow-lg flex-1 max-w-screen-md mx-auto" role="region" aria-labelledby="contact-info-title">
                     <h3 id="contact-info-title" class="text-2xl font-bold text-gray-800 mb-4">Nos coordonnées</h3>
                     <p class="text-gray-600 mb-4">Nous sommes basés à Saint-Etienne, dans le département de la Loire.</p>
                     <ul class="space-y-4" role="list" aria-label="Liste des coordonnées de contact">
