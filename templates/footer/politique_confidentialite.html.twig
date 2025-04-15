@@ -3,8 +3,8 @@
 {% block title %}Politique de Confidentialité{% endblock %}
 
 {% block body %}
-    <div class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-        <h1 class="text-2xl font-bold mb-4">Politique de Confidentialité</h1>
+    <div class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg" role="region" aria-labelledby="privacy-title">
+        <h1 id="privacy-title" class="text-2xl font-bold mb-4">Politique de Confidentialité</h1>
 
         <p>La présente politique de confidentialité a pour but d’informer les utilisateurs du site <strong>SaintéTour</strong> sur la collecte et l’utilisation de leurs données personnelles.</p>
 
@@ -13,13 +13,13 @@
 
         <h2 class="text-xl font-semibold mt-4">Utilisation des données</h2>
         <p>Les données collectées sont utilisées uniquement pour :</p>
-        <ul class="list-disc pl-5">
+        <ul class="list-disc pl-5" role="list" aria-label="Liste des utilisations des données collectées">
             <li>Gérer les réservations et itinéraires</li>
             <li>Améliorer l’expérience utilisateur</li>
             <li>Envoyer des emails d’informations et de promotions</li>
         </ul>
 
         <h2 class="text-xl font-semibold mt-4">Droit des utilisateurs</h2>
-        <p>Conformément au RGPD, vous avez un droit d’accès, de modification et de suppression de vos données personnelles. Pour exercer ces droits, contactez-nous à <strong>contact@sainte-tour.fr</strong>.</p>
+        <p>Conformément au RGPD, vous avez un droit d’accès, de modification et de suppression de vos données personnelles. Pour exercer ces droits, contactez-nous à <a href="mailto:contact@sainte-tour.fr" class="text-blue-500 hover:underline" aria-label="Envoyer un email à contact@sainte-tour.fr">contact@sainte-tour.fr</a>.</p>
     </div>
 {% endblock %}

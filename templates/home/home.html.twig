@@ -1,49 +1,33 @@
-{# {% extends 'base.html.twig' %}
-
-{% block title %}Accueil{% endblock %}
-
-{% block body %}
-    <div class="bg-cover bg-center bg-fixed h-screen" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')">
-        <div class="flex items-center justify-center h-full text-center">
-            <div class="text-white">
-                <h1 class="text-4xl font-bold">Bienvenue sur SaintéTour</h1>
-                <p class="mt-4 text-xl">Découvrez les itinéraires et lieux de Saint-Étienne.</p>
-            </div>
-        </div>
-    </div>
-{% endblock %} #}
-
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
     <!-- Section Hero avec Slideshow -->
-    <div class="relative w-full h-screen overflow-hidden">
+    <div class="relative w-full h-screen overflow-hidden" role="region" aria-labelledby="hero-title">
         <!-- Slideshow -->
-        <div class="absolute inset-0 slideshow">
-            <div class="slide active absolute inset-0 bg-cover bg-center transition-opacity duration-1000" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')"></div>
-            <div class="slide absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0" style="background-image: url('{{ asset('images/Saint-Etienne-fauriel.jpg') }}')"></div>
-            <div class="slide absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}')"></div>
+        <div class="absolute inset-0 slideshow" aria-label="Slideshow des images de Saint-Étienne">
+            <div class="slide active absolute inset-0 bg-cover bg-center transition-opacity duration-1000" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')" aria-hidden="true"></div>
+            <div class="slide absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0" style="background-image: url('{{ asset('images/Saint-Etienne-fauriel.jpg') }}')" aria-hidden="true"></div>
+            <div class="slide absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}')" aria-hidden="true"></div>
         </div>
         
         <!-- Overlay avec contenu -->
         <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70 flex flex-col items-center justify-center">
             <div class="container mx-auto px-4 text-center">
-               <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-3 md:mb-4 transform transition-all duration-700 translate-y-0 opacity-100 shadow-text">
+               <h1 id="hero-title" class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-3 md:mb-4 shadow-text">
                     Bienvenue sur SaintéCityTour
                </h1>
-               <p class="text-lg sm:text-xl md:text-2xl text-white mb-4 sm:mb-6 md:mb-8 max-w-xs sm:max-w-lg md:max-w-2xl lg:max-w-3xl mx-auto transform transition-all duration-700 delay-300 translate-y-0 opacity-100 shadow-text">
+               <p class="text-lg sm:text-xl md:text-2xl text-white mb-4 sm:mb-6 md:mb-8 max-w-xs sm:max-w-lg md:max-w-2xl lg:max-w-3xl mx-auto shadow-text">
                     Découvrez les itinéraires et lieux incontournables de Saint-Étienne
                </p>
                 
                <!-- Boutons CTA -->
                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mt-4 sm:mt-6 md:mt-8">
-                   <a href="{{ path('app_itineraire') }}" class="px-5 sm:px-6 md:px-7 lg:px-8 py-2 sm:py-2.5 md:py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-full uppercase tracking-wide transition-all transform hover:-translate-y-1 hover:shadow-lg text-sm sm:text-base">
+                   <a href="{{ path('app_itineraire') }}" class="px-5 sm:px-6 md:px-7 lg:px-8 py-2 sm:py-2.5 md:py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-full uppercase tracking-wide transition-all transform hover:-translate-y-1 hover:shadow-lg text-sm sm:text-base" aria-label="Explorer les itinéraires disponibles">
                        Explorer les itinéraires
                    </a>
-                   <a href="{{ path('app_lieu') }}" class="px-5 sm:px-6 md:px-7 lg:px-8 py-2 sm:py-2.5 md:py-3 border-2 border-white text-white font-bold rounded-full uppercase tracking-wide transition-all transform hover:-translate-y-1 hover:bg-white/10 hover:shadow-lg text-sm sm:text-base">
+                   <a href="{{ path('app_lieu') }}" class="px-5 sm:px-6 md:px-7 lg:px-8 py-2 sm:py-2.5 md:py-3 border-2 border-white text-white font-bold rounded-full uppercase tracking-wide transition-all transform hover:-translate-y-1 hover:bg-white/10 hover:shadow-lg text-sm sm:text-base" aria-label="Découvrir les lieux incontournables">
                        Découvrir les lieux
                    </a>
                </div>
@@ -51,29 +35,29 @@
         </div>
         
        <!-- Points forts -->
-       <div class="absolute bottom-0 left-0 right-0 bg-black/70 py-2 sm:py-3 md:py-4 lg:py-6 px-2 sm:px-3 md:px-4">
+       <div class="absolute bottom-0 left-0 right-0 bg-black/70 py-2 sm:py-3 md:py-4 lg:py-6 px-2 sm:px-3 md:px-4" role="region" aria-labelledby="highlights-title">
            <div class="container mx-auto text-center text-white mb-1 sm:mb-2 md:mb-3 lg:mb-4">
-               <h2 class="text-base sm:text-lg md:text-xl font-bold">Pourquoi choisir SaintéCityTour ?</h2>
+               <h2 id="highlights-title" class="text-base sm:text-lg md:text-xl font-bold">Pourquoi choisir SaintéCityTour ?</h2>
                <p class="text-xs sm:text-sm md:text-base text-gray-300">Découvrez ce que nous avons à offrir pour rendre votre expérience unique.</p>
            </div>
            <div class="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-1 sm:gap-2 md:gap-3 lg:gap-4 text-white text-center">
                <div class="p-1 sm:p-1.5 md:p-2">
-                   <div class="text-green-500 text-lg sm:text-xl md:text-2xl mb-0 sm:mb-0.5 md:mb-1">★</div>
+                   <div class="text-green-500 text-lg sm:text-xl md:text-2xl mb-0 sm:mb-0.5 md:mb-1" aria-hidden="true">★</div>
                    <div class="text-xs sm:text-sm font-medium">Itinéraires personnalisés</div>
                    <p class="text-xs text-gray-300 mt-0 sm:mt-0.5 md:mt-1 hidden sm:block">Profitez d'itinéraires divers et variés conçus par nos équipes.</p>
                </div>
                <div class="p-1 sm:p-1.5 md:p-2">
-                   <div class="text-green-500 text-lg sm:text-xl md:text-2xl mb-0 sm:mb-0.5 md:mb-1">🏛️</div>
+                   <div class="text-green-500 text-lg sm:text-xl md:text-2xl mb-0 sm:mb-0.5 md:mb-1" aria-hidden="true">🏛️</div>
                    <div class="text-xs sm:text-sm font-medium">Patrimoine culturel</div>
                    <p class="text-xs text-gray-300 mt-0 sm:mt-0.5 md:mt-1 hidden sm:block">Explorez les monuments et lieux emblématiques de Saint-Étienne.</p>
                </div>
                <div class="p-1 sm:p-1.5 md:p-2">
-                   <div class="text-green-500 text-lg sm:text-xl md:text-2xl mb-0 sm:mb-0.5 md:mb-1">🍽️</div>
+                   <div class="text-green-500 text-lg sm:text-xl md:text-2xl mb-0 sm:mb-0.5 md:mb-1" aria-hidden="true">🍽️</div>
                    <div class="text-xs sm:text-sm font-medium">Gastronomie locale</div>
                    <p class="text-xs text-gray-300 mt-0 sm:mt-0.5 md:mt-1 hidden sm:block">Savourez les spécialités culinaires de la région.</p>
                </div>
                <div class="p-1 sm:p-1.5 md:p-2">
-                   <div class="text-green-500 text-lg sm:text-xl md:text-2xl mb-0 sm:mb-0.5 md:mb-1">🚶</div>
+                   <div class="text-green-500 text-lg sm:text-xl md:text-2xl mb-0 sm:mb-0.5 md:mb-1" aria-hidden="true">🚶</div>
                    <div class="text-xs sm:text-sm font-medium">Visites guidées</div>
                    <p class="text-xs text-gray-300 mt-0 sm:mt-0.5 md:mt-1 hidden sm:block">Profitez de visites sur mesure avec toutes les infos pratiques.</p>
                </div>
@@ -100,7 +84,6 @@
             setInterval(nextSlide, 5000);
         });
     </script>
-
     <!-- Styles supplémentaires -->
     <style>
         .shadow-text {
@@ -133,3 +116,14 @@
         }
     </style>
 {% endblock %}
+
+{# Ce fichier home.html.twig constitue la page d'accueil du site, avec un design immersif et interactif.
+La section "Hero" inclut un slideshow d'images de Saint-Étienne, marqué avec aria-label pour décrire son contenu.
+Les images du slideshow sont décoratives et marquées avec aria-hidden="true" pour éviter une surcharge des lecteurs d'écran.
+Un titre principal "Bienvenue sur SaintéCityTour" est défini avec un ID et lié à la région principale via aria-labelledby.
+Deux boutons CTA permettent d'explorer les itinéraires et lieux, avec des descriptions claires grâce à aria-label.
+Une section "Points forts" présente les avantages du service, structurée avec role="region" et aria-labelledby.
+Les icônes des points forts sont marquées avec aria-hidden="true" pour éviter une redondance inutile.
+Le slideshow est animé avec JavaScript, avec une transition fluide entre les images toutes les 5 secondes.
+Les styles CSS incluent des ajustements pour les appareils mobiles, garantissant une expérience responsive.
+Ce fichier garantit une expérience utilisateur immersive, accessible et visuellement attrayante. #}

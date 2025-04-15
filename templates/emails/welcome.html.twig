@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demande de contact</title>
+    <title>Bienvenue</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,20 +25,19 @@
                     <!-- Header -->
                     <tr>
                         <td style="background-color: #e6e1ff; padding: 10px; text-align: center; border-radius: 8px 8px 0 0;">
-                            <h1 style="margin: 0; color: #5a4fcf; font-size: 24px;">Bienvenue</h1>
+                            <h1 style="margin: 0; color: #5a4fcf; font-size: 24px;" role="heading" aria-level="1">Bienvenue</h1>
                         </td>
                     </tr>
                     <!-- Content -->
                     <tr>
                         <td style="padding: 20px;">
-                           
-                            <p style="margin: 10px 0;"><strong>Email:</strong> {{ data.email }}</p>
+                            <p style="margin: 10px 0;"><strong>Email :</strong> <span aria-label="Adresse email de l'utilisateur">{{ data.email }}</span></p>
                         </td>
                     </tr>
                     <!-- Footer -->
                     <tr>
                         <td style="text-align: center; padding: 10px; font-size: 12px; color: #777;">
-                            <p style="margin: 0;">Merci de nous avoir rejoint. Bienvenue !</p>
+                            <p style="margin: 0;">Merci de nous avoir rejoint. <span aria-label="Message de bienvenue">Bienvenue !</span></p>
                         </td>
                     </tr>
                 </table>
@@ -47,3 +46,22 @@
     </table>
 </body>
 </html>
+
+{# Ce fichier welcome.html.twig est un modèle d'email de bienvenue pour les utilisateurs. Il utilise une structure HTML simple et accessible :
+
+1. **Structure sémantique :**  
+   - Le fichier utilise des balises HTML standard comme `<table>` pour structurer le contenu de l'email.
+
+2. **Accessibilité :**  
+   - Le titre "Bienvenue" est marqué avec `role="heading"` et `aria-level="1"` pour indiquer son importance.  
+   - Les informations dynamiques, comme l'email de l'utilisateur, sont accompagnées d'un `aria-label` pour une meilleure compréhension par les lecteurs d'écran.  
+   - Le message de bienvenue inclut également un `aria-label` pour le rendre plus descriptif.
+
+3. **Design :**  
+   - Le style est minimaliste avec des couleurs douces et une mise en page centrée.  
+   - Le contenu est contenu dans une table avec des bordures arrondies et un fond blanc pour une meilleure lisibilité.
+
+4. **Responsabilité :**  
+   - Les styles CSS incluent des ajustements pour garantir une bonne lisibilité sur tous les appareils et clients de messagerie.
+
+Ce fichier garantit une expérience utilisateur claire, accessible et visuellement agréable. #}

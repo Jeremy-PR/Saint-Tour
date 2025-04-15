@@ -1,136 +1,132 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Notre carte de Saint-Etienne
-{% endblock %}
+{% block title %}Notre carte de Saint-Etienne{% endblock %}
 
 {% block body %}
-	<div class="bg-cover bg-center bg-fixed h-screen" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')">
-		<h1 class="text-2xl text-white font-semibold mb-4 text-center">Notre carte de Saint-Etienne</h1>
+    <div class="bg-cover bg-center bg-fixed h-screen" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')">
+        <h1 class="text-2xl text-white font-semibold mb-4 text-center" role="heading" aria-level="1">Notre carte de Saint-Etienne</h1>
 
-		<!-- Conteneur principal -->
-		<div
-			class="container mx-auto px-4">
-			<!-- Filtre par catégorie -->
-			<div class="mb-4 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-4">
-				<div class="w-full md:w-1/2">
-					<label for="categoryFilter" class="block font-semibold text-white mb-2">Filtrer par catégorie :</label>
-					<select id="categoryFilter" class="w-full border p-2 rounded">
-						<option value="all">Toutes les catégories</option>
-						{% for categorie in categories %}
-							<option value="{{ categorie.name }}">{{ categorie.name }}</option>
-						{% endfor %}
-					</select>
-				</div>
+        <!-- Conteneur principal -->
+        <div class="container mx-auto px-4" role="region" aria-labelledby="map-section-title">
+            <h2 id="map-section-title" class="sr-only">Carte interactive et filtres</h2>
 
-				<!-- Sélectionner un itinéraire -->
-				<div class="w-full md:w-1/2">
-					<label for="itineraireFilter" class="block font-semibold text-white mb-2">Choisir un itinéraire :</label>
-					<select id="itineraireFilter" class="w-full border p-2 rounded">
-						<option value="all">Tous les itinéraires</option>
-						{% for itineraire in itineraires %}
-							<option value="{{ itineraire.id }}">{{ itineraire.name }}</option>
-						{% endfor %}
-					</select>
-				</div>
-			</div>
+            <!-- Filtre par catégorie -->
+            <div class="mb-4 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-4">
+                <div class="w-full md:w-1/2">
+                    <label for="categoryFilter" class="block font-semibold text-white mb-2">Filtrer par catégorie :</label>
+                    <select id="categoryFilter" class="w-full border p-2 rounded" aria-label="Filtrer les lieux par catégorie">
+                        <option value="all">Toutes les catégories</option>
+                        {% for categorie in categories %}
+                            <option value="{{ categorie.name }}">{{ categorie.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-			<!-- Bloc pour la carte -->
-			<div id="map" class="rounded-lg shadow-lg" style="height: 70vh; width: 100%;"></div>
-		</div>
+                <!-- Sélectionner un itinéraire -->
+                <div class="w-full md:w-1/2">
+                    <label for="itineraireFilter" class="block font-semibold text-white mb-2">Choisir un itinéraire :</label>
+                    <select id="itineraireFilter" class="w-full border p-2 rounded" aria-label="Filtrer les lieux par itinéraire">
+                        <option value="all">Tous les itinéraires</option>
+                        {% for itineraire in itineraires %}
+                            <option value="{{ itineraire.id }}">{{ itineraire.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
 
-		<script>
-			// Initialisation de la carte Leaflet
-var map = L.map('map').setView([
-45.4397, 4.3872
-], 13);
+            <!-- Bloc pour la carte -->
+            <div id="map" class="rounded-lg shadow-lg" style="height: 70vh; width: 100%;" role="application" aria-label="Carte interactive de Saint-Etienne"></div>
+        </div>
 
-// Ajout du fond de carte
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+        <script>
+            // Initialisation de la carte Leaflet
+            var map = L.map('map').setView([45.4397, 4.3872], 13);
 
-// Récupérer les lieux et itinéraires et les stocker dans des variables JS
-const lieux = {{ lieux|raw }};
-const itineraires = {{ itineraires|json_encode|raw }};
-let markers = []; // Tableau pour stocker les marqueurs Leaflet
-let polyline = null;
-// Pour le tracé des itinéraires
+            // Ajout du fond de carte
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
 
-// Fonction pour afficher les lieux filtrés
-function afficherLieux(categorie) { // Supprimer tous les marqueurs existants
-markers.forEach(marker => map.removeLayer(marker));
-markers = [];
+            // Récupérer les lieux et itinéraires et les stocker dans des variables JS
+            const lieux = {{ lieux|raw }};
+            const itineraires = {{ itineraires|json_encode|raw }};
+            let markers = [];
+            let polyline = null;
 
-// Ajouter uniquement les lieux correspondant à la catégorie sélectionnée
-lieux.forEach(lieu => {
-if (lieu.latitude && lieu.longitude) {
-const categoriesLieu = lieu.categories.map(c => c.name);
-if (categorie === "all" || categoriesLieu.includes(categorie)) { // Génération dynamique du lien avec Twig
-const lieuUrl = "{{ path('lieu_show', {'id': 'PLACEHOLDER_ID'}) }}".replace('PLACEHOLDER_ID', lieu.id);
+            // Fonction pour afficher les lieux filtrés
+            function afficherLieux(categorie) {
+                markers.forEach(marker => map.removeLayer(marker));
+                markers = [];
 
-// Contenu de la popup
-const popupContent = `
-                            <strong>${
-lieu.name
-}</strong><br>
-                            <a href="${lieuUrl}" class="text-blue-500 hover:underline">Voir plus</a>
-                        `;
+                lieux.forEach(lieu => {
+                    if (lieu.latitude && lieu.longitude) {
+                        const categoriesLieu = lieu.categories.map(c => c.name);
+                        if (categorie === "all" || categoriesLieu.includes(categorie)) {
+                            const lieuUrl = "{{ path('lieu_show', {'id': 'PLACEHOLDER_ID'}) }}".replace('PLACEHOLDER_ID', lieu.id);
+                            const popupContent = `
+                                <strong>${lieu.name}</strong><br>
+                                <a href="${lieuUrl}" class="text-blue-500 hover:underline">Voir plus</a>
+                            `;
+                            let marker = L.marker([lieu.latitude, lieu.longitude]).addTo(map).bindPopup(popupContent);
+                            markers.push(marker);
+                        }
+                    }
+                });
+            }
 
-// Ajouter le marqueur avec la popup
-let marker = L.marker([lieu.latitude, lieu.longitude]).addTo(map).bindPopup(popupContent);
-markers.push(marker);
-}
-}
-});
-}
+            function afficherItineraire(itineraireId) {
+                markers.forEach(marker => map.removeLayer(marker));
+                markers = [];
 
-function afficherItineraire(itineraireId) { // Supprimer les anciens marqueurs et tracé
-markers.forEach(marker => map.removeLayer(marker));
-markers = [];
+                if (itineraireId === "all") {
+                    afficherLieux("all");
+                    return;
+                }
 
+                const itineraire = itineraires.find(i => i.id == itineraireId);
+                if (itineraire) {
+                    itineraire.lieux.forEach(lieuId => {
+                        const lieu = lieux.find(l => l.id == lieuId);
+                        if (lieu && lieu.latitude && lieu.longitude) {
+                            const lieuUrl = "{{ path('lieu_show', {'id': 'PLACEHOLDER_ID'}) }}".replace('PLACEHOLDER_ID', lieu.id);
+                            const popupContent = `
+                                <strong>${lieu.name}</strong><br>
+                                <a href="${lieuUrl}" class="text-blue-500 hover:underline">Voir plus</a>
+                            `;
+                            let marker = L.marker([lieu.latitude, lieu.longitude]).addTo(map).bindPopup(popupContent);
+                            markers.push(marker);
+                        }
+                    });
+                }
+            }
 
-// Si "Tous les itinéraires" est sélectionné, afficher tous les lieux
-if (itineraireId === "all") {
-afficherLieux("all");
-return;
-}
+            afficherLieux("all");
 
-// Trouver l'itinéraire sélectionné
-const itineraire = itineraires.find(i => i.id == itineraireId);
-if (itineraire) { // Afficher les lieux de l'itinéraire
-itineraire.lieux.forEach(lieuId => {
-const lieu = lieux.find(l => l.id == lieuId);
-if (lieu && lieu.latitude && lieu.longitude) { // Génération dynamique du lien avec Twig
-const lieuUrl = "{{ path('lieu_show', {'id': 'PLACEHOLDER_ID'}) }}".replace('PLACEHOLDER_ID', lieu.id);
+            document.getElementById("categoryFilter").addEventListener("change", function () {
+                document.getElementById("itineraireFilter").value = "all";
+                afficherLieux(this.value);
+            });
 
-// Contenu de la popup
-const popupContent = `
-                    <strong>${
-lieu.name
-}</strong><br>
-                    <a href="${lieuUrl}" class="text-blue-500 hover:underline">Voir plus</a>
-                `;
-
-// Ajouter le marqueur avec la popup
-let marker = L.marker([lieu.latitude, lieu.longitude]).addTo(map).bindPopup(popupContent);
-markers.push(marker);
-}
-});
-}
-}
-
-// Afficher tous les lieux au chargement de la page
-afficherLieux("all");
-
-// Écouter les changements dans le filtre des catégories
-document.getElementById("categoryFilter").addEventListener("change", function () { // Réinitialiser le filtre des itinéraires
-document.getElementById("itineraireFilter").value = "all";
-afficherLieux(this.value);
-});
-
-// Écouter les changements dans le filtre des itinéraires
-document.getElementById("itineraireFilter").addEventListener("change", function () { // Réinitialiser le filtre des catégories
-document.getElementById("categoryFilter").value = "all";
-afficherItineraire(this.value);
-});
-		</script>
-	</div>
+            document.getElementById("itineraireFilter").addEventListener("change", function () {
+                document.getElementById("categoryFilter").value = "all";
+                afficherItineraire(this.value);
+            });
+        </script>
+    </div>
 {% endblock %}
+
+{# 1. Ce fichier index.html.twig étend le fichier de base `base.html.twig` pour hériter de la structure principale du site.  
+2. Il affiche une carte interactive de Saint-Étienne avec des filtres pour explorer les lieux et itinéraires disponibles.  
+3. La carte est initialisée avec Leaflet et utilise OpenStreetMap comme fond de carte.  
+4. Les lieux et itinéraires sont récupérés dynamiquement depuis le backend et injectés dans le JavaScript.  
+5. Deux filtres sont proposés : un pour sélectionner une catégorie de lieux et un autre pour choisir un itinéraire spécifique.  
+6. Les filtres sont accessibles avec des labels clairs et des attributs ARIA comme `aria-label` pour décrire leur fonction.  
+7. Les lieux sont affichés sur la carte sous forme de marqueurs, chacun avec une popup contenant le nom du lieu et un lien pour en savoir plus.  
+8. Les itinéraires affichent uniquement les lieux qui leur sont associés, avec des marqueurs et des popups similaires.  
+9. Les marqueurs sont mis à jour dynamiquement en fonction des filtres sélectionnés, garantissant une expérience utilisateur fluide.  
+10. La carte est définie comme une application interactive avec `role="application"` et un label ARIA pour les lecteurs d'écran.  
+11. Les sections importantes, comme les filtres et la carte, sont structurées avec des rôles ARIA comme `region` et des titres masqués pour l'accessibilité.  
+12. Les styles CSS et classes Tailwind CSS assurent une mise en page responsive et moderne.  
+13. Les événements JavaScript gèrent les interactions utilisateur, comme le changement de filtre et l'affichage des lieux ou itinéraires correspondants.  
+14. Les liens dans les popups sont stylisés et accessibles, permettant une navigation rapide vers les détails des lieux.  
+15. Ce fichier combine interactivité, accessibilité et design pour offrir une expérience utilisateur riche et inclusive. #}

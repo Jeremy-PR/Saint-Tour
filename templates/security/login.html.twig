@@ -3,51 +3,61 @@
 {% block body %}
     <section class="bg-cover bg-center h-screen" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}');">
         <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
-            <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 class="text-2xl font-semibold text-center mb-4 text-gray-700">Connectez-vous</h2>
-               
+            <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md" role="form" aria-labelledby="login-title">
+                <h2 id="login-title" class="text-2xl font-semibold text-center mb-4 text-gray-700">Connectez-vous</h2>
 
                 <!-- Formulaire de connexion -->
-                <form method="post" class="space-y-4">
+                <form method="post" class="space-y-4" aria-describedby="login-description">
                     {% if error %}
-                        <div class="alert alert-danger text-red-500">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        <div class="alert alert-danger text-red-500" role="alert">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
                     {% endif %}
 
                     <!-- Email -->
                     <div class="flex flex-col">
                         <label for="username" class="text-gray-600">Email</label>
-                        <input type="email" value="{{ last_username }}" name="_username" id="username" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" autocomplete="email" required autofocus>
-                      
+                        <input type="email" value="{{ last_username }}" name="_username" id="username" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" autocomplete="email" required autofocus aria-required="true">
                     </div>
 
                     <!-- Mot de passe -->
                     <div class="flex flex-col relative">
                         <label for="password" class="text-gray-600">Mot de passe</label>
-                        <input type="password" name="_password" id="password" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
-                        <i class="fa fa-eye absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"></i>
-                      
+                        <input type="password" name="_password" id="password" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required aria-required="true">
+                        <i class="fa fa-eye absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" aria-hidden="true"></i>
                     </div>
 
                     <!-- Se souvenir de moi -->
                     <div class="flex items-center space-x-2">
-                        <input type="checkbox" name="_remember_me" value="1" id="_remember_me" class="text-blue-500">
-                        <label for="_remember_me" class="text-sm text-gray-600">Keep me logged in</label>
+                        <input type="checkbox" name="_remember_me" value="1" id="_remember_me" class="text-blue-500" aria-describedby="remember-me-description">
+                        <label for="_remember_me" class="text-sm text-gray-600">Se souvenir de moi</label>
                     </div>
 
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                     <!-- Bouton de soumission -->
-                    <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-md mt-4 hover:bg-green-700 focus:outline-none">
+                    <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-md mt-4 hover:bg-green-700 focus:outline-none" aria-label="Se connecter">
                         Connexion
                     </button>
                 </form>
 
                 <!-- Liens supplémentaires -->
                 <div class="flex justify-between mt-4 text-sm">
-                    {# <a href="{{ path('app_forgot_password') }}" class="text-blue-500 hover:underline">Forgot your password?</a> #}
+                    {# <a href="{{ path('app_forgot_password') }}" class="text-blue-500 hover:underline">Mot de passe oublié ?</a> #}
                     <a href="{{ path('app_register') }}" class="text-green-600 hover:underline">Créer un compte</a>
                 </div>
             </div>
         </div>
     </section>
 {% endblock %}
+
+{# 1. Ce fichier login.html.twig étend le fichier de base `base.html.twig` pour hériter de la structure principale du site.  
+2. Il affiche une section pleine page avec une image de fond et une superposition sombre pour mettre en avant le formulaire de connexion.  
+3. Le formulaire de connexion contient des champs pour l'email et le mot de passe, avec des labels associés pour l'accessibilité.  
+4. Un message d'erreur est affiché en cas de problème de connexion, avec un rôle ARIA `alert` pour les lecteurs d'écran.  
+5. Le champ email est pré-rempli avec la dernière tentative de connexion grâce à la variable `last_username`.  
+6. Une case à cocher "Se souvenir de moi" est incluse, avec une description accessible via `aria-describedby`.  
+7. Un jeton CSRF est ajouté pour sécuriser le formulaire contre les attaques CSRF.  
+8. Un bouton de soumission stylisé permet de valider le formulaire, avec un attribut `aria-label` pour décrire son action.  
+9. Un lien vers la page d'inscription est affiché sous le formulaire pour les utilisateurs qui n'ont pas encore de compte.  
+10. Le fichier utilise des pratiques d'accessibilité comme les rôles ARIA, des descriptions pour les icônes, et des champs obligatoires clairement définis. #}

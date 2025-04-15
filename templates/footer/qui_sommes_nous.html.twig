@@ -3,8 +3,8 @@
 {% block title %}Qui sommes-nous ?{% endblock %}
 
 {% block body %}
-    <div class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-        <h1 class="text-2xl font-bold mb-4">Qui sommes-nous ?</h1>
+    <div class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg" role="region" aria-labelledby="about-title">
+        <h1 id="about-title" class="text-2xl font-bold mb-4">Qui sommes-nous ?</h1>
 
         <p><strong>SaintéTour</strong> est une plateforme dédiée à la découverte des itinéraires et lieux incontournables de Saint-Étienne.</p>
 
@@ -15,6 +15,6 @@
         <p>Nous sommes une équipe de passionnés de voyage et de technologie, souhaitant offrir une expérience utilisateur immersive.</p>
 
         <h2 class="text-xl font-semibold mt-4">Contactez-nous</h2>
-        <p>Pour toute question, n’hésitez pas à nous écrire à <strong>contact@sainte-tour.fr</strong>.</p>
+        <p>Pour toute question, n’hésitez pas à nous écrire à <a href="mailto:contact@sainte-tour.fr" class="text-blue-500 hover:underline" aria-label="Envoyer un email à contact@sainte-tour.fr">contact@sainte-tour.fr</a>.</p>
     </div>
 {% endblock %}

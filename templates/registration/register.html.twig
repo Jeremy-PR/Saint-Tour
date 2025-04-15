@@ -3,23 +3,23 @@
 {% block body %}
 <section class="bg-cover bg-center h-screen" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}');">
     <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-            <h2 class="text-2xl font-semibold text-center mb-4 text-gray-700">Créez votre compte</h2>
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md" role="form" aria-labelledby="register-title">
+            <h2 id="register-title" class="text-2xl font-semibold text-center mb-4 text-gray-700">Créez votre compte</h2>
 
-            {{ form_start(registrationForm, {'attr': {'class': 'space-y-4'}}) }}
+            {{ form_start(registrationForm, {'attr': {'class': 'space-y-4', 'aria-describedby': 'register-description'}}) }}
 
             <!-- Email -->
             <div class="flex flex-col">
                 {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'text-gray-600'}}) }}
-                {{ form_widget(registrationForm.email, {'attr': {'class': 'p-3 border border-green-00 rounded-md'}}) }}
-                {{ form_errors(registrationForm.email, {'attr': {'class': 'text-red-500 text-sm'}}) }}
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'p-3 border border-green-00 rounded-md', 'aria-required': 'true'}}) }}
+                {{ form_errors(registrationForm.email, {'attr': {'class': 'text-red-500 text-sm', 'role': 'alert'}}) }}
             </div>
 
             <!-- Pseudo -->
             <div class="flex flex-col">
                 {{ form_label(registrationForm.pseudo, null, {'label_attr': {'class': 'text-gray-600'}}) }}
-                {{ form_widget(registrationForm.pseudo, {'attr': {'class': 'p-3 border border-gray-300 rounded-md'}}) }}
-                {{ form_errors(registrationForm.pseudo, {'attr': {'class': 'text-red-500 text-sm'}}) }}
+                {{ form_widget(registrationForm.pseudo, {'attr': {'class': 'p-3 border border-gray-300 rounded-md', 'aria-required': 'true'}}) }}
+                {{ form_errors(registrationForm.pseudo, {'attr': {'class': 'text-red-500 text-sm', 'role': 'alert'}}) }}
             </div>
 
             <!-- Mot de passe -->
@@ -29,10 +29,11 @@
                     'attr': {
                         'id': 'password1',
                         'class': 'p-3 border border-gray-300 rounded-md',
-                        'type': 'password'
+                        'type': 'password',
+                        'aria-required': 'true'
                     }
                 }) }}
-                {{ form_errors(registrationForm.plainPassword.first, {'attr': {'class': 'text-red-500 text-sm'}}) }}
+                {{ form_errors(registrationForm.plainPassword.first, {'attr': {'class': 'text-red-500 text-sm', 'role': 'alert'}}) }}
             </div>
 
             <!-- Confirmation mot de passe -->
@@ -42,17 +43,19 @@
                     'attr': {
                         'id': 'password2',
                         'class': 'p-3 border border-gray-300 rounded-md',
-                        'type': 'password'
+                        'type': 'password',
+                        'aria-required': 'true'
                     }
                 }) }}
-                {{ form_errors(registrationForm.plainPassword.second, {'attr': {'class': 'text-red-500 text-sm'}}) }}
+                {{ form_errors(registrationForm.plainPassword.second, {'attr': {'class': 'text-red-500 text-sm', 'role': 'alert'}}) }}
             </div>
 
             <!-- Conditions d'utilisation -->
             <div class="flex items-start gap-3">
                 {{ form_widget(registrationForm.agreeTerms, {
                     'attr': {
-                        'class': 'mt-1 rounded border-gray-300 text-indigo-600 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+                        'class': 'mt-1 rounded border-gray-300 text-indigo-600 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50',
+                        'aria-required': 'true'
                     }
                 }) }}
                 <label for="{{ registrationForm.agreeTerms.vars.id }}" class="text-sm text-gray-700">
@@ -62,10 +65,10 @@
                     <a href="/politique-confidentialite" class="text-indigo-600 underline hover:text-indigo-800">politique de confidentialité</a>.
                 </label>
             </div>
-            {{ form_errors(registrationForm.agreeTerms, {'attr': {'class': 'text-red-500 text-sm'}}) }}
+            {{ form_errors(registrationForm.agreeTerms, {'attr': {'class': 'text-red-500 text-sm', 'role': 'alert'}}) }}
 
             <!-- Bouton de soumission -->
-            <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-md mt-4 hover:bg-blue-600 focus:outline-none">
+            <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-md mt-4 hover:bg-blue-600 focus:outline-none" aria-label="Créer un compte">
                 Créer compte
             </button>
 
@@ -80,3 +83,14 @@
 </section>
 
 {% endblock %}
+
+{# 1. Ce fichier register.html.twig étend le fichier de base `base.html.twig` pour hériter de la structure principale du site.  
+2. Il affiche une section pleine page avec une image de fond et une superposition sombre pour mettre en avant le formulaire d'inscription.  
+3. Le formulaire d'inscription est généré dynamiquement avec Symfony Forms, incluant des champs pour l'email, le pseudo, le mot de passe et la confirmation du mot de passe.  
+4. Chaque champ est accompagné d'un label descriptif et affiche des messages d'erreur en cas de validation incorrecte.  
+5. Une case à cocher permet aux utilisateurs d'accepter les conditions générales et la politique de confidentialité, avec des liens cliquables.  
+6. Les champs obligatoires sont marqués avec `aria-required="true"` pour améliorer l'accessibilité.  
+7. Les messages d'erreur utilisent `role="alert"` pour être détectés par les lecteurs d'écran.  
+8. Un bouton de soumission stylisé permet de valider le formulaire et de créer un compte.  
+9. Un lien vers la page de connexion est affiché sous le formulaire pour les utilisateurs ayant déjà un compte.  
+10. Le fichier utilise des pratiques d'accessibilité comme les rôles ARIA et des descriptions claires pour les actions et les champs. #}

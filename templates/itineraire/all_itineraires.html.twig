@@ -1,31 +1,45 @@
 {% extends 'base.html.twig' %}
 
+{% extends 'base.html.twig' %}
+
 {% block title %}Tous les Itinéraires{% endblock %}
 
 {% block body %}
     <div class="min-h-screen bg-cover bg-center bg-fixed" style="background-image: url('{{ asset('images/Saint-etienne-vu-haut.jpg') }}')">
-        <div class="container mx-auto my-8 p-6 rounded-lg shadow-lg">
-            <h1 class="text-3xl font-bold text-white text-center mb-8">Tous les Itinéraires</h1>
+        <div class="container mx-auto my-8 p-6 rounded-lg shadow-lg" role="region" aria-labelledby="itineraires-title">
+            <h1 id="itineraires-title" class="text-3xl font-bold text-white text-center mb-8" role="heading" aria-level="1">Tous les Itinéraires</h1>
 
             <!-- Liste des itinéraires -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4 sm:px-6 lg:px-8" role="list" aria-label="Liste des itinéraires">
                 {% for itineraire in itineraires %}
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl" role="listitem">
                         <div class="p-4">
                             <h2 class="text-lg font-bold text-gray-800 mb-2">{{ itineraire.name }}</h2>
-                          <p class="text-sm text-gray-600 mb-4">{{ itineraire.description|raw|striptags|slice(0, 100) ~ '...' }}</p>
+                            <p class="text-sm text-gray-600 mb-4">{{ itineraire.description|raw|striptags|slice(0, 100) ~ '...' }}</p>
                             <a 
                                 href="{{ path('itineraire_show', {'id': itineraire.id}) }}" 
                                 class="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition-colors"
+                                aria-label="Voir les détails de l'itinéraire {{ itineraire.name }}"
                             >
                                 Voir détails
                             </a>
                         </div>
                     </div>
                 {% else %}
-                    <p class="col-span-full text-center text-white">Aucun itinéraire disponible pour le moment.</p>
+                    <p class="col-span-full text-center text-white" aria-label="Aucun itinéraire disponible">Aucun itinéraire disponible pour le moment.</p>
                 {% endfor %}
             </div>
         </div>
     </div>
 {% endblock %}
+
+{# Ce fichier all_itineraires.html.twig affiche une liste de tous les itinéraires disponibles.
+Le titre principal "Tous les Itinéraires" est défini avec un rôle ARIA heading et un niveau d'importance aria-level="1".
+La section principale est structurée avec role="region" et liée au titre via aria-labelledby.
+Les itinéraires sont affichés sous forme de cartes dans une grille responsive, avec des descriptions courtes et des liens vers leurs détails.
+Chaque carte d'itinéraire utilise role="listitem" pour structurer la liste avec un rôle ARIA list.
+Les descriptions des itinéraires sont nettoyées avec striptags pour éviter tout contenu HTML non désiré.
+Les liens "Voir détails" incluent des attributs aria-label pour décrire leur action de manière claire.
+Si aucun itinéraire n'est disponible, un message alternatif est affiché avec un label ARIA pour les lecteurs d'écran.
+La mise en page utilise des classes Tailwind CSS pour un design moderne et une expérience utilisateur fluide.
+Ce fichier garantit une expérience utilisateur accessible et visuellement agréable pour tous les utilisateurs. #}

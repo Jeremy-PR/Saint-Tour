@@ -3,8 +3,8 @@
 {% block title %}Conditions d'Utilisation{% endblock %}
 
 {% block body %}
-    <div class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-        <h1 class="text-2xl font-bold mb-4">Conditions d'Utilisation</h1>
+    <div class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg" role="region" aria-labelledby="conditions-title">
+        <h1 id="conditions-title" class="text-2xl font-bold mb-4">Conditions d'Utilisation</h1>
 
         <h2 class="text-xl font-semibold mt-4">Acceptation des conditions</h2>
         <p>L’utilisation du site <strong>SaintéTour</strong> implique l’acceptation des présentes conditions générales d’utilisation.</p>
@@ -14,7 +14,7 @@
 
         <h2 class="text-xl font-semibold mt-4">Utilisation des services</h2>
         <p>L’utilisateur s’engage à ne pas :</p>
-        <ul class="list-disc pl-5">
+        <ul class="list-disc pl-5" role="list" aria-label="Liste des engagements de l'utilisateur">
             <li>Publier de contenus illicites</li>
             <li>Usurper l’identité d’une autre personne</li>
             <li>Interférer avec le bon fonctionnement du site</li>

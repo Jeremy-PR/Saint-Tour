@@ -4,21 +4,21 @@
 
 {% block body %}
 <div class="min-h-screen bg-cover bg-center bg-fixed" style="background-image: url('{{ asset('images/Saint-Etienne-fauriel.jpg') }}')">
-    <div class="container mx-auto my-8 p-6 bg-white opacity-90 rounded-lg shadow-lg">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">{{ itineraire.name }}</h1>
+    <div class="container mx-auto my-8 p-6 bg-white opacity-90 rounded-lg shadow-lg" role="region" aria-labelledby="itineraire-title">
+        <h1 id="itineraire-title" class="text-3xl font-bold text-center text-gray-800 mb-6">{{ itineraire.name }}</h1>
 
         <!-- Description de l'itinéraire -->
         <div class="mb-6">
             <h2 class="text-xl font-semibold text-gray-700">Description :</h2>
-            <p class="text-lg text-gray-600">{{ itineraire.description | raw }}</p>
+            <p class="text-lg text-gray-600" aria-label="Description de l'itinéraire">{{ itineraire.description | raw }}</p>
         </div>
 
         <!-- Liste des lieux -->
         <div class="mb-6">
             <h2 class="text-xl font-semibold text-gray-700">Lieux de l'itinéraire :</h2>
-            <ul class="list-disc list-inside text-gray-600">
+            <ul class="list-disc list-inside text-gray-600" role="list" aria-label="Liste des lieux de l'itinéraire">
                 {% for lieu in itineraire.lieux %}
-                    <li class="mb-2">
+                    <li class="mb-2" role="listitem">
                         <strong class="text-gray-800">{{ lieu.name }}</strong>
                         -
                         <span class="text-gray-500">{{ lieu.adresse }}</span>
@@ -32,73 +32,74 @@
         <!-- Carte avec itinéraire tracé -->
         <div class="mb-6">
             <h2 class="text-xl font-semibold text-gray-700 mb-4">Carte de l'itinéraire :</h2>
-            <div id="map" class="w-full h-96 rounded-lg shadow-lg"></div>
+            <div id="map" class="w-full h-96 rounded-lg shadow-lg" role="application" aria-label="Carte interactive de l'itinéraire"></div>
         </div>
 
         <!-- Section des avis -->
         <div class="mb-6">
             <h2 class="text-2xl font-semibold text-gray-700 mb-6 border-b pb-2">Avis des utilisateurs :</h2>
 
-        <!-- Liste des avis -->
-<div class="space-y-6">
-    {% for avis in itineraire.avis %}
-        <div class="p-6 bg-gray-100 rounded-lg shadow-md">
-            <div class="flex items-center justify-between mb-2">
-                <p class="text-lg font-semibold text-gray-800">{{ avis.user.pseudo }}</p>
-                <span class="text-sm text-gray-500">{{ avis.createdAt|date('d/m/Y') }}</span>
-            </div>
-            <p class="text-gray-600 mb-4">{{ avis.commentaire }}</p>
-            <div class="flex items-center justify-between">
-                <span class="text-yellow-500 font-bold">Note : {{ avis.note }}/5</span>
+            <!-- Liste des avis -->
+            <div class="space-y-6" role="list" aria-label="Liste des avis des utilisateurs">
+                {% for avis in itineraire.avis %}
+                    <div class="p-6 bg-gray-100 rounded-lg shadow-md" role="listitem">
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="text-lg font-semibold text-gray-800">{{ avis.user.pseudo }}</p>
+                            <span class="text-sm text-gray-500">{{ avis.createdAt|date('d/m/Y') }}</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">{{ avis.commentaire }}</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-yellow-500 font-bold">Note : {{ avis.note }}/5</span>
 
-                <!-- Bouton de suppression (uniquement pour le propriétaire du commentaire) -->
-                {% if app.user and app.user.id == avis.user.id %}
-                    <form action="{{ path('avis_delete', {'id': avis.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ avis.id) }}">
-                        <button type="submit" class="text-red-500 hover:text-red-700 text-sm font-semibold">
-                            Supprimer
-                        </button>
-                    </form>
-                {% endif %}
+                            <!-- Bouton de suppression (uniquement pour le propriétaire du commentaire) -->
+                            {% if app.user and app.user.id == avis.user.id %}
+                                <form action="{{ path('avis_delete', {'id': avis.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ avis.id) }}">
+                                    <button type="submit" class="text-red-500 hover:text-red-700 text-sm font-semibold" aria-label="Supprimer cet avis">
+                                        Supprimer
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-gray-500 text-center" aria-label="Aucun avis disponible">Aucun avis pour cet itinéraire pour le moment.</p>
+                {% endfor %}
             </div>
-        </div>
-    {% else %}
-        <p class="text-gray-500 text-center">Aucun avis pour cet itinéraire pour le moment.</p>
-    {% endfor %}
-</div>
 
-        <!-- Formulaire pour ajouter un avis (uniquement pour les utilisateurs connectés) -->
-        {% if app.user %}
-            <div class="mb-6">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4">Ajouter un avis :</h2>
-                {{ form_start(form) }}
-                <div class="space-y-4">
-                    <div>
-                        {{ form_label(form.note, 'Note :', {'label_attr': {'class': 'block font-semibold text-gray-700'}}) }}
-                        {{ form_widget(form.note, {'attr': {'class': 'w-full border p-2 rounded'}}) }}
+            <!-- Formulaire pour ajouter un avis (uniquement pour les utilisateurs connectés) -->
+            {% if app.user %}
+                <div class="mb-6">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4">Ajouter un avis :</h2>
+                    {{ form_start(form) }}
+                    <div class="space-y-4">
+                        <div>
+                            {{ form_label(form.note, 'Note :', {'label_attr': {'class': 'block font-semibold text-gray-700'}}) }}
+                            {{ form_widget(form.note, {'attr': {'class': 'w-full border p-2 rounded'}}) }}
+                        </div>
+                        <div>
+                            {{ form_label(form.commentaire, 'Commentaire :', {'label_attr': {'class': 'block font-semibold text-gray-700'}}) }}
+                            {{ form_widget(form.commentaire, {'attr': {'class': 'w-full border p-2 rounded', 'rows': 4}}) }}
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="px-6 py-2 text-white bg-blue-500 hover:bg-blue-700 rounded-md shadow-lg" aria-label="Envoyer votre avis">
+                                Envoyer
+                            </button>
+                        </div>
                     </div>
-                    <div>
-                        {{ form_label(form.commentaire, 'Commentaire :', {'label_attr': {'class': 'block font-semibold text-gray-700'}}) }}
-                        {{ form_widget(form.commentaire, {'attr': {'class': 'w-full border p-2 rounded', 'rows': 4}}) }}
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="px-6 py-2 text-white bg-blue-500 hover:bg-blue-700 rounded-md shadow-lg">
-                            Envoyer
-                        </button>
-                    </div>
+                    {{ form_end(form) }}
                 </div>
-                {{ form_end(form) }}
-            </div>
-        {% else %}
-            <p class="text-gray-500 mt-6 text-center">Vous devez être connecté pour écrire un avis.</p>
-        {% endif %}
-    </div>
+            {% else %}
+                <p class="text-gray-500 mt-6 text-center" aria-label="Connectez-vous pour écrire un avis">Vous devez être connecté pour écrire un avis.</p>
+            {% endif %}
+        </div>
 
-    <!-- Bouton retour -->
-    <div class="text-center">
-        <a href="{{ path('app_itineraire') }}" class="inline-block px-6 py-2 text-white bg-blue-500 hover:bg-blue-700 rounded-md shadow-lg">
-            Retour à la liste des itinéraires
-        </a>
+        <!-- Bouton retour -->
+        <div class="text-center">
+            <a href="{{ path('app_itineraire') }}" class="inline-block px-6 py-2 text-white bg-blue-500 hover:bg-blue-700 rounded-md shadow-lg" role="link" aria-label="Retourner à la liste des itinéraires">
+                Retour à la liste des itinéraires
+            </a>
+        </div>
     </div>
 </div>
 
@@ -128,3 +129,19 @@
     });
 </script>
 {% endblock %}
+
+{# 1. Ce fichier show.html.twig affiche les détails d'un itinéraire, incluant son nom, sa description, les lieux associés, une carte interactive, et les avis des utilisateurs.  
+2. Le titre principal utilise `aria-labelledby` pour être lié au conteneur principal, qui est défini comme une région importante avec `role="region"`.  
+3. La description de l'itinéraire est affichée avec un texte clair et accessible, accompagné d'un label ARIA.  
+4. Les lieux associés sont listés dans une liste structurée avec `role="list"` et `role="listitem"`.  
+5. Une carte interactive est intégrée avec Leaflet, utilisant `role="application"` et un label ARIA pour les lecteurs d'écran.  
+6. Les marqueurs sur la carte incluent des popups avec des liens accessibles vers les détails des lieux.  
+7. La section des avis affiche les commentaires des utilisateurs, chaque avis étant structuré avec `role="listitem"`.  
+8. Les utilisateurs connectés peuvent ajouter un avis via un formulaire accessible, avec des labels clairs et des champs bien décrits.  
+9. Les utilisateurs peuvent également supprimer leurs avis, avec un bouton de suppression sécurisé et accessible.  
+10. Si aucun avis ou lieu n'est disponible, des messages alternatifs sont affichés avec des descriptions ARIA.  
+11. Un bouton de retour stylisé permet de revenir à la liste des itinéraires, avec un rôle ARIA `link` et un label descriptif.  
+12. La mise en page utilise des classes Tailwind CSS pour un design moderne et responsive.  
+13. Les données des lieux sont injectées dynamiquement dans le JavaScript pour afficher les marqueurs sur la carte.  
+14. Les interactions utilisateur, comme l'ajout ou la suppression d'avis, sont sécurisées et accessibles.  
+15. Ce fichier garantit une expérience utilisateur fluide, interactive et inclusive grâce à des pratiques d'accessibilité bien appliquées. #}

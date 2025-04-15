@@ -1,57 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier mon Profil
-{% endblock %}
+{% block title %}Modifier mon Profil{% endblock %}
 
 {% block body %}
-	<section class="bg-cover bg-center h-screen" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}');">
-		<div class="flex items-center justify-center h-full bg-black bg-opacity-50">
-			<div class="w-full max-w-md bg-white bg-opacity-20 backdrop-blur-lg p-8 rounded-lg shadow-lg">
-				<h2 class="text-3xl font-bold text-center mb-6 text-white">Modifier mon Profil</h2>
+    <section class="bg-cover bg-center h-screen" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}');">
+        <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
+            <div class="w-full max-w-md bg-white bg-opacity-20 backdrop-blur-lg p-8 rounded-lg shadow-lg" role="form" aria-labelledby="edit-profile-title">
+                <h2 id="edit-profile-title" class="text-3xl font-bold text-center mb-6 text-white">Modifier mon Profil</h2>
 
-				{{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
+                {{ form_start(form, {'attr': {'class': 'space-y-4', 'aria-describedby': 'edit-profile-description'}}) }}
 
-				<!-- Pseudo -->
-				<div class="flex flex-col">
-					{{ form_label(form.pseudo, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
-					{{ form_widget(form.pseudo, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500'}}) }}
-				</div>
+                <!-- Pseudo -->
+                <div class="flex flex-col">
+                    {{ form_label(form.pseudo, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
+                    {{ form_widget(form.pseudo, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
+                </div>
 
-				<!-- Email -->
-				<div class="flex flex-col">
-					{{ form_label(form.email, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
-					{{ form_widget(form.email, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500'}}) }}
-				</div>
+                <!-- Email -->
+                <div class="flex flex-col">
+                    {{ form_label(form.email, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
+                    {{ form_widget(form.email, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
+                </div>
 
-				<!-- Mot de passe actuel -->
-				<div class="flex flex-col">
-					{{ form_label(form.currentPassword, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
-					{{ form_widget(form.currentPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500'}}) }}
-				</div>
+                <!-- Mot de passe actuel -->
+                <div class="flex flex-col">
+                    {{ form_label(form.currentPassword, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
+                    {{ form_widget(form.currentPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
+                </div>
 
-				<!-- Nouveau mot de passe -->
-				<div class="flex flex-col">
-					{{ form_label(form.newPassword, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
-					{{ form_widget(form.newPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500'}}) }}
-				</div>
+                <!-- Nouveau mot de passe -->
+                <div class="flex flex-col">
+                    {{ form_label(form.newPassword, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
+                    {{ form_widget(form.newPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
+                </div>
 
-				<!-- Confirmer le mot de passe -->
-				<div class="flex flex-col">
-					{{ form_label(form.confirmPassword, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
-					{{ form_widget(form.confirmPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500'}}) }}
-				</div>
+                <!-- Confirmer le mot de passe -->
+                <div class="flex flex-col">
+                    {{ form_label(form.confirmPassword, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
+                    {{ form_widget(form.confirmPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
+                </div>
 
-			
-				<div class="mt-6 text-center w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-md transition duration-300">
-					{{ form_end(form) }}
-				</div>
+                <!-- Bouton de soumission -->
+                <div class="mt-6 text-center">
+                    <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-md transition duration-300" aria-label="Enregistrer les modifications">
+                        Enregistrer
+                    </button>
+                </div>
+                {{ form_end(form) }}
 
-
-				<!-- Lien Retour -->
-				<div class="mt-4 text-center">
-					<a href="{{ path('app_profile') }}" class="text-white hover:underline">Retour au profil</a>
-				</div>
-			</div>
-		</div>
-	</section>
+                <!-- Lien Retour -->
+                <div class="mt-4 text-center">
+                    <a href="{{ path('app_profile') }}" class="text-white hover:underline" role="link" aria-label="Retourner au profil">
+                        Retour au profil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
+
+{# 1. Ce fichier edit.html.twig étend le fichier de base `base.html.twig` pour hériter de la structure principale du site.  
+2. Il affiche une section pleine page avec une image de fond et une superposition sombre pour mettre en avant le formulaire de modification du profil.  
+3. Le formulaire permet à l'utilisateur de modifier son pseudo, son email, son mot de passe actuel, et de définir un nouveau mot de passe avec confirmation.  
+4. Chaque champ est accompagné d'un label descriptif et utilise des classes Tailwind CSS pour un design moderne et responsive.  
+5. Les champs obligatoires sont marqués avec `aria-required="true"` pour améliorer l'accessibilité.  
+6. Un bouton de soumission stylisé permet d'enregistrer les modifications, avec un attribut `aria-label` pour décrire son action.  
+7. Un lien de retour vers la page de profil est affiché sous le formulaire, avec un rôle ARIA `link` et une description claire.  
+8. Le fichier applique des pratiques d'accessibilité comme les rôles ARIA et des descriptions pour les champs et actions.  
+9. La mise en page est centrée et optimisée pour une expérience utilisateur agréable.  
+10. Le formulaire est sécurisé et géré dynamiquement avec Symfony Forms. #}

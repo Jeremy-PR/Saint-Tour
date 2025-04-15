@@ -1,4 +1,4 @@
-<div class="flash-container space-y-2">
+<div class="flash-container space-y-2" role="region" aria-label="Notifications">
     {% for type, messages in app.flashes %}
         <div class="
             px-4 py-3 rounded-lg shadow-md text-white relative
@@ -7,8 +7,8 @@
             {% elseif type == 'warning' %} bg-yellow-500
             {% else %} bg-gray-600
             {% endif %}
-        ">
-            <button type="button" class="absolute top-2 right-3 text-white text-xl leading-none" onclick="this.parentElement.remove();">&times;</button>
+        " role="alert" aria-live="assertive">
+            <button type="button" class="absolute top-2 right-3 text-white text-xl leading-none" onclick="this.parentElement.remove();" aria-label="Fermer la notification">&times;</button>
             {{ messages | join('. ') }}
         </div>
     {% endfor %}
@@ -23,3 +23,14 @@
     width: 320px;
 }
 </style>
+
+{# 1. Ce fichier flash.html.twig affiche des notifications flash dynamiques sur la page.  
+2. Les notifications sont contenues dans un élément `<div>` avec un rôle ARIA `region` et un label `Notifications` pour les lecteurs d'écran.  
+3. Chaque notification est stylisée avec des couleurs spécifiques selon son type : vert pour le succès, rouge pour les erreurs, jaune pour les avertissements, et gris pour les messages généraux.  
+4. Les notifications utilisent le rôle ARIA `alert` et `aria-live="assertive"` pour être immédiatement annoncées par les lecteurs d'écran.  
+5. Un bouton de fermeture est inclus dans chaque notification, avec un label `aria-label="Fermer la notification"` pour décrire son action.  
+6. Les notifications sont positionnées en bas à droite de l'écran grâce à des styles CSS.  
+7. Le fichier utilise des classes Tailwind CSS pour un design moderne et responsive.  
+8. Les messages flash sont générés dynamiquement à partir des données de `app.flashes`.  
+9. Les notifications peuvent être supprimées par l'utilisateur en cliquant sur le bouton de fermeture.  
+10. Ce fichier garantit une expérience utilisateur accessible et visuellement claire pour les messages importants. #}

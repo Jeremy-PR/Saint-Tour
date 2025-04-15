@@ -1,51 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-
     <!-- Formulaire de contact -->
-     <section class="bg-cover bg-center bg-fixed h-screen flex items-center" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')">
+    <section class="bg-cover bg-center bg-fixed h-screen flex items-center" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')" role="region" aria-labelledby="contact-title">
         <div class="container mx-auto">
             <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-white">Envoyez-nous un message</h2>
-               
+                <h2 id="contact-title" class="text-4xl font-bold text-white" role="heading" aria-level="1">Envoyez-nous un message</h2>
             </div>
 
             <div class="flex flex-col md:flex-row gap-8">
                 <!-- Formulaire -->
-                <div class="bg-white p-8 rounded-lg shadow-lg flex-1">
+                <div class="bg-white p-8 rounded-lg shadow-lg flex-1" role="form" aria-labelledby="form-title">
+                    <h3 id="form-title" class="text-2xl font-bold text-gray-800 mb-4">Formulaire de contact</h3>
                     {{ form_start(form, {'attr': {'id': 'formContact', 'class': 'space-y-6'}}) }}
                     
                     <div>
                         {{ form_label(form.firstName, null, {'label_attr': {'class': 'block text-gray-700 font-medium mb-2'}}) }}
-                        {{ form_widget(form.firstName, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                        {{ form_widget(form.firstName, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
                         {{ form_errors(form.firstName) }}
                     </div>
 
                     <div>
                         {{ form_label(form.lastName, null, {'label_attr': {'class': 'block text-gray-700 font-medium mb-2'}}) }}
-                        {{ form_widget(form.lastName, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                        {{ form_widget(form.lastName, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
                         {{ form_errors(form.lastName) }}
                     </div>
 
-					
-
                     <div>
                         {{ form_label(form.email, null, {'label_attr': {'class': 'block text-gray-700 font-medium mb-2'}}) }}
-                        {{ form_widget(form.email, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
                         {{ form_errors(form.email) }}
                     </div>
 
-                  
-
                     <div>
                         {{ form_label(form.message, null, {'label_attr': {'class': 'block text-gray-700 font-medium mb-2'}}) }}
-                        {{ form_widget(form.message, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                        {{ form_widget(form.message, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
                         {{ form_errors(form.message) }}
                     </div>
 
                     <div class="text-center">
-                        <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+                        <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300" aria-label="Envoyer le message">
                             Envoyer le message
                         </button>
                     </div>
@@ -54,26 +48,26 @@
                 </div>
 
                 <!-- Informations de contact -->
-                <div class="bg-white p-8 rounded-lg shadow-lg flex-1">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Nos coordonnées</h3>
+                <div class="bg-white p-8 rounded-lg shadow-lg flex-1" role="region" aria-labelledby="contact-info-title">
+                    <h3 id="contact-info-title" class="text-2xl font-bold text-gray-800 mb-4">Nos coordonnées</h3>
                     <p class="text-gray-600 mb-4">Nous sommes basés à Saint-Etienne, dans le département de la Loire.</p>
-                    <ul class="space-y-4">
+                    <ul class="space-y-4" role="list" aria-label="Liste des coordonnées de contact">
                         <li class="flex items-center">
-                            <i class="material-icons text-blue-500 mr-4">&#xE55F;</i>
+                            <i class="material-icons text-blue-500 mr-4" aria-hidden="true">&#xE55F;</i>
                             <span>Sainté City Tour, Saint-Etienne</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="material-icons text-blue-500 mr-4">&#xE61C;</i>
+                            <i class="material-icons text-blue-500 mr-4" aria-hidden="true">&#xE61C;</i>
                             <span>+33 (0) 6 60 06 66 00</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="material-icons text-blue-500 mr-4">&#xE916;</i>
+                            <i class="material-icons text-blue-500 mr-4" aria-hidden="true">&#xE916;</i>
                             <span>9h - 18h du Lundi au Vendredi</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="material-icons text-blue-500 mr-4">&#xE0E1;</i>
+                            <i class="material-icons text-blue-500 mr-4" aria-hidden="true">&#xE0E1;</i>
                             <span>
-                                <a href="mailto:georges@luxuryservices.com" class="text-blue-500 hover:underline">
+                                <a href="mailto:saintecitytour@gmail.com" class="text-blue-500 hover:underline" aria-label="Envoyer un email à saintecitytour@gmail.com">
                                     saintecitytour@gmail.com
                                 </a>
                             </span>
@@ -83,7 +77,6 @@
             </div>
         </div>
     </section>
-	
 {% endblock %}
 
 {% block javascriptFooter %}
@@ -101,3 +94,25 @@
     });
 </script>
 {% endblock %}
+
+{# Ce fichier contact.html.twig est une page de contact permettant aux utilisateurs d'envoyer un message et de consulter les coordonnées de l'organisation. Voici un résumé :
+
+1. **Formulaire de contact :**
+   - Un formulaire est inclus pour collecter le prénom, le nom, l'email et le message de l'utilisateur.
+   - Les champs du formulaire sont accessibles avec des labels clairs et des attributs comme `aria-required="true"` pour indiquer les champs obligatoires.
+   - Un bouton "Envoyer le message" est fourni avec un `aria-label` pour décrire son action.
+
+2. **Informations de contact :**
+   - Une section affiche les coordonnées de l'organisation, incluant l'adresse, le numéro de téléphone, les horaires et un email cliquable.
+   - Les icônes décoratives sont marquées avec `aria-hidden="true"` pour éviter qu'elles ne soient lues par les lecteurs d'écran.
+   - La liste des coordonnées est structurée avec `role="list"` et `aria-label` pour une meilleure accessibilité.
+
+3. **Carte interactive :**
+   - Une carte OpenStreetMap est intégrée pour afficher l'emplacement de l'organisation.
+   - Un marqueur avec un popup "Bienvenue" est ajouté pour indiquer l'emplacement exact.
+
+4. **Design et accessibilité :**
+   - La page utilise des classes Tailwind CSS pour un design moderne et responsive.
+   - Les rôles ARIA et les attributs d'accessibilité garantissent une expérience utilisateur inclusive.
+
+Ce fichier offre une interface claire, accessible et fonctionnelle pour contacter l'organisation. #}

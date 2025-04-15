@@ -1,221 +1,219 @@
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>
-			{% block title %}SaintéTour
-			{% endblock %}
-		</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            {% block title %}SaintéTour
+            {% endblock %}
+        </title>
 
-		{% block stylesheets %}
-			<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-		{% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+        {% endblock %}
 
-		<!-- Intégration de Font Awesome et Leaflet -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+        <!-- Intégration de Font Awesome et Leaflet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-		<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-		<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-	</head>
-	<body class="bg-gray-100 min-h-screen flex flex-col">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    </head>
+    <body class="bg-gray-100 min-h-screen flex flex-col">
 
-		<header class="bg-green-600 shadow-lg relative">
-			<div class="container mx-auto px-4">
-				<nav class="relative flex items-center justify-between py-4">
-					<!-- Logo et nom du site en flex container -->
-					<div class="flex items-center">
-						<a href="{{ path('app_home') }}" class="text-white text-2xl font-bold mr-3">Logo</a>
-						<span class="text-white text-xl font-semibold hidden md:block">SaintéCityTour</span>
-					</div>
+        <!-- Lien pour passer directement au contenu principal -->
+        <a href="#main-content" class="sr-only focus:not-sr-only focus:block bg-green-600 text-white p-2">Passer au contenu principal</a>
 
-					<!-- Menu Hamburger (Mobile) -->
-					<button id="menu-toggle" class="text-white bg-green-700 hover:bg-green-800 transition-colors p-2 rounded-md z-20 lg:hidden focus:outline-none">
-						<i class="fas fa-bars"></i>
-					</button>
-					<button id="menu-close" class="text-white bg-green-700 hover:bg-green-800 transition-colors p-2 rounded-md z-20 lg:hidden focus:outline-none hidden">
-						<i class="fas fa-times"></i>
-					</button>
+        <header class="bg-green-600 shadow-lg relative" role="banner">
+            <div class="container mx-auto px-4">
+                <nav class="relative flex items-center justify-between py-4" role="navigation" aria-label="Navigation principale">
+                    <!-- Logo et nom du site en flex container -->
+                    <div class="flex items-center">
+                        <a href="{{ path('app_home') }}" class="text-white text-2xl font-bold mr-3">Logo</a>
+                        <span class="text-white text-xl font-semibold hidden md:block">SaintéCityTour</span>
+                    </div>
 
-					<!-- Navigation Links -->
-					<div id="menu" class="fixed inset-0 lg:relative bg-green-600 lg:bg-transparent pt-20 lg:pt-0 z-10 transform translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out lg:flex lg:items-center lg:justify-end">
-						<div class="container mx-auto px-4 lg:p-0 flex flex-col lg:flex-row lg:items-center">
-							<!-- Navigation principale -->
-							<ul class="flex flex-col lg:flex-row lg:mr-8 mb-6 lg:mb-0 items-center">
-								<li class="py-2 lg:py-0 lg:px-3">
-									<a href="{{ path('app_lieu') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Lieux</a>
-								</li>
-								<li class="py-2 lg:py-0 lg:px-3">
-									<a href="{{ path('app_itineraire') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Itinéraires</a>
-								</li>
-								<li class="py-2 lg:py-0 lg:px-3">
-									<a href="{{ path('app_map') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Carte</a>
-								</li>
-							</ul>
+                    <!-- Menu Hamburger (Mobile) -->
+                    <button id="menu-toggle" aria-expanded="false" aria-controls="menu" class="text-white bg-green-700 hover:bg-green-800 transition-colors p-2 rounded-md z-20 lg:hidden focus:outline-none">
+                        <i class="fas fa-bars" aria-hidden="true"></i>
+                    </button>
+                    <button id="menu-close" aria-expanded="true" aria-controls="menu" class="text-white bg-green-700 hover:bg-green-800 transition-colors p-2 rounded-md z-20 lg:hidden focus:outline-none hidden">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
 
-							<!-- Séparateur vertical pour desktop -->
-							<div class="hidden lg:block h-6 w-px bg-green-400 mx-2"></div>
+                    <!-- Navigation Links -->
+                    <div id="menu" class="fixed inset-0 lg:relative bg-green-600 lg:bg-transparent pt-20 lg:pt-0 z-10 transform translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out lg:flex lg:items-center lg:justify-end">
+                        <div class="container mx-auto px-4 lg:p-0 flex flex-col lg:flex-row lg:items-center">
+                            <!-- Navigation principale -->
+                            <ul class="flex flex-col lg:flex-row lg:mr-8 mb-6 lg:mb-0 items-center">
+                                <li class="py-2 lg:py-0 lg:px-3">
+                                    <a href="{{ path('app_lieu') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Lieux</a>
+                                </li>
+                                <li class="py-2 lg:py-0 lg:px-3">
+                                    <a href="{{ path('app_itineraire') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Itinéraires</a>
+                                </li>
+                                <li class="py-2 lg:py-0 lg:px-3">
+                                    <a href="{{ path('app_map') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Carte</a>
+                                </li>
+                            </ul>
 
-							<!-- Séparateur horizontal pour mobile -->
-							<div class="w-full h-px bg-green-500 my-4 lg:hidden"></div>
+                            <!-- Séparateur vertical pour desktop -->
+                            <div class="hidden lg:block h-6 w-px bg-green-400 mx-2"></div>
 
-							<!-- Right Menu -->
-							<ul class="flex flex-col lg:flex-row items-center">
-								{% if app.user %}
-									<li class="py-2 lg:py-0 lg:px-3">
-										<a href="{{ path('app_profile') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
-											<i class="fas fa-user mr-2"></i>Profil
-										</a>
-									</li>
-									<li class="py-2 lg:py-0 lg:px-3">
-										<a href="{{ path('app_logout') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
-											<i class="fas fa-sign-out-alt mr-2"></i>Déconnexion
-										</a>
-									</li>
-								{% else %}
-									<li class="py-2 lg:py-0 lg:px-3">
-										<a href="{{ path('app_login') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
-											<i class="fas fa-sign-in-alt mr-2"></i>Connexion
-										</a>
-									</li>
-									<li class="py-2 lg:py-0 lg:px-3 mt-2 lg:mt-0">
-										<a href="{{ path('app_register') }}" class="bg-white text-green-600 hover:bg-green-100 transition-colors px-4 py-2 rounded-md font-bold flex items-center">
-											<i class="fas fa-user-plus mr-2"></i>Inscription
-										</a>
-									</li>
-								{% endif %}
-							</ul>
-						</div>
-					</div>
-				</nav>
-			</div>
-		</header>
+                            <!-- Séparateur horizontal pour mobile -->
+                            <div class="w-full h-px bg-green-500 my-4 lg:hidden"></div>
 
-		<main class="flex-grow bg-gray-100">
-			{% include 'partials/flash.html.twig' %}
-			{% block body %}{% endblock %}
-		</main>
+                            <!-- Right Menu -->
+                            <ul class="flex flex-col lg:flex-row items-center">
+                                {% if app.user %}
+                                    <li class="py-2 lg:py-0 lg:px-3">
+                                        <a href="{{ path('app_profile') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
+                                            <i class="fas fa-user mr-2" aria-hidden="true"></i>Profil
+                                        </a>
+                                    </li>
+                                    <li class="py-2 lg:py-0 lg:px-3">
+                                        <a href="{{ path('app_logout') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
+                                            <i class="fas fa-sign-out-alt mr-2" aria-hidden="true"></i>Déconnexion
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="py-2 lg:py-0 lg:px-3">
+                                        <a href="{{ path('app_login') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
+                                            <i class="fas fa-sign-in-alt mr-2" aria-hidden="true"></i>Connexion
+                                        </a>
+                                    </li>
+                                    <li class="py-2 lg:py-0 lg:px-3 mt-2 lg:mt-0">
+                                        <a href="{{ path('app_register') }}" class="bg-white text-green-600 hover:bg-green-100 transition-colors px-4 py-2 rounded-md font-bold flex items-center">
+                                            <i class="fas fa-user-plus mr-2" aria-hidden="true"></i>Inscription
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
 
-		<footer class="bg-black text-white py-6">
-			<!-- Le contenu du footer reste inchangé -->
-			<div class="container mx-auto px-4">
-				<!-- Logo et Slogan -->
-				<div class="flex flex-col items-center mb-6">
-					<div class="text-2xl font-bold mb-2">SaintéCityTour</div>
-					<p class="text-sm text-gray-400 text-center">Découvrez Saint-Étienne autrement</p>
-				</div>
+        <main id="main-content" class="flex-grow bg-gray-100">
+            {% include 'partials/flash.html.twig' %}
+            {% block body %}{% endblock %}
+        </main>
 
-				<!-- Séparateur stylisé -->
-				<div class="flex justify-center mb-6">
-					<div class="w-16 h-1 bg-green-600 rounded-full"></div>
-				</div>
+        <footer class="bg-black text-white py-6" role="contentinfo">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col items-center mb-6">
+                    <div class="text-2xl font-bold mb-2">SaintéCityTour</div>
+                    <p class="text-sm text-gray-400 text-center">Découvrez Saint-Étienne autrement</p>
+                </div>
 
-				<!-- Liens et Informations -->
-				<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8">
-					<!-- Colonne 1 : Liens Légaux -->
-					<div class="flex flex-col items-center sm:items-start space-y-3">
-						<h3 class="text-lg font-semibold mb-2 text-green-500">Informations légales</h3>
-						<a href="{{ path('app_mentions_legales') }}" class="hover:text-green-400 transition-colors duration-300">Mentions Légales</a>
-						<a href="{{ path('app_politique_confidentialite') }}" class="hover:text-green-400 transition-colors duration-300">Politique de confidentialité</a>
-						<a href="{{ path('app_conditions_utilisation') }}" class="hover:text-green-400 transition-colors duration-300">Conditions d'utilisation</a>
-					</div>
+                <div class="flex justify-center mb-6">
+                    <div class="w-16 h-1 bg-green-600 rounded-full"></div>
+                </div>
 
-					<!-- Colonne 2 : À propos -->
-					<div class="flex flex-col items-center sm:items-start space-y-3">
-						<h3 class="text-lg font-semibold mb-2 text-green-500">À propos</h3>
-						<a href="{{ path('app_qui_sommes_nous') }}" class="hover:text-green-400 transition-colors duration-300">Qui sommes-nous ?</a>
-						<a href="{{ path('contact_index') }}" class="hover:text-green-400 transition-colors duration-300">Nous contacter</a>
-					</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8">
+                    <div class="flex flex-col items-center sm:items-start space-y-3">
+                        <h3 class="text-lg font-semibold mb-2 text-green-500">Informations légales</h3>
+                        <a href="{{ path('app_mentions_legales') }}" class="hover:text-green-400 transition-colors duration-300">Mentions Légales</a>
+                        <a href="{{ path('app_politique_confidentialite') }}" class="hover:text-green-400 transition-colors duration-300">Politique de confidentialité</a>
+                        <a href="{{ path('app_conditions_utilisation') }}" class="hover:text-green-400 transition-colors duration-300">Conditions d'utilisation</a>
+                    </div>
 
-					<!-- Colonne 3 : Réseaux sociaux -->
-					<div class="flex flex-col items-center md:items-start space-y-3">
-						<h3 class="text-lg font-semibold mb-2 text-green-500">Suivez-nous</h3>
-						<div class="flex space-x-4">
-							<a href="#" class="text-white hover:text-green-400 transition-colors duration-300">
-								<i class="fab fa-facebook-f text-xl"></i>
-							</a>
-							<a href="#" class="text-white hover:text-green-400 transition-colors duration-300">
-								<i class="fab fa-instagram text-xl"></i>
-							</a>
-							<a href="#" class="text-white hover:text-green-400 transition-colors duration-300">
-								<i class="fab fa-twitter text-xl"></i>
-							</a>
-							<a href="#" class="text-white hover:text-green-400 transition-colors duration-300">
-								<i class="fab fa-youtube text-xl"></i>
-							</a>
-						</div>
-						<p class="text-sm text-gray-400 mt-2">Restez informés de nos actualités</p>
-					</div>
-				</div>
+                    <div class="flex flex-col items-center sm:items-start space-y-3">
+                        <h3 class="text-lg font-semibold mb-2 text-green-500">À propos</h3>
+                        <a href="{{ path('app_qui_sommes_nous') }}" class="hover:text-green-400 transition-colors duration-300">Qui sommes-nous ?</a>
+                        <a href="{{ path('contact_index') }}" class="hover:text-green-400 transition-colors duration-300">Nous contacter</a>
+                    </div>
 
-				<!-- Barre de séparation -->
-				<div class="h-px bg-gray-800 w-full my-4"></div>
+                    <div class="flex flex-col items-center md:items-start space-y-3">
+                        <h3 class="text-lg font-semibold mb-2 text-green-500">Suivez-nous</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-white hover:text-green-400 transition-colors duration-300" aria-label="Suivez-nous sur Facebook">
+                                <i class="fab fa-facebook-f text-xl" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-green-400 transition-colors duration-300" aria-label="Suivez-nous sur Instagram">
+                                <i class="fab fa-instagram text-xl" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-green-400 transition-colors duration-300" aria-label="Suivez-nous sur Twitter">
+                                <i class="fab fa-twitter text-xl" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-green-400 transition-colors duration-300" aria-label="Suivez-nous sur YouTube">
+                                <i class="fab fa-youtube text-xl" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-2">Restez informés de nos actualités</p>
+                    </div>
+                </div>
 
-				<!-- Copyright et Mention du site -->
-				<div class="flex flex-col md:flex-row justify-between items-center mt-4">
-					<p class="text-sm text-gray-400 mb-2 md:mb-0">&copy; 2025 SaintéCityTour. Tous droits réservés.</p>
-					<div class="flex items-center">
-						<span class="text-sm text-gray-400">Fait avec</span>
-						<i class="fas fa-heart text-green-500 mx-1"></i>
-						<span class="text-sm text-gray-400">à Saint-Étienne</span>
-					</div>
-				</div>
-			</div>
-		</footer>
+                <div class="h-px bg-gray-800 w-full my-4"></div>
 
-		{% block javascripts %}
-			<script>
-				// Menu toggle logic amélioré
-				document.addEventListener('DOMContentLoaded', function () {
-					const menuToggle = document.getElementById('menu-toggle');
-					const menuClose = document.getElementById('menu-close');
-					const menu = document.getElementById('menu');
-					
-					// Fonction pour ouvrir le menu
-					function openMenu() {
-						menu.classList.remove('translate-x-full');
-						menu.classList.add('translate-x-0');
-						menuToggle.classList.add('hidden');
-						menuClose.classList.remove('hidden');
-						document.body.classList.add('overflow-hidden'); // Empêche le défilement du corps
-					}
-					
-					// Fonction pour fermer le menu
-					function closeMenu() {
-						menu.classList.remove('translate-x-0');
-						menu.classList.add('translate-x-full');
-						menuToggle.classList.remove('hidden');
-						menuClose.classList.add('hidden');
-						document.body.classList.remove('overflow-hidden'); // Permet le défilement du corps
-					}
-					
-					// Gestionnaires d'événements
-					menuToggle.addEventListener('click', openMenu);
-					menuClose.addEventListener('click', closeMenu);
-					
-					// Fermer le menu si l'écran devient plus grand (transition de mobile à desktop)
-					window.addEventListener('resize', function() {
-						if (window.innerWidth >= 1024) { // Breakpoint lg de Tailwind
-							menu.classList.remove('translate-x-0', 'translate-x-full');
-							menuToggle.classList.remove('hidden');
-							menuClose.classList.add('hidden');
-							document.body.classList.remove('overflow-hidden');
-						} else if (!menu.classList.contains('translate-x-0')) {
-							menu.classList.add('translate-x-full');
-						}
-					});
-					
-					// Fermer le menu lorsqu'un lien est cliqué (pour mobile)
-					const menuLinks = menu.querySelectorAll('a');
-					menuLinks.forEach(link => {
-						link.addEventListener('click', function() {
-							if (window.innerWidth < 1024) {
-								closeMenu();
-							}
-						});
-					});
-				});
-			</script>
-		{% endblock %}
-	</body>
+                <div class="flex flex-col md:flex-row justify-between items-center mt-4">
+                    <p class="text-sm text-gray-400 mb-2 md:mb-0">&copy; 2025 SaintéCityTour. Tous droits réservés.</p>
+                    <div class="flex items-center">
+                        <span class="text-sm text-gray-400">Fait avec</span>
+                        <i class="fas fa-heart text-green-500 mx-1" aria-hidden="true"></i>
+                        <span class="text-sm text-gray-400">à Saint-Étienne</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        {% block javascripts %}
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const menuToggle = document.getElementById('menu-toggle');
+                    const menuClose = document.getElementById('menu-close');
+                    const menu = document.getElementById('menu');
+                    
+                    function openMenu() {
+                        menu.classList.remove('translate-x-full');
+                        menu.classList.add('translate-x-0');
+                        menuToggle.classList.add('hidden');
+                        menuClose.classList.remove('hidden');
+                        menuToggle.setAttribute('aria-expanded', 'true');
+                    }
+                    
+                    function closeMenu() {
+                        menu.classList.remove('translate-x-0');
+                        menu.classList.add('translate-x-full');
+                        menuToggle.classList.remove('hidden');
+                        menuClose.classList.add('hidden');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                    }
+                    
+                    menuToggle.addEventListener('click', openMenu);
+                    menuClose.addEventListener('click', closeMenu);
+                    
+                    window.addEventListener('resize', function() {
+                        if (window.innerWidth >= 1024) {
+                            menu.classList.remove('translate-x-0', 'translate-x-full');
+                            menuToggle.classList.remove('hidden');
+                            menuClose.classList.add('hidden');
+                        } else if (!menu.classList.contains('translate-x-0')) {
+                            menu.classList.add('translate-x-full');
+                        }
+                    });
+                    
+                    const menuLinks = menu.querySelectorAll('a');
+                    menuLinks.forEach(link => {
+                        link.addEventListener('click', function() {
+                            if (window.innerWidth < 1024) {
+                                closeMenu();
+                            }
+                        });
+                    });
+                });
+            </script>
+        {% endblock %}
+    </body>
 </html>
+
+{# 1. Le fichier base.html.twig définit la structure de base du site, incluant l'en-tête, le contenu principal et le pied de page.  
+2. Il intègre des styles CSS et des bibliothèques comme Font Awesome et Leaflet pour les icônes et les cartes interactives.  
+3. Un lien "Passer au contenu principal" est ajouté pour améliorer l'accessibilité et permettre aux utilisateurs de naviguer rapidement.  
+4. L'en-tête contient un menu de navigation principal avec un logo, des liens vers différentes sections du site, et un menu hamburger pour les appareils mobiles.  
+5. Le menu mobile est contrôlé par des boutons avec des attributs ARIA pour indiquer son état (ouvert ou fermé).  
+6. Le contenu principal est défini dans un bloc `<main>` avec un ID pour permettre une navigation rapide.  
+7. Le pied de page inclut des informations légales, des liens vers des pages importantes, et des icônes de réseaux sociaux avec des descriptions accessibles.  
+8. Des messages flash sont inclus pour afficher des notifications dynamiques.  
+9. Un script JavaScript gère l'ouverture et la fermeture du menu mobile, ainsi que son comportement lors des redimensionnements de la fenêtre.  
+10. Le fichier utilise des pratiques d'accessibilité comme les rôles ARIA, des descriptions pour les icônes, et un contraste visuel optimisé.   #}

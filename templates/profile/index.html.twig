@@ -5,22 +5,22 @@
 {% block body %}
     <section class="bg-cover bg-center h-screen" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}');">
         <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
-            <div class="bg-white bg-opacity-70 backdrop-blur-lg p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 class="text-3xl font-bold text-center mb-6 text-black">Mon Profil</h2>
+            <div class="bg-white bg-opacity-70 backdrop-blur-lg p-8 rounded-lg shadow-lg w-full max-w-md" role="region" aria-labelledby="profile-title">
+                <h2 id="profile-title" class="text-3xl font-bold text-center mb-6 text-black">Mon Profil</h2>
 
                 <div class="space-y-4 text-black">
                     <div class="flex flex-col">
-                        <span class="text-black font-semibold">Pseudo :</span>
-                        <span class="text-lg">{{ user.pseudo }}</span>
+                        <span class="text-black font-semibold" aria-label="Pseudo">Pseudo :</span>
+                        <span class="text-lg" aria-labelledby="profile-pseudo">{{ user.pseudo }}</span>
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-black font-semibold">Email :</span>
-                        <span class="text-lg">{{ user.email }}</span>
+                        <span class="text-black font-semibold" aria-label="Email">Email :</span>
+                        <span class="text-lg" aria-labelledby="profile-email">{{ user.email }}</span>
                     </div>
                 </div>
 
                 <div class="mt-6 text-center">
-                    <a href="{{ path('app_profile_edit') }}" class="px-6 py-3 bg-green-600 hover:bg-blue-700 text-black font-bold rounded-md shadow-lg transition duration-300">
+                    <a href="{{ path('app_profile_edit') }}" class="px-6 py-3 bg-green-600 hover:bg-blue-700 text-black font-bold rounded-md shadow-lg transition duration-300" role="button" aria-label="Modifier mon profil">
                         Modifier mon profil
                     </a>
                 </div>
@@ -28,3 +28,14 @@
         </div>
     </section>
 {% endblock %}
+
+{# 1. Ce fichier index.html.twig étend le fichier de base `base.html.twig` pour hériter de la structure principale du site.  
+2. Il affiche une section pleine page avec une image de fond et une superposition sombre pour mettre en avant les informations du profil utilisateur.  
+3. Le titre "Mon Profil" est affiché en haut de la section avec un ID pour lier la région via ARIA.  
+4. Les informations du profil, comme le pseudo et l'email de l'utilisateur, sont affichées dans des blocs distincts.  
+5. Chaque champ est accompagné d'attributs ARIA (`aria-label` et `aria-labelledby`) pour améliorer l'accessibilité.  
+6. Un bouton stylisé permet à l'utilisateur de naviguer vers la page de modification de son profil.  
+7. Le bouton "Modifier mon profil" utilise `role="button"` et `aria-label` pour décrire clairement son action.  
+8. La structure utilise des classes Tailwind CSS pour un design moderne et responsive.  
+9. Le fichier applique des pratiques d'accessibilité comme les rôles ARIA et des descriptions claires pour les champs et actions.  
+10. La mise en page est centrée et optimisée pour une expérience utilisateur agréable. #}
