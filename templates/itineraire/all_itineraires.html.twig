@@ -17,7 +17,7 @@
                             <p class="text-sm text-gray-600 mb-4">{{ itineraire.description|raw|striptags|slice(0, 100) ~ '...' }}</p>
                             <a 
                                 href="{{ path('itineraire_show', {'id': itineraire.id}) }}" 
-                                class="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition-colors"
+                                class="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-500 transition-colors"
                                 aria-label="Voir les détails de l'itinéraire {{ itineraire.name }}"
                             >
                                 Voir détails
