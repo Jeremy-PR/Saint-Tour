@@ -27,10 +27,12 @@
             <div class="container mx-auto px-4">
                 <nav class="relative flex items-center justify-between py-4" role="navigation" aria-label="Navigation principale">
                     <!-- Logo et nom du site en flex container -->
-                    <div class="flex items-center">
-                        <a href="{{ path('app_home') }}" class="text-white text-2xl font-bold mr-3">Logo</a>
-                        <span class="text-white text-xl font-semibold hidden md:block">SaintéCityTour</span>
-                    </div>
+                 <div class="flex items-center">
+    <a href="{{ path('app_home') }}" class="flex items-center">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo SaintéCityTour" class="h-6 w-auto mr-2">
+        <span class="text-white text-xl font-semibold hidden md:block">SaintéCityTour</span>
+    </a>
+</div>
 
                     <!-- Menu Hamburger (Mobile) -->
                     <button id="menu-toggle" aria-expanded="false" aria-controls="menu" class="text-white bg-green-700 hover:bg-green-800 transition-colors p-2 rounded-md z-20 lg:hidden focus:outline-none">

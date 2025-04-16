@@ -34,7 +34,7 @@ final class RegistrationController extends AbstractController
             );
     
             // Affecter le rôle ROLE_USER par défaut
-            $user->setRoles(['ROLE_USER']);
+            // $user->setRoles(['ROLE_USER']);// optionnel car le getRole de User ajoute automatiquement le ROLE_USER
     
             // Persist l'utilisateur
             $entityManager->persist($user);

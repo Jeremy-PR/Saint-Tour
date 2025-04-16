@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Lieu;
+use App\Repository\LieuRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,12 +13,9 @@ use Symfony\Component\Routing\Attribute\Route;
 final class LieuController extends AbstractController
 {
     #[Route('/lieu', name: 'app_lieu')]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(LieuRepository $lieuRepository): Response
     {
-
-         
-           $lieux = $entityManager->getRepository(Lieu::class)->findAll();
-
+        $lieux = $lieuRepository->findAll();
 
         return $this->render('lieu/all_lieux.html.twig', [
             'lieux' => $lieux,
@@ -25,11 +23,10 @@ final class LieuController extends AbstractController
     }
 
     #[Route('/lieu/{id}', name: 'lieu_show')]
-public function show(Lieu $lieu): Response
-{
-    return $this->render('lieu/show.html.twig', [
-        'lieu' => $lieu,
-    ]);
-}
-
+    public function show(Lieu $lieu): Response
+    {
+        return $this->render('lieu/show.html.twig', [
+            'lieu' => $lieu,
+        ]);
+    }
 }

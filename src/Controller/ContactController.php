@@ -17,27 +17,27 @@ final class ContactController extends AbstractController
     public function index(Request $request, MailerInterface $mailer): Response
     {
         $data = new ContactDTO();
-        
+
         /** @var User */
         $user = $this->getUser();
-        
+
         if ($user) {
             $data->email = $user->getEmail();
-  }
+        }
 
 
         $form = $this->createForm(ContactType::class, $data);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $mail = (new TemplatedEmail())
-                ->from($data->email)
-                ->replyTo($data->email)
-                ->to('saintecitytour@gmail.com')
-                ->subject('Demande de contact')
-                ->htmlTemplate('emails/contact.html.twig')
-                ->context(['data' => $data]);
+                    ->from($data->email)
+                    ->replyTo($data->email)
+                    ->to('saintecitytour@gmail.com')
+                    ->subject('Demande de contact')
+                    ->htmlTemplate('emails/contact.html.twig')
+                    ->context(['data' => $data]);
 
 
                 $mailer->send($mail);

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AvisRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -39,8 +40,10 @@ class Avis
     private ?Itineraire $itineraire = null;
 
   
-
-    
+    public function __construct($created_at = new DateTimeImmutable())
+    {
+        $this->created_at = $created_at;
+    }
 
 
     public function getId(): ?int

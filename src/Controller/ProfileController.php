@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ProfileType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,33 +31,13 @@ class ProfileController extends AbstractController
     #[Route('/edit', name: 'app_profile_edit')]
     public function edit(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
-        /** @var \App\Entity\User $user */
+        /** @var User $user */
         $user = $this->getUser();
-        if (!$user) {
-            throw $this->createNotFoundException('Utilisateur non trouvé');
-        }
+        // if (!$user) {
+        //     throw $this->createNotFoundException('Utilisateur non trouvé');
+        // }
 
-        // Création du formulaire
-        $form = $this->createFormBuilder($user)
-            ->add('pseudo', TextType::class, ['label' => 'Pseudo'])
-            ->add('email', TextType::class, ['label' => 'Email'])
-            ->add('currentPassword', PasswordType::class, [
-                'label' => 'Mot de passe actuel',
-                'mapped' => false, // Ce champ ne sera pas directement lié à l'entité User
-            ])
-            ->add('newPassword', PasswordType::class, [
-                'label' => 'Nouveau mot de passe',
-                'required' => false, // Le champ n'est pas obligatoire
-                'mapped' => false, // Ce champ ne sera pas directement lié à l'entité User
-            ])
-            ->add('confirmPassword', PasswordType::class, [
-                'label' => 'Confirmer le nouveau mot de passe',
-                'required' => false, // Le champ n'est pas obligatoire
-                'mapped' => false, // Ce champ ne sera pas directement lié à l'entité User
-            ])
-            ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
-            ->getForm();
-
+        $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Avis;
 use App\Entity\Itineraire;
-use App\Entity\Lieu;
 use App\Form\AvisType;
+use App\Repository\ItineraireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,9 +15,9 @@ use Symfony\Component\Routing\Attribute\Route;
 final class ItineraireController extends AbstractController
 {
     #[Route('/itineraire', name: 'app_itineraire')]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(ItineraireRepository $itineraireRepository): Response
     {
-        $itineraires = $entityManager->getRepository(Itineraire::class)->findAll();
+        $itineraires = $itineraireRepository->findAll();
         return $this->render('itineraire/all_itineraires.html.twig', [
             'itineraires' => $itineraires,
         ]);
@@ -44,7 +44,7 @@ final class ItineraireController extends AbstractController
         $avis = new Avis();
         $avis->setItineraire($itineraire);
         $avis->setUser($this->getUser());
-        $avis->setCreatedAt(new \DateTimeImmutable());
+        // $avis->setCreatedAt(new \DateTimeImmutable()); // Optionnel, car déjà défini dans le constructeur
 
         // Créer le formulaire
         $form = $this->createForm(AvisType::class, $avis);
