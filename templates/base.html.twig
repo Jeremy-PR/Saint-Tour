@@ -18,12 +18,12 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     </head>
-    <body class="bg-gray-100 min-h-screen flex flex-col">
+    <body class="bg-primary-color-green-main min-h-screen flex flex-col">
 
         <!-- Lien pour passer directement au contenu principal -->
-        <a href="#main-content" class="sr-only focus:not-sr-only focus:block bg-green-600 text-white p-2">Passer au contenu principal</a>
+        <a href="#main-content" class="sr-only focus:not-sr-only focus:block bg-primary-color-green-main text-white p-2">Passer au contenu principal</a>
 
-        <header class="bg-green-600 shadow-lg relative" role="banner">
+        <header class="bg-primary-color-primary-color-green-main shadow-lg relative" role="banner">
             <div class="container mx-auto px-4">
                 <nav class="relative flex items-center justify-between py-4" role="navigation" aria-label="Navigation principale">
                     <!-- Logo et nom du site en flex container -->
@@ -38,12 +38,12 @@
                     <button id="menu-toggle" aria-expanded="false" aria-controls="menu" class="text-white bg-green-700 hover:bg-green-800 transition-colors p-2 rounded-md z-20 lg:hidden focus:outline-none">
                         <i class="fas fa-bars" aria-hidden="true"></i>
                     </button>
-                    <button id="menu-close" aria-expanded="true" aria-controls="menu" class="text-white bg-green-700 hover:bg-green-800 transition-colors p-2 rounded-md z-20 lg:hidden focus:outline-none hidden">
+                    <button id="menu-close" aria-expanded="true" aria-controls="menu" class="text-white bg-primary-color-green-main hover:bg-green-800 transition-colors p-2 rounded-md z-20 lg:hidden focus:outline-none hidden">
                         <i class="fas fa-times" aria-hidden="true"></i>
                     </button>
 
                     <!-- Navigation Links -->
-                    <div id="menu" class="fixed inset-0 lg:relative bg-green-600 lg:bg-transparent pt-20 lg:pt-0 z-10 transform translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out lg:flex lg:items-center lg:justify-end">
+                    <div id="menu" class="fixed inset-0 lg:relative bg-primary-color-green-main lg:bg-transparent pt-20 lg:pt-0 z-10 transform translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out lg:flex lg:items-center lg:justify-end">
                         <div class="container mx-auto px-4 lg:p-0 flex flex-col lg:flex-row lg:items-center">
                             <!-- Navigation principale -->
                             <ul class="flex flex-col lg:flex-row lg:mr-8 mb-6 lg:mb-0 items-center">
@@ -84,7 +84,7 @@
                                         </a>
                                     </li>
                                     <li class="py-2 lg:py-0 lg:px-3 mt-2 lg:mt-0">
-                                        <a href="{{ path('app_register') }}" class="bg-white text-green-600 hover:bg-green-100 transition-colors px-4 py-2 rounded-md font-bold flex items-center">
+                                        <a href="{{ path('app_register') }}" class="bg-white text-primary-color-green-main hover:bg-green-100 transition-colors px-4 py-2 rounded-md font-bold flex items-center">
                                             <i class="fas fa-user-plus mr-2" aria-hidden="true"></i>Inscription
                                         </a>
                                     </li>
@@ -109,7 +109,7 @@
                 </div>
 
                 <div class="flex justify-center mb-6">
-                    <div class="w-16 h-1 bg-green-600 rounded-full"></div>
+                    <div class="w-16 h-1 bg-primary-color-green-main rounded-full"></div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8">

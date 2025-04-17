@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<section class="bg-cover bg-center h-screen" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}');">
-    <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
+<section class="min-h-screen bg-cover bg-center" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}');">
+    <div class="flex items-center justify-center min-h-screen bg-black bg-opacity-50 px-4 py-12">
         <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md" role="form" aria-labelledby="register-title">
             <h2 id="register-title" class="text-2xl font-semibold text-center mb-4 text-gray-700">Créez votre compte</h2>
 
@@ -60,28 +60,27 @@
                 }) }}
                 <label for="{{ registrationForm.agreeTerms.vars.id }}" class="text-sm text-gray-700">
                     J'accepte les
-                    <a href="/conditions-utilisation" class="text-green-700 underline hover:text-green-500">conditions générales d'utilisation</a>
+                    <a href="/conditions-utilisation" class="text-primary-color-green-main underline hover:text-green-500">conditions générales d'utilisation</a>
                     et la
-                    <a href="/politique-confidentialite" class="text-green-700 underline hover:text-green-500">politique de confidentialité</a>.
+                    <a href="/politique-confidentialite" class="text-primary-color-green-main underline hover:text-green-500">politique de confidentialité</a>.
                 </label>
             </div>
             {{ form_errors(registrationForm.agreeTerms, {'attr': {'class': 'text-red-500 text-sm', 'role': 'alert'}}) }}
 
             <!-- Bouton de soumission -->
-            <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-md mt-4 hover:bg-green-700 focus:outline-none" aria-label="Créer un compte">
+            <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-md mt-4 hover:bg-primary-color-green-main focus:outline-none" aria-label="Créer un compte">
                 Créer compte
             </button>
 
             <!-- Lien vers la page de connexion -->
             <div class="text-center mt-4">
-                <a href="{{ path('app_login') }}" class="text-sm text-green-700 hover:underline">Vous avez déjà un compte ? Connectez-vous ici</a>
+                <a href="{{ path('app_login') }}" class="text-sm text-primary-color-green-main hover:underline">Vous avez déjà un compte ? Connectez-vous ici</a>
             </div>
 
             {{ form_end(registrationForm) }}
         </div>
     </div>
 </section>
-
 {% endblock %}
 
 {# 1. Ce fichier register.html.twig étend le fichier de base `base.html.twig` pour hériter de la structure principale du site.  

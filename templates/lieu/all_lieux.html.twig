@@ -5,59 +5,63 @@
 {% block body %}
     <div class="min-h-screen flex flex-col">
         <!-- Contenu principal -->
-        <div class="bg-green-100 flex-1 py-12">
-            <h1 class="text-3xl font-bold text-center mb-8 text-green-800" role="heading" aria-level="1">Tous les Lieux</h1>
+        <div class="bg-opacity-80 flex-1 py-8 md:py-12 bg-cover bg-center" style="background-image: url('{{ asset('images/bgimageedit.png') }}');">
+            <div class="container mx-auto px-4 max-w-7xl">
+                <h1 class="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8 text-green-800" role="heading" aria-level="1">Tous les Lieux</h1>
 
-            <!-- Menu déroulant pour sélectionner un lieu -->
-            <div class="flex justify-center mb-8">
-                <label for="lieu-select" class="sr-only">Sélectionnez un lieu</label>
-                <select 
-                    id="lieu-select" 
-                    class="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 w-full max-w-md"
-                    onchange="redirectToLieu(this)"
-                    aria-label="Menu déroulant pour sélectionner un lieu"
-                >
-                    <option value="">-- Sélectionnez un lieu --</option>
-                    {% for lieu in lieux %}
-                        <option value="{{ path('lieu_show', {'id': lieu.id}) }}">{{ lieu.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <!-- Liste des lieux -->
-           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4 sm:px-6 lg:px-8" role="list" aria-label="Liste des lieux">
-    {% for lieu in lieux %}
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl" role="listitem">
-            <div class="w-full h-48 overflow-hidden">
-                <img 
-                    src="{{ asset('uploads/images/' ~ lieu.image) }}" 
-                    alt="Image de {{ lieu.name }}" 
-                    class="w-full h-full object-cover"
-                >
-            </div>
-            <div class="p-4">
-                <h2 class="text-xl font-bold text-gray-800 mb-2">{{ lieu.name }}</h2>
-                <p class="text-sm text-gray-600 mb-4">{{ lieu.description|slice(0, 100) ~ '...' }}</p>
-                <div class="flex justify-between items-center">
-                    <span class="text-sm text-gray-500">Catégorie : 
-                        {% for categorie in lieu.categories %}
-                            {{ categorie.name }}{% if not loop.last %}, {% endif %}
-                        {% endfor %}
-                    </span>
-                    <a 
-                        href="{{ path('lieu_show', {'id': lieu.id}) }}" 
-                        class="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-500 transition-colors"
-                        aria-label="Voir les détails de {{ lieu.name }}"
+                <!-- Menu déroulant pour sélectionner un lieu -->
+                <div class="flex justify-center mb-6 md:mb-10">
+                    <label for="lieu-select" class="sr-only">Sélectionnez un lieu</label>
+                    <select 
+                        id="lieu-select" 
+                        class="p-2 md:p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-color-green-main w-full max-w-md"
+                        onchange="redirectToLieu(this)"
+                        aria-label="Menu déroulant pour sélectionner un lieu"
                     >
-                        Voir détails
-                    </a>
+                        <option value="">-- Sélectionnez un lieu --</option>
+                        {% for lieu in lieux %}
+                            <option value="{{ path('lieu_show', {'id': lieu.id}) }}">{{ lieu.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Liste des lieux -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 md:gap-8 lg:gap-10" role="list" aria-label="Liste des lieux">
+                    {% for lieu in lieux %}
+                        <div class="bg-primary-color-green-main rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-2xl" role="listitem">
+                            <div class="w-full h-48 sm:h-52 md:h-56 lg:h-60 overflow-hidden">
+                                <img 
+                                    src="{{ asset('uploads/images/' ~ lieu.image) }}" 
+                                    alt="Image de {{ lieu.name }}" 
+                                    class="w-full h-full object-cover"
+                                >
+                            </div>
+                            <div class="p-4 md:p-5 lg:p-6">
+                                <h2 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-3">{{ lieu.name }}</h2>
+                                <p class="text-sm text-white mb-3 md:mb-4">{{ lieu.description|slice(0, 100) ~ '...' }}</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs md:text-sm text-white">Catégorie : 
+                                        {% for categorie in lieu.categories %}
+                                            {{ categorie.name }}{% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </span>
+                                    <a 
+                                        href="{{ path('lieu_show', {'id': lieu.id}) }}" 
+                                        class="bg-white text-primary-color-green-main px-2 py-1 md:px-3 md:py-2 rounded-md text-sm hover:bg-gray-300 transition-colors"
+                                        aria-label="Voir les détails de {{ lieu.name }}"
+                                    >
+                                        Voir détails
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p class="col-span-full text-center text-green-800 py-8" aria-label="Aucun lieu disponible">Aucun lieu disponible pour le moment.</p>
+                    {% endfor %}
                 </div>
             </div>
         </div>
-    {% else %}
-        <p class="col-span-full text-center text-green-800" aria-label="Aucun lieu disponible">Aucun lieu disponible pour le moment.</p>
-    {% endfor %}
-</div>
+    </div>
 
     <script>
         // Fonction pour rediriger vers la page du lieu sélectionné

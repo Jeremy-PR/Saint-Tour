@@ -5,40 +5,40 @@
 {% block body %}
     <section class="bg-cover bg-center h-screen" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}');">
         <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
-            <div class="w-full max-w-md bg-white bg-opacity-20 backdrop-blur-lg p-8 rounded-lg shadow-lg" role="form" aria-labelledby="edit-profile-title">
-                <h2 id="edit-profile-title" class="text-3xl font-bold text-center mb-6 text-white">Modifier mon Profil</h2>
+            <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md" role="form" aria-labelledby="edit-profile-title">
+                <h2 id="edit-profile-title" class="text-2xl font-semibold text-center mb-4 text-gray-700">Modifier mon Profil</h2>
 
                 {{ form_start(form, {'attr': {'class': 'space-y-4', 'aria-describedby': 'edit-profile-description'}}) }}
 
                 <!-- Pseudo -->
                 <div class="flex flex-col">
-                    {{ form_label(form.pseudo, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
-                    {{ form_widget(form.pseudo, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
+                    {{ form_label(form.pseudo, null, {'label_attr': {'class': 'text-black font-semibold'}}) }}
+                    {{ form_widget(form.pseudo, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500', 'aria-required': 'true'}}) }}
                 </div>
 
                 <!-- Email -->
                 <div class="flex flex-col">
-                    {{ form_label(form.email, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
-                    {{ form_widget(form.email, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
+                    {{ form_label(form.email, null, {'label_attr': {'class': 'text-black font-semibold'}}) }}
+                    {{ form_widget(form.email, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500', 'aria-required': 'true'}}) }}
                 </div>
 
                 <!-- Mot de passe actuel -->
                 <div class="flex flex-col">
-                    {{ form_label(form.currentPassword, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
-                    {{ form_widget(form.currentPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
+                    {{ form_label(form.currentPassword, null, {'label_attr': {'class': 'text-black font-semibold'}}) }}
+                    {{ form_widget(form.currentPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500', 'aria-required': 'true'}}) }}
                     {{ form_errors(form.currentPassword, {'attr': {'class': 'text-red-500 mt-2'}}) }}
                 </div>
 
                 <!-- Nouveau mot de passe -->
                 <div class="flex flex-col">
-                    {{ form_label(form.newPassword, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
-                    {{ form_widget(form.newPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
+                    {{ form_label(form.newPassword, null, {'label_attr': {'class': 'text-black font-semibold'}}) }}
+                    {{ form_widget(form.newPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500', 'aria-required': 'true'}}) }}
                 </div>
 
                 <!-- Confirmer le mot de passe -->
                 <div class="flex flex-col">
-                    {{ form_label(form.confirmPassword, null, {'label_attr': {'class': 'text-gray-200 font-semibold'}}) }}
-                    {{ form_widget(form.confirmPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
+                    {{ form_label(form.confirmPassword, null, {'label_attr': {'class': 'text-black font-semibold'}}) }}
+                    {{ form_widget(form.confirmPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500', 'aria-required': 'true'}}) }}
                     {{ form_errors(form.confirmPassword, {'attr': {'class': 'text-red-500 mt-2'}}) }}
                 </div>
 

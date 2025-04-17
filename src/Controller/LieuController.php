@@ -7,6 +7,7 @@ use App\Entity\Lieu;
 use App\Repository\LieuRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -23,10 +24,13 @@ final class LieuController extends AbstractController
     }
 
     #[Route('/lieu/{id}', name: 'lieu_show')]
-    public function show(Lieu $lieu): Response
+    public function show(Lieu $lieu, Request $request): Response
     {
+        $referer = $request->headers->get('referer'); // Récupérer l'URL de la page précédente
+    
         return $this->render('lieu/show.html.twig', [
             'lieu' => $lieu,
+            'referer' => $referer, // Passer le referer à la vue
         ]);
     }
 }
