@@ -10,11 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Security\Http\Logout\LogoutHandlerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 #[Route('/profile')]
 #[IsGranted('ROLE_USER')]
@@ -72,20 +71,32 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/delete', name: 'app_profile_delete')]
-    public function delete(EntityManagerInterface $em): Response
-    {
+    #[Route('/delete', name: 'app_profile_delete', methods: ['POST'])]
+    public function delete(
+        Request $request,
+        EntityManagerInterface $em,
+        TokenStorageInterface $tokenStorage
+    ): Response {
         $user = $this->getUser();
+
         if (!$user) {
-            throw $this->createNotFoundException('Utilisateur non trouvé');
+            throw $this->createNotFoundException('Utilisateur non trouvé.');
         }
 
-        // Supprimez l'utilisateur
+    
+
+        // Supprimer l'utilisateur
         $em->remove($user);
         $em->flush();
 
+        // Déconnecter l'utilisateur
+        $tokenStorage->setToken(null); // Supprime le token de la session
+        $request->getSession()->invalidate(); // Invalide la session
+
+        // Ajouter un message flash
         $this->addFlash('success', 'Votre compte a été supprimé avec succès.');
 
+        // Rediriger vers la page d'accueil
         return $this->redirectToRoute('app_home');
     }
 }
