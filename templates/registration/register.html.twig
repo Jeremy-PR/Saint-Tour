@@ -1,83 +1,73 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<section class="min-h-screen bg-cover bg-center" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}');">
-    <div class="flex items-center justify-center min-h-screen bg-black bg-opacity-50 px-4 py-12">
+<section class="bg-cover bg-center h-screen" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}');">
+    <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
         <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md" role="form" aria-labelledby="register-title">
-            <h2 id="register-title" class="text-2xl font-semibold text-center mb-4 text-gray-700">Créez votre compte</h2>
+            <h2 id="register-title" class="text-2xl font-semibold text-center mb-4 text-gray-700">Créer un compte</h2>
 
-            {{ form_start(registrationForm, {'attr': {'class': 'space-y-4', 'aria-describedby': 'register-description'}}) }}
+            {{ form_start(registrationForm, {'attr': {'class': 'space-y-4'}}) }}
 
             <!-- Email -->
             <div class="flex flex-col">
                 {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'text-gray-600'}}) }}
-                {{ form_widget(registrationForm.email, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500', 'aria-required': 'true'}}) }}
-                {{ form_errors(registrationForm.email, {'attr': {'class': 'text-red-500 text-sm', 'role': 'alert'}}) }}
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}}) }}
+                {{ form_errors(registrationForm.email, {'attr': {'class': 'text-red-500 text-sm'}}) }}
             </div>
 
             <!-- Pseudo -->
             <div class="flex flex-col">
                 {{ form_label(registrationForm.pseudo, null, {'label_attr': {'class': 'text-gray-600'}}) }}
-                {{ form_widget(registrationForm.pseudo, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500', 'aria-required': 'true'}}) }}
-                {{ form_errors(registrationForm.pseudo, {'attr': {'class': 'text-red-500 text-sm', 'role': 'alert'}}) }}
+                {{ form_widget(registrationForm.pseudo, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}}) }}
+                {{ form_errors(registrationForm.pseudo, {'attr': {'class': 'text-red-500 text-sm'}}) }}
             </div>
 
             <!-- Mot de passe -->
             <div class="flex flex-col">
                 {{ form_label(registrationForm.plainPassword.first, null, {'label_attr': {'class': 'text-gray-600'}}) }}
-                {{ form_widget(registrationForm.plainPassword.first, {
-                    'attr': {
-                        'id': 'password1',
-                        'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500',
-                        'type': 'password',
-                        'aria-required': 'true'
-                    }
-                }) }}
-                {{ form_errors(registrationForm.plainPassword.first, {'attr': {'class': 'text-red-500 text-sm', 'role': 'alert'}}) }}
+                {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}}) }}
+                {{ form_errors(registrationForm.plainPassword.first, {'attr': {'class': 'text-red-500 text-sm'}}) }}
             </div>
 
-            <!-- Confirmation mot de passe -->
+            <!-- Confirmation du mot de passe -->
             <div class="flex flex-col">
                 {{ form_label(registrationForm.plainPassword.second, null, {'label_attr': {'class': 'text-gray-600'}}) }}
-                {{ form_widget(registrationForm.plainPassword.second, {
-                    'attr': {
-                        'id': 'password2',
-                        'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500',
-                        'type': 'password',
-                        'aria-required': 'true'
-                    }
-                }) }}
-                {{ form_errors(registrationForm.plainPassword.second, {'attr': {'class': 'text-red-500 text-sm', 'role': 'alert'}}) }}
+                {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}}) }}
+                {{ form_errors(registrationForm.plainPassword.second, {'attr': {'class': 'text-red-500 text-sm'}}) }}
             </div>
 
-            <!-- Conditions d'utilisation -->
-            <div class="flex items-start gap-3">
-                {{ form_widget(registrationForm.agreeTerms, {
-                    'attr': {
-                        'class': 'mt-1 rounded border-gray-300 text-indigo-600 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50',
-                        'aria-required': 'true'
-                    }
-                }) }}
-                <label for="{{ registrationForm.agreeTerms.vars.id }}" class="text-sm text-gray-700">
+            <!-- Conditions générales -->
+            <div class="flex items-start space-x-2">
+                {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'text-blue-500'}}) }}
+                <label for="{{ registrationForm.agreeTerms.vars.id }}" class="text-sm text-gray-600">
                     J'accepte les
-                    <a href="/conditions-utilisation" class="text-primary-color-green-main underline hover:text-green-500">conditions générales d'utilisation</a>
+                    <a href="/conditions-utilisation" class="text-green-600 hover:underline">conditions générales d'utilisation</a>
                     et la
-                    <a href="/politique-confidentialite" class="text-primary-color-green-main underline hover:text-green-500">politique de confidentialité</a>.
+                    <a href="/politique-confidentialite" class="text-green-600 hover:underline">politique de confidentialité</a>.
                 </label>
             </div>
-            {{ form_errors(registrationForm.agreeTerms, {'attr': {'class': 'text-red-500 text-sm', 'role': 'alert'}}) }}
+            {{ form_errors(registrationForm.agreeTerms, {'attr': {'class': 'text-red-500 text-sm'}}) }}
+
+            <!-- Offres promotionnelles -->
+            <div class="flex items-start space-x-2">
+                {{ form_widget(registrationForm.receivePromotions, {'attr': {'class': 'text-blue-500'}}) }}
+                <label for="{{ registrationForm.receivePromotions.vars.id }}" class="text-sm text-gray-600">
+                    Recevoir des offres promotionnelles et des informations marketing.
+                </label>
+            </div>
+            {{ form_errors(registrationForm.receivePromotions, {'attr': {'class': 'text-red-500 text-sm'}}) }}
 
             <!-- Bouton de soumission -->
             <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-md mt-4 hover:bg-primary-color-green-main focus:outline-none" aria-label="Créer un compte">
-                Créer compte
+                S'inscrire
             </button>
 
-            <!-- Lien vers la page de connexion -->
-            <div class="text-center mt-4">
-                <a href="{{ path('app_login') }}" class="text-sm text-primary-color-green-main hover:underline">Vous avez déjà un compte ? Connectez-vous ici</a>
-            </div>
-
             {{ form_end(registrationForm) }}
+
+            <!-- Lien vers la page de connexion -->
+            <div class="flex justify-between mt-4 text-sm">
+                <a href="{{ path('app_login') }}" class="text-green-600 hover:underline">Déjà un compte ? Connectez-vous</a>
+            </div>
         </div>
     </div>
 </section>
