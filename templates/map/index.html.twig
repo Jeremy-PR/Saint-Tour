@@ -1,117 +1,123 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Notre carte de Saint-Etienne{% endblock %}
+{% block title %}Notre carte de Saint-Etienne
+{% endblock %}
 
 {% block body %}
-    <section class="bg-cover bg-center min-h-screen" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}');">
-        <div class="flex items-center justify-center min-h-screen bg-black bg-opacity-50 py-12">
-            <div class="container mx-auto p-6 rounded-lg shadow-lg bg-white  backdrop-blur-lg" role="region" aria-labelledby="map-section-title">
-                <h1 id="map-section-title" class="text-3xl font-bold text-gray-800 text-center mb-8" role="heading" aria-level="1">Notre carte de Saint-Etienne</h1>
+	<section class="bg-cover bg-center min-h-screen" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}');">
+		<div class="flex items-center justify-center min-h-screen bg-black bg-opacity-50 py-12">
+			<div class="container mx-auto p-6 rounded-lg shadow-lg bg-white  backdrop-blur-lg" role="region" aria-labelledby="map-section-title">
+				<h1 id="map-section-title" class="text-3xl font-bold text-gray-800 text-center mb-8" role="heading" aria-level="1">Notre carte de Saint-Etienne</h1>
 
-                <!-- Filtre par catégorie -->
-                <div class="mb-6 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-4">
-    <div class="w-full md:w-1/2">
-        <label for="categoryFilter" class="block font-semibold text-gray-800 mb-2">Filtrer par catégorie :</label>
-        <select id="categoryFilter" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-primary-color-green-main focus:border-primary-color-green-main" aria-label="Filtrer les lieux par catégorie">
-            <option value="all">Toutes les catégories</option>
-            {% for categorie in categories %}
-                <option value="{{ categorie.name }}">{{ categorie.name }}</option>
-            {% endfor %}
-        </select>
-    </div>
+				<!-- Filtre par catégorie -->
+				<div class="mb-6 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-4">
+					<div class="w-full md:w-1/2">
+						<label for="categoryFilter" class="block font-semibold text-gray-800 mb-2">Filtrer par catégorie :</label>
+						<select id="categoryFilter" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-primary-color-green-main focus:border-primary-color-green-main" aria-label="Filtrer les lieux par catégorie">
+							<option value="all">Toutes les catégories</option>
+							{% for categorie in categories %}
+								<option value="{{ categorie.name }}">{{ categorie.name }}</option>
+							{% endfor %}
+						</select>
+					</div>
 
-    <div class="w-full md:w-1/2">
-        <label for="itineraireFilter" class="block font-semibold text-gray-800 mb-2">Choisir un itinéraire :</label>
-        <select id="itineraireFilter" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-primary-color-green-main focus:border-primary-color-green-main" aria-label="Filtrer les lieux par itinéraire">
-            <option value="all">Tous les itinéraires</option>
-            {% for itineraire in itineraires %}
-                <option value="{{ itineraire.id }}">{{ itineraire.name }}</option>
-            {% endfor %}
-        </select>
-    </div>
-</div>
+					<div class="w-full md:w-1/2">
+						<label for="itineraireFilter" class="block font-semibold text-gray-800 mb-2">Choisir un itinéraire :</label>
+						<select id="itineraireFilter" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-primary-color-green-main focus:border-primary-color-green-main" aria-label="Filtrer les lieux par itinéraire">
+							<option value="all">Tous les itinéraires</option>
+							{% for itineraire in itineraires %}
+								<option value="{{ itineraire.id }}">{{ itineraire.name }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
 
-                <!-- Bloc pour la carte -->
-                <div id="map" class="rounded-lg shadow-lg" style="height: 70vh; width: 100%;" role="application" aria-label="Carte interactive de Saint-Etienne"></div>
-            </div>
-        </div>
-    </section>
+				<!-- Bloc pour la carte -->
+				<div id="map" class="rounded-lg shadow-lg" style="height: 70vh; width: 100%;" role="application" aria-label="Carte interactive de Saint-Etienne"></div>
+			</div>
+		</div>
+	</section>
 
-    <script>
-        // Initialisation de la carte Leaflet
-        var map = L.map('map').setView([45.4397, 4.3872], 13);
+	<script>
+		// Initialisation de la carte Leaflet
+var map = L.map('map').setView([
+45.4397, 4.3872
+], 13);
 
-        // Ajout du fond de carte
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+// Ajout du fond de carte
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 
-        // Récupérer les lieux et itinéraires et les stocker dans des variables JS
-        const lieux = {{ lieux|raw }};
-        const itineraires = {{ itineraires|json_encode|raw }};
-        let markers = [];
-        let polyline = null;
+// Récupérer les lieux et itinéraires et les stocker dans des variables JS
+const lieux = {{ lieux|raw }};
+const itineraires = {{ itineraires|json_encode|raw }};
+let markers = [];
+let polyline = null;
 
-        // Fonction pour afficher les lieux filtrés
-        function afficherLieux(categorie) {
-            markers.forEach(marker => map.removeLayer(marker));
-            markers = [];
+// Fonction pour afficher les lieux filtrés
+function afficherLieux(categorie) {
+markers.forEach(marker => map.removeLayer(marker));
+markers = [];
 
-            lieux.forEach(lieu => {
-                if (lieu.latitude && lieu.longitude) {
-                    const categoriesLieu = lieu.categories.map(c => c.name);
-                    if (categorie === "all" || categoriesLieu.includes(categorie)) {
-                        const lieuUrl = "{{ path('lieu_show', {'id': 'PLACEHOLDER_ID'}) }}".replace('PLACEHOLDER_ID', lieu.id);
-                        const popupContent = `
-                            <strong>${lieu.name}</strong><br>
+lieux.forEach(lieu => {
+if (lieu.latitude && lieu.longitude) {
+const categoriesLieu = lieu.categories.map(c => c.name);
+if (categorie === "all" || categoriesLieu.includes(categorie)) {
+const lieuUrl = "{{ path('lieu_show', {'id': 'PLACEHOLDER_ID'}) }}".replace('PLACEHOLDER_ID', lieu.id);
+const popupContent = `
+                            <strong>${
+lieu.name
+}</strong><br>
                             <a href="${lieuUrl}" class="text-blue-500 hover:underline">Voir plus</a>
                         `;
-                        let marker = L.marker([lieu.latitude, lieu.longitude]).addTo(map).bindPopup(popupContent);
-                        markers.push(marker);
-                    }
-                }
-            });
-        }
+let marker = L.marker([lieu.latitude, lieu.longitude]).addTo(map).bindPopup(popupContent);
+markers.push(marker);
+}
+}
+});
+}
 
-        function afficherItineraire(itineraireId) {
-            markers.forEach(marker => map.removeLayer(marker));
-            markers = [];
+function afficherItineraire(itineraireId) {
+markers.forEach(marker => map.removeLayer(marker));
+markers = [];
 
-            if (itineraireId === "all") {
-                afficherLieux("all");
-                return;
-            }
+if (itineraireId === "all") {
+afficherLieux("all");
+return;
+}
 
-            const itineraire = itineraires.find(i => i.id == itineraireId);
-            if (itineraire) {
-                itineraire.lieux.forEach(lieuId => {
-                    const lieu = lieux.find(l => l.id == lieuId);
-                    if (lieu && lieu.latitude && lieu.longitude) {
-                        const lieuUrl = "{{ path('lieu_show', {'id': 'PLACEHOLDER_ID'}) }}".replace('PLACEHOLDER_ID', lieu.id);
-                        const popupContent = `
-                            <strong>${lieu.name}</strong><br>
+const itineraire = itineraires.find(i => i.id == itineraireId);
+if (itineraire) {
+itineraire.lieux.forEach(lieuId => {
+const lieu = lieux.find(l => l.id == lieuId);
+if (lieu && lieu.latitude && lieu.longitude) {
+const lieuUrl = "{{ path('lieu_show', {'id': 'PLACEHOLDER_ID'}) }}".replace('PLACEHOLDER_ID', lieu.id);
+const popupContent = `
+                            <strong>${
+lieu.name
+}</strong><br>
                             <a href="${lieuUrl}" class="text-blue-500 hover:underline">Voir plus</a>
                         `;
-                        let marker = L.marker([lieu.latitude, lieu.longitude]).addTo(map).bindPopup(popupContent);
-                        markers.push(marker);
-                    }
-                });
-            }
-        }
+let marker = L.marker([lieu.latitude, lieu.longitude]).addTo(map).bindPopup(popupContent);
+markers.push(marker);
+}
+});
+}
+}
 
-        afficherLieux("all");
+afficherLieux("all");
 
-        document.getElementById("categoryFilter").addEventListener("change", function () {
-            document.getElementById("itineraireFilter").value = "all";
-            afficherLieux(this.value);
-        });
+document.getElementById("categoryFilter").addEventListener("change", function () {
+document.getElementById("itineraireFilter").value = "all";
+afficherLieux(this.value);
+});
 
-        document.getElementById("itineraireFilter").addEventListener("change", function () {
-            document.getElementById("categoryFilter").value = "all";
-            afficherItineraire(this.value);
-        });
-    </script>
+document.getElementById("itineraireFilter").addEventListener("change", function () {
+document.getElementById("categoryFilter").value = "all";
+afficherItineraire(this.value);
+});
+	</script>
 {% endblock %}
+
 
 {# 1. Ce fichier index.html.twig étend le fichier de base `base.html.twig` pour hériter de la structure principale du site.  
 2. Il affiche une carte interactive de Saint-Étienne avec des filtres pour explorer les lieux et itinéraires disponibles.  
