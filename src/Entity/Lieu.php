@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LieuRepository::class)]
 class Lieu
@@ -20,14 +21,17 @@ class Lieu
 
     #[ORM\Column(length: 255)]
     #[Groups(['lieu:read', 'itineraire:read'])]
+    #[Assert\NotBlank(message: "Le nom du lieu est obligatoire.")]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Groups(['lieu:read'])]
+    #[Assert\NotBlank(message: "La description est obligatoire.")]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['lieu:read'])]
+    #[Assert\NotBlank(message: "L'adresse est obligatoire.")]
     private ?string $adresse = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 6)]

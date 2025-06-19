@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ItineraireRepository::class)]
 class Itineraire
@@ -20,12 +21,17 @@ class Itineraire
 
     #[ORM\Column(length: 255)]
     #[Groups("itineraire:read")]
+    #[Assert\NotBlank(message: "Le nom de l'itinéraire est obligatoire.")]
+
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: "La description est obligatoire.")]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "La date de création est obligatoire.")]
+    #[Assert\DateTime(message: "La date doit être valide.")]
     private ?\DateTimeImmutable $created_at = null;
 
     /**
