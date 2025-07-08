@@ -51,7 +51,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: 
 const lieux = {{ lieux|raw }};
 const itineraires = {{ itineraires|json_encode|raw }};
 let markers = [];
-let polyline = null;
+
 
 // Fonction pour afficher les lieux filtrés
 function afficherLieux(categorie) {
@@ -117,6 +117,7 @@ afficherItineraire(this.value);
 });
 	</script>
 {% endblock %}
+
 
 
 {# 1. Ce fichier index.html.twig étend le fichier de base `base.html.twig` pour hériter de la structure principale du site.  
