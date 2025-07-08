@@ -6,33 +6,33 @@
 {% block body %}
 	<section class="bg-cover bg-center py-12" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}');">
 		<div class="flex items-center justify-center">
-			<div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-xs mx-auto" role="form" aria-labelledby="edit-profile-title">
-				<h2 id="edit-profile-title" class="text-2xl font-semibold text-center mb-4 text-gray-700">Modifier mon Profil</h2>
+			<div class="bg-primary-color-white p-6 rounded-lg shadow-lg w-full max-w-xs mx-auto" role="form" aria-labelledby="edit-profile-title">
+				<h2 id="edit-profile-title" class="text-2xl font-semibold text-center mb-4 text-primary-color-black">Modifier mon Profil</h2>
 
 				{{ form_start(form, {'attr': {'class': 'space-y-4', 'aria-describedby': 'edit-profile-description'}}) }}
 
 				<!-- Pseudo -->
 				<div class="flex flex-col">
-					{{ form_label(form.pseudo, null, {'label_attr': {'class': 'text-black font-semibold'}}) }}
+					{{ form_label(form.pseudo, null, {'label_attr': {'class': 'text-primary-color-black font-semibold'}}) }}
 					{{ form_widget(form.pseudo, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500', 'aria-required': 'true'}}) }}
 				</div>
 
 				<!-- Email -->
 				<div class="flex flex-col">
-					{{ form_label(form.email, null, {'label_attr': {'class': 'text-black font-semibold'}}) }}
+					{{ form_label(form.email, null, {'label_attr': {'class': 'text-primary-color-black font-semibold'}}) }}
 					{{ form_widget(form.email, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500', 'aria-required': 'true'}}) }}
 				</div>
 
 				<!-- Mot de passe actuel -->
 				<div class="flex flex-col">
-					{{ form_label(form.currentPassword, null, {'label_attr': {'class': 'text-black font-semibold'}}) }}
+					{{ form_label(form.currentPassword, null, {'label_attr': {'class': 'text-primary-color-black font-semibold'}}) }}
 					{{ form_widget(form.currentPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500', 'aria-required': 'true'}}) }}
 					{{ form_errors(form.currentPassword, {'attr': {'class': 'text-red-500 mt-2'}}) }}
 				</div>
 
 				<!-- Nouveau mot de passe -->
 				<div class="flex flex-col">
-					{{ form_label(form.newPassword, null, {'label_attr': {'class': 'text-black font-semibold'}}) }}
+					{{ form_label(form.newPassword, null, {'label_attr': {'class': 'text-primary-color-black font-semibold'}}) }}
 					{{ form_widget(form.newPassword, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500', 'aria-required': 'true'}}) }}
 				</div>
 

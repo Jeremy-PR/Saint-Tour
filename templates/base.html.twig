@@ -21,7 +21,7 @@
     <body class="bg-primary-color-green-main min-h-screen flex flex-col">
 
         <!-- Lien pour passer directement au contenu principal -->
-        <a href="#main-content" class="sr-only focus:not-sr-only focus:block bg-primary-color-green-main text-white p-2">Passer au contenu principal</a>
+        <a href="#main-content" class="sr-only focus:not-sr-only focus:block bg-primary-color-green-main text-primary-color-white p-2">Passer au contenu principal</a>
 
         <header class="bg-primary-color-primary-color-green-main shadow-lg relative" role="banner">
             <div class="container mx-auto px-4">
@@ -30,13 +30,13 @@
                  <div class="flex items-center">
     <a href="{{ path('app_home') }}" class="flex items-center">
         <img src="{{ asset('images/logo.png') }}" alt="Logo SaintéCityTour" class="h-6 w-auto mr-2">
-<span class="text-white text-xl font-semibold text-center w-full">SaintéCityTour</span></div>
+<span class="text-primary-color-white text-xl font-semibold text-center w-full">SaintéCityTour</span></div>
 
                     <!-- Menu Hamburger (Mobile) -->
-                    <button id="menu-toggle" aria-expanded="false" aria-controls="menu" class="text-white bg-green-700 hover:bg-green-800 transition-colors p-2 rounded-md z-20 lg:hidden focus:outline-none">
+                    <button id="menu-toggle" aria-expanded="false" aria-controls="menu" class="text-primary-color-white bg-green-700 hover:bg-green-800 transition-colors p-2 rounded-md z-20 lg:hidden focus:outline-none">
                         <i class="fas fa-bars" aria-hidden="true"></i>
                     </button>
-                    <button id="menu-close" aria-expanded="true" aria-controls="menu" class="text-white bg-primary-color-green-main hover:bg-green-800 transition-colors p-2 rounded-md z-20 lg:hidden focus:outline-none hidden">
+                    <button id="menu-close" aria-expanded="true" aria-controls="menu" class="text-primary-color-white bg-primary-color-green-main hover:bg-green-800 transition-colors p-2 rounded-md z-20 lg:hidden focus:outline-none hidden">
                         <i class="fas fa-times" aria-hidden="true"></i>
                     </button>
 
@@ -46,13 +46,13 @@
                             <!-- Navigation principale -->
                             <ul class="flex flex-col lg:flex-row lg:mr-8 mb-6 lg:mb-0 items-center">
                                 <li class="py-2 lg:py-0 lg:px-3">
-                                    <a href="{{ path('app_lieu') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Lieux</a>
+                                    <a href="{{ path('app_lieu') }}" class="text-primary-color-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Lieux</a>
                                 </li>
                                 <li class="py-2 lg:py-0 lg:px-3">
-                                    <a href="{{ path('app_itineraire') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Itinéraires</a>
+                                    <a href="{{ path('app_itineraire') }}" class="text-primary-color-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Itinéraires</a>
                                 </li>
                                 <li class="py-2 lg:py-0 lg:px-3">
-                                    <a href="{{ path('app_map') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Carte</a>
+                                    <a href="{{ path('app_map') }}" class="text-primary-color-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 block">Carte</a>
                                 </li>
                             </ul>
 
@@ -66,23 +66,23 @@
                             <ul class="flex flex-col lg:flex-row items-center">
                                 {% if app.user %}
                                     <li class="py-2 lg:py-0 lg:px-3">
-                                        <a href="{{ path('app_profile') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
+                                        <a href="{{ path('app_profile') }}" class="text-primary-color-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
                                             <i class="fas fa-user mr-2" aria-hidden="true"></i>Profil
                                         </a>
                                     </li>
                                     <li class="py-2 lg:py-0 lg:px-3">
-                                        <a href="{{ path('app_logout') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
+                                        <a href="{{ path('app_logout') }}" class="text-primary-color-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
                                             <i class="fas fa-sign-out-alt mr-2" aria-hidden="true"></i>Déconnexion
                                         </a>
                                     </li>
                                 {% else %}
                                     <li class="py-2 lg:py-0 lg:px-3">
-                                        <a href="{{ path('app_login') }}" class="text-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
+                                        <a href="{{ path('app_login') }}" class="text-primary-color-white text-lg lg:text-base font-bold hover:text-green-200 transition-colors duration-200 flex items-center">
                                             <i class="fas fa-sign-in-alt mr-2" aria-hidden="true"></i>Connexion
                                         </a>
                                     </li>
                                     <li class="py-2 lg:py-0 lg:px-3 mt-2 lg:mt-0">
-                                        <a href="{{ path('app_register') }}" class="bg-white text-primary-color-green-main hover:bg-green-100 transition-colors px-4 py-2 rounded-md font-bold flex items-center">
+                                        <a href="{{ path('app_register') }}" class="bg-primary-color-white text-primary-color-green-main hover:bg-green-100 transition-colors px-4 py-2 rounded-md font-bold flex items-center">
                                             <i class="fas fa-user-plus mr-2" aria-hidden="true"></i>Inscription
                                         </a>
                                     </li>
@@ -99,11 +99,11 @@
             {% block body %}{% endblock %}
         </main>
 
-        <footer class="bg-black text-white py-6" role="contentinfo">
+        <footer class="bg-black text-primary-color-white py-6" role="contentinfo">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col items-center mb-6">
                     <div class="text-2xl font-bold mb-2">SaintéCityTour</div>
-                    <p class="text-sm text-gray-400 text-center">Découvrez Saint-Étienne autrement</p>
+                    <p class="text-sm text-primary-color-white text-center">Découvrez Saint-Étienne autrement</p>
                 </div>
 
                 <div class="flex justify-center mb-6">
@@ -127,31 +127,31 @@
                     <div class="flex flex-col items-center md:items-start space-y-3">
                         <h3 class="text-lg font-semibold mb-2 text-green-500">Suivez-nous</h3>
                         <div class="flex space-x-4">
-                            <a href="#" class="text-white hover:text-green-400 transition-colors duration-300" aria-label="Suivez-nous sur Facebook">
+                            <a href="#" class="text-primary-color-white hover:text-green-400 transition-colors duration-300" aria-label="Suivez-nous sur Facebook">
                                 <i class="fab fa-facebook-f text-xl" aria-hidden="true"></i>
                             </a>
-                            <a href="#" class="text-white hover:text-green-400 transition-colors duration-300" aria-label="Suivez-nous sur Instagram">
+                            <a href="#" class="text-primary-color-white hover:text-green-400 transition-colors duration-300" aria-label="Suivez-nous sur Instagram">
                                 <i class="fab fa-instagram text-xl" aria-hidden="true"></i>
                             </a>
-                            <a href="#" class="text-white hover:text-green-400 transition-colors duration-300" aria-label="Suivez-nous sur Twitter">
+                            <a href="#" class="text-primary-color-white hover:text-green-400 transition-colors duration-300" aria-label="Suivez-nous sur Twitter">
                                 <i class="fab fa-twitter text-xl" aria-hidden="true"></i>
                             </a>
-                            <a href="#" class="text-white hover:text-green-400 transition-colors duration-300" aria-label="Suivez-nous sur YouTube">
+                            <a href="#" class="text-primary-color-white hover:text-green-400 transition-colors duration-300" aria-label="Suivez-nous sur YouTube">
                                 <i class="fab fa-youtube text-xl" aria-hidden="true"></i>
                             </a>
                         </div>
-                        <p class="text-sm text-gray-400 mt-2">Restez informés de nos actualités</p>
+                        <p class="text-sm text-primary-color-white mt-2">Restez informés de nos actualités</p>
                     </div>
                 </div>
 
                 <div class="h-px bg-gray-800 w-full my-4"></div>
 
                 <div class="flex flex-col md:flex-row justify-between items-center mt-4">
-                    <p class="text-sm text-gray-400 mb-2 md:mb-0">&copy; 2025 SaintéCityTour. Tous droits réservés.</p>
+                    <p class="text-sm text-primary-color-white mb-2 md:mb-0">&copy; 2025 SaintéCityTour. Tous droits réservés.</p>
                     <div class="flex items-center">
-                        <span class="text-sm text-gray-400">Fait avec</span>
+                        <span class="text-sm text-primary-color-white">Fait avec</span>
                         <i class="fas fa-heart text-green-500 mx-1" aria-hidden="true"></i>
-                        <span class="text-sm text-gray-400">à Saint-Étienne</span>
+                        <span class="text-sm text-primary-color-white">à Saint-Étienne</span>
                     </div>
                 </div>
             </div>

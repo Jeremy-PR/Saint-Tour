@@ -7,12 +7,12 @@
 	<section class="bg-cover bg-center min-h-screen" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}');">
 		<div class="flex items-center justify-center min-h-screen bg-black bg-opacity-50 py-12">
 			<div class="container mx-auto p-6 rounded-lg shadow-lg bg-white  backdrop-blur-lg" role="region" aria-labelledby="map-section-title">
-				<h1 id="map-section-title" class="text-3xl font-bold text-gray-800 text-center mb-8" role="heading" aria-level="1">Notre carte de Saint-Etienne</h1>
+				<h1 id="map-section-title" class="text-3xl font-bold text-primary-color-black text-center mb-8" role="heading" aria-level="1">Notre carte de Saint-Etienne</h1>
 
 				<!-- Filtre par catégorie -->
 				<div class="mb-6 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-4">
 					<div class="w-full md:w-1/2">
-						<label for="categoryFilter" class="block font-semibold text-gray-800 mb-2">Filtrer par catégorie :</label>
+						<label for="categoryFilter" class="block font-semibold text-primary-color-black mb-2">Filtrer par catégorie :</label>
 						<select id="categoryFilter" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-primary-color-green-main focus:border-primary-color-green-main" aria-label="Filtrer les lieux par catégorie">
 							<option value="all">Toutes les catégories</option>
 							{% for categorie in categories %}
@@ -22,7 +22,7 @@
 					</div>
 
 					<div class="w-full md:w-1/2">
-						<label for="itineraireFilter" class="block font-semibold text-gray-800 mb-2">Choisir un itinéraire :</label>
+						<label for="itineraireFilter" class="block font-semibold text-primary-color-black mb-2">Choisir un itinéraire :</label>
 						<select id="itineraireFilter" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-primary-color-green-main focus:border-primary-color-green-main" aria-label="Filtrer les lieux par itinéraire">
 							<option value="all">Tous les itinéraires</option>
 							{% for itineraire in itineraires %}

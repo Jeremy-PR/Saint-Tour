@@ -5,41 +5,41 @@
     <section class="bg-cover bg-center bg-fixed min-h-screen flex flex-col justify-between pb-20" style="background-image: url('{{ asset('images/hotel-de-ville.jpg') }}')" role="region" aria-labelledby="contact-title">
         <div class="container mx-auto px-4 flex-grow">
             <div class="text-center mb-12">
-                <h2 id="contact-title" class="text-4xl font-bold text-white" role="heading" aria-level="1">Envoyez-nous un message</h2>
+                <h2 id="contact-title" class="text-4xl text-primary-color-white font-bold " role="heading" aria-level="1">Envoyez-nous un message</h2>
             </div>
 
             <div class="flex flex-col md:flex-row gap-8">
                 <!-- Formulaire -->
-                <div class="bg-white p-8 rounded-lg shadow-lg flex-1 max-w-screen-md mx-auto" role="form" aria-labelledby="form-title">
-                    <h3 id="form-title" class="text-2xl font-bold text-gray-800 mb-4">Formulaire de contact</h3>
+                <div class="bg-primary-color-white p-8 rounded-lg shadow-lg flex-1 max-w-screen-md mx-auto" role="form" aria-labelledby="form-title">
+                    <h3 id="form-title" class="text-2xl font-bold text-primary-color-black mb-4">Formulaire de contact</h3>
                     {{ form_start(form, {'attr': {'id': 'formContact', 'class': 'space-y-6'}}) }}
                     
                     <div>
-                        {{ form_label(form.firstName, null, {'label_attr': {'class': 'block text-gray-700 font-medium mb-2'}}) }}
-                        {{ form_widget(form.firstName, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
+                        {{ form_label(form.firstName, null, {'label_attr': {'class': 'block text-primary-color-black font-medium mb-2'}}) }}
+                        {{ form_widget(form.firstName, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-color-green-main', 'aria-required': 'true'}}) }}
                         {{ form_errors(form.firstName) }}
                     </div>
 
                     <div>
-                        {{ form_label(form.lastName, null, {'label_attr': {'class': 'block text-gray-700 font-medium mb-2'}}) }}
-                        {{ form_widget(form.lastName, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
+                        {{ form_label(form.lastName, null, {'label_attr': {'class': 'block text-primary-color-black font-medium mb-2'}}) }}
+                        {{ form_widget(form.lastName, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-color-green-main', 'aria-required': 'true'}}) }}
                         {{ form_errors(form.lastName) }}
                     </div>
 
                     <div>
-                        {{ form_label(form.email, null, {'label_attr': {'class': 'block text-gray-700 font-medium mb-2'}}) }}
-                        {{ form_widget(form.email, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
+                        {{ form_label(form.email, null, {'label_attr': {'class': 'block text-primary-color-black font-medium mb-2'}}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-color-green-main', 'aria-required': 'true'}}) }}
                         {{ form_errors(form.email) }}
                     </div>
 
                     <div>
-                        {{ form_label(form.message, null, {'label_attr': {'class': 'block text-gray-700 font-medium mb-2'}}) }}
-                        {{ form_widget(form.message, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500', 'aria-required': 'true'}}) }}
+                        {{ form_label(form.message, null, {'label_attr': {'class': 'block text-primary-color-black font-medium mb-2'}}) }}
+                        {{ form_widget(form.message, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-color-green-main', 'aria-required': 'true'}}) }}
                         {{ form_errors(form.message) }}
                     </div>
 
                     <div class="text-center">
-                        <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300" aria-label="Envoyer le message">
+                        <button type="submit" class="bg-primary-color-green-main text-primary-color-white px-6 py-2 rounded-lg hover:bg-primary-color-green-main transition duration-300" aria-label="Envoyer le message">
                             Envoyer le message
                         </button>
                     </div>
@@ -48,26 +48,26 @@
                 </div>
 
                 <!-- Informations de contact -->
-                <div class="bg-white p-8 rounded-lg shadow-lg flex-1 max-w-screen-md mx-auto" role="region" aria-labelledby="contact-info-title">
-                    <h3 id="contact-info-title" class="text-2xl font-bold text-gray-800 mb-4">Nos coordonnées</h3>
-                    <p class="text-gray-600 mb-4">Nous sommes basés à Saint-Etienne, dans le département de la Loire.</p>
+                <div class="bg-primary-color-white p-8 rounded-lg shadow-lg flex-1 max-w-screen-md mx-auto" role="region" aria-labelledby="contact-info-title">
+                    <h3 id="contact-info-title" class="text-2xl font-bold text-primary-color-black mb-4">Nos coordonnées</h3>
+                    <p class="text-primary-color-black mb-4">Nous sommes basés à Saint-Etienne, dans le département de la Loire.</p>
                     <ul class="space-y-4" role="list" aria-label="Liste des coordonnées de contact">
                         <li class="flex items-center">
-                            <i class="material-icons text-blue-500 mr-4" aria-hidden="true">&#xE55F;</i>
+                            <i class="material-icons text-primary-color-green-main mr-4" aria-hidden="true">&#xE55F;</i>
                             <span>Sainté City Tour, Saint-Etienne</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="material-icons text-blue-500 mr-4" aria-hidden="true">&#xE61C;</i>
+                            <i class="material-icons text-primary-color-green-main mr-4" aria-hidden="true">&#xE61C;</i>
                             <span>+33 (0) 6 60 06 66 00</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="material-icons text-blue-500 mr-4" aria-hidden="true">&#xE916;</i>
+                            <i class="material-icons text-primary-color-green-main mr-4" aria-hidden="true">&#xE916;</i>
                             <span>9h - 18h du Lundi au Vendredi</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="material-icons text-blue-500 mr-4" aria-hidden="true">&#xE0E1;</i>
+                            <i class="material-icons text-primary-color-green-main mr-4" aria-hidden="true">&#xE0E1;</i>
                             <span>
-                                <a href="mailto:saintecitytour@gmail.com" class="text-blue-500 hover:underline" aria-label="Envoyer un email à saintecitytour@gmail.com">
+                                <a href="mailto:saintecitytour@gmail.com" class="text-primary-color-green-main hover:underline" aria-label="Envoyer un email à saintecitytour@gmail.com">
                                     saintecitytour@gmail.com
                                 </a>
                             </span>

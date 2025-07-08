@@ -1,7 +1,7 @@
 <div class="flash-container space-y-2" role="region" aria-label="Notifications">
     {% for type, messages in app.flashes %}
         <div class="
-            px-4 py-3 rounded-lg shadow-md text-white relative
+            px-4 py-3 rounded-lg shadow-md text-primary-color-white relative
             {% if type == 'success' %} bg-green-500
             {% elseif type == 'danger' %} bg-red-500
             {% elseif type == 'warning' %} bg-yellow-500

@@ -8,7 +8,7 @@
         <!-- Contenu principal -->
         <div class="bg-opacity-80 flex-1 py-8 md:py-12 bg-cover bg-center" style="background-image: url('{{ asset('images/bgimageedit.png') }}');">
             <div class="container mx-auto px-4 max-w-7xl">
-                <h1 class="text-3xl font-bold text-gray-800 text-center mb-8" role="heading" aria-level="1">Tous les Lieux</h1>
+                <h1 class="text-3xl font-bold text-primary-color-black text-center mb-8" role="heading" aria-level="1">Tous les Lieux</h1>
 
                 <!-- Menu déroulant pour sélectionner un lieu -->
                 <div class="flex justify-center mb-6 md:mb-10">
@@ -38,17 +38,17 @@
                                 >
                             </div>
                             <div class="p-4 md:p-5 lg:p-6">
-                                <h2 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-3">{{ lieu.name }}</h2>
-                                <p class="text-sm text-white mb-3 md:mb-4">{{ lieu.description|slice(0, 100) ~ '...' }}</p>
+                                <h2 class="text-xl md:text-2xl font-bold text-primary-color-white mb-2 md:mb-3">{{ lieu.name }}</h2>
+                                <p class=" text-primary-color-white text-sm mb-3 md:mb-4">{{ lieu.description|slice(0, 100) ~ '...' }}</p>
                                 <div class="flex justify-between items-center">
-                                    <span class="text-xs md:text-sm text-white">Catégorie : 
+                                    <span class="text-xs md:text-sm text-primary-color-white">Catégorie :
                                         {% for categorie in lieu.categories %}
                                             {{ categorie.name }}{% if not loop.last %}, {% endif %}
                                         {% endfor %}
                                     </span>
                                     <a 
                                         href="{{ path('lieu_show', {'id': lieu.id}) }}" 
-                                        class="bg-white text-primary-color-green-main px-2 py-1 md:px-3 md:py-2 rounded-md text-sm hover:bg-gray-300 transition-colors"
+                                        class="bg-primary-color-white text-primary-color-green-main px-2 py-1 md:px-3 md:py-2 rounded-md text-sm hover:bg-gray-300 transition-colors"
                                         aria-label="Voir les détails de {{ lieu.name }}"
                                     >
                                         Voir détails
@@ -57,7 +57,7 @@
                             </div>
                         </div>
                     {% else %}
-                        <p class="col-span-full text-center text-green-800 py-8" aria-label="Aucun lieu disponible">Aucun lieu disponible pour le moment.</p>
+                        <p class="col-span-full text-center text-primary-color-black py-8" aria-label="Aucun lieu disponible">Aucun lieu disponible pour le moment.</p>
                     {% endfor %}
                 </div>
             </div>

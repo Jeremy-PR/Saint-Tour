@@ -1,37 +1,37 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<section class="bg-cover bg-center h-screen" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}');">
-    <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md" role="form" aria-labelledby="register-title">
-            <h2 id="register-title" class="text-2xl font-semibold text-center mb-4 text-gray-700">Créer un compte</h2>
+<section class="bg-cover bg-center min-h-screen py-8 sm:py-12" style="background-image: url('{{ asset('images/vu-de-haut.jpg') }}');">
+    <div class="flex items-center justify-center min-h-[400px]">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md mx-4" role="form" aria-labelledby="register-title">
+            <h2 id="register-title" class="text-2xl font-semibold text-center mb-4 text-primary-color-black">Créer un compte</h2>
 
             {{ form_start(registrationForm, {'attr': {'class': 'space-y-4'}}) }}
 
             <!-- Email -->
             <div class="flex flex-col">
-                {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'text-gray-600'}}) }}
+                {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'text-primary-clor-black'}}) }}
                 {{ form_widget(registrationForm.email, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}}) }}
                 {{ form_errors(registrationForm.email, {'attr': {'class': 'text-red-500 text-sm'}}) }}
             </div>
 
             <!-- Pseudo -->
             <div class="flex flex-col">
-                {{ form_label(registrationForm.pseudo, null, {'label_attr': {'class': 'text-gray-600'}}) }}
+                {{ form_label(registrationForm.pseudo, null, {'label_attr': {'class': 'text-primary-color-black'}}) }}
                 {{ form_widget(registrationForm.pseudo, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}}) }}
                 {{ form_errors(registrationForm.pseudo, {'attr': {'class': 'text-red-500 text-sm'}}) }}
             </div>
 
             <!-- Mot de passe -->
             <div class="flex flex-col">
-                {{ form_label(registrationForm.plainPassword.first, null, {'label_attr': {'class': 'text-gray-600'}}) }}
+                {{ form_label(registrationForm.plainPassword.first, null, {'label_attr': {'class': 'text-primary-color-black'}}) }}
                 {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}}) }}
                 {{ form_errors(registrationForm.plainPassword.first, {'attr': {'class': 'text-red-500 text-sm'}}) }}
             </div>
 
             <!-- Confirmation du mot de passe -->
             <div class="flex flex-col">
-                {{ form_label(registrationForm.plainPassword.second, null, {'label_attr': {'class': 'text-gray-600'}}) }}
+                {{ form_label(registrationForm.plainPassword.second, null, {'label_attr': {'class': 'text-primary-color-black'}}) }}
                 {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}}) }}
                 {{ form_errors(registrationForm.plainPassword.second, {'attr': {'class': 'text-red-500 text-sm'}}) }}
             </div>
@@ -39,7 +39,7 @@
             <!-- Conditions générales -->
             <div class="flex items-start space-x-2">
                 {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'text-blue-500'}}) }}
-                <label for="{{ registrationForm.agreeTerms.vars.id }}" class="text-sm text-gray-600">
+                <label for="{{ registrationForm.agreeTerms.vars.id }}" class="text-sm text-primary-color-black">
                     J'accepte les
                     <a href="/conditions-utilisation" class="text-green-600 hover:underline">conditions générales d'utilisation</a>
                     et la
@@ -51,14 +51,14 @@
             <!-- Offres promotionnelles -->
             <div class="flex items-start space-x-2">
                 {{ form_widget(registrationForm.receivePromotions, {'attr': {'class': 'text-blue-500'}}) }}
-                <label for="{{ registrationForm.receivePromotions.vars.id }}" class="text-sm text-gray-600">
+                <label for="{{ registrationForm.receivePromotions.vars.id }}" class="text-sm text-primary-color-black">
                     Recevoir des offres promotionnelles et des informations marketing.
                 </label>
             </div>
             {{ form_errors(registrationForm.receivePromotions, {'attr': {'class': 'text-red-500 text-sm'}}) }}
 
             <!-- Bouton de soumission -->
-            <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-md mt-4 hover:bg-primary-color-green-main focus:outline-none" aria-label="Créer un compte">
+            <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-md mt-4 hover:bg-green-500 transition-colors" aria-label="Créer un compte">
                 S'inscrire
             </button>
 
