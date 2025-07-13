@@ -35,9 +35,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
+
     #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\NotBlank(message: "Le mot de passe est requis.")]
-    #[Assert\Length(min: 6, minMessage: "Le mot de passe doit contenir au moins 6 caractères.")]
     private ?string $password = null;
 
     /**
@@ -181,12 +180,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->receivePromotions;
     }
-    
+
     public function setReceivePromotions(bool $receivePromotions): self
     {
         $this->receivePromotions = $receivePromotions;
         return $this;
     }
-
-   
 }
