@@ -27,9 +27,9 @@ class ItineraireCrudController extends AbstractCrudController
                 ->setFormTypeOption('by_reference', false)
                 ->setCrudController(LieuCrudController::class)
                 ->setHelp('Sélectionnez les lieux par lesquels passe cet itinéraire'),
-          
+
             DateTimeField::new('created_at')->onlyOnDetail(),
-            
+
         ];
     }
 }

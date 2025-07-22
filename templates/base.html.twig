@@ -42,7 +42,9 @@
 
                     <!-- Navigation Links -->
                     <div id="menu" class="fixed inset-0 lg:relative bg-primary-color-green-main lg:bg-transparent pt-20 lg:pt-0 z-10 transform translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out lg:flex lg:items-center lg:justify-end">
-                        <div class="container mx-auto px-4 lg:p-0 flex flex-col lg:flex-row lg:items-center">
+                        <!-- Overlay pour mobile -->
+                        <div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-40 z-40 lg:hidden hidden"></div>
+                        <div class="container mx-auto px-4 lg:p-0 flex flex-col lg:flex-row lg:items-center z-50">
                             <!-- Navigation principale -->
                             <ul class="flex flex-col lg:flex-row lg:mr-8 mb-6 lg:mb-0 items-center">
                                 <li class="py-2 lg:py-0 lg:px-3">
@@ -163,36 +165,80 @@
                     const menuToggle = document.getElementById('menu-toggle');
                     const menuClose = document.getElementById('menu-close');
                     const menu = document.getElementById('menu');
-                    
+                    const menuOverlay = document.getElementById('menu-overlay');
+                    const menuContainer = menu.querySelector('.container');
+                    // let menuTimer = null;
+
                     function openMenu() {
                         menu.classList.remove('translate-x-full');
                         menu.classList.add('translate-x-0');
+                        menu.style.transform = 'translateX(0) !important';
                         menuToggle.classList.add('hidden');
                         menuClose.classList.remove('hidden');
                         menuToggle.setAttribute('aria-expanded', 'true');
+                        if (window.innerWidth < 1024) {
+                            menuOverlay.classList.remove('hidden');
+                            menuOverlay.style.display = 'block';
+                            menuOverlay.style.setProperty('display', 'block', 'important');
+                        }
+                        // Timer désactivé pour diagnostic
+                        // if (menuTimer) clearTimeout(menuTimer);
+                        // menuTimer = setTimeout(closeMenu, 10000);
                     }
-                    
+
                     function closeMenu() {
                         menu.classList.remove('translate-x-0');
                         menu.classList.add('translate-x-full');
+                        menu.style.transform = 'translateX(100%) !important';
                         menuToggle.classList.remove('hidden');
                         menuClose.classList.add('hidden');
                         menuToggle.setAttribute('aria-expanded', 'false');
+                        menuOverlay.classList.add('hidden');
+                        menuOverlay.style.display = 'none';
+                        menuOverlay.style.setProperty('display', 'none', 'important');
+                        // Log pour diagnostic
+                        console.log('closeMenu appelé');
+                        // if (menuTimer) {
+                        //     clearTimeout(menuTimer);
+                        //     menuTimer = null;
+                        // }
                     }
-                    
+
                     menuToggle.addEventListener('click', openMenu);
                     menuClose.addEventListener('click', closeMenu);
-                    
+                    menuOverlay.addEventListener('click', closeMenu);
+                    // Empêche la fermeture du menu lors d'un clic à l'intérieur du menu
+                    menu.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                    });
+                    if (menuContainer) {
+                        menuContainer.addEventListener('click', function(event) {
+                            event.stopPropagation();
+                        });
+                    }
+                    // Diagnostic : log tous les clics sur le document
+                    document.addEventListener('click', function(e) {
+                        console.log('document click', e.target);
+                    });
+
                     window.addEventListener('resize', function() {
                         if (window.innerWidth >= 1024) {
                             menu.classList.remove('translate-x-0', 'translate-x-full');
                             menuToggle.classList.remove('hidden');
                             menuClose.classList.add('hidden');
-                        } else if (!menu.classList.contains('translate-x-0')) {
-                            menu.classList.add('translate-x-full');
+                            menuOverlay.classList.add('hidden');
+                            if (menuTimer) {
+                                clearTimeout(menuTimer);
+                                menuTimer = null;
+                            }
+                        } else {
+                            if (!menu.classList.contains('translate-x-0')) {
+                                menu.classList.add('translate-x-full');
+                                menuOverlay.classList.add('hidden');
+                            }
                         }
                     });
-                    
+
                     const menuLinks = menu.querySelectorAll('a');
                     menuLinks.forEach(link => {
                         link.addEventListener('click', function() {
